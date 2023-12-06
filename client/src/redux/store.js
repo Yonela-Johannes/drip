@@ -6,6 +6,9 @@ import authReducer from './features/auth/authSlice';
 import productReducer from './features/products/productSlice'
 import cartReducer from './features/cart/cartSlice'
 import adminReducer from './features/admin/adminProducts/adminReducer'
+import enquiryReducer from './features/enquiry/enquirySlice'
+import usersReducer from './features/cutomers/customerSlice'
+import categoryReducer from './features/category/categorySlice'
 
 const persistConfig = {
   key: 'root',
@@ -16,10 +19,13 @@ const persistedUserReducer = persistReducer(persistConfig, authReducer);
 const persistedCardReducer = persistReducer(persistConfig, cartReducer);
 
 const rootReducer = {
-  auth: persistedUserReducer,
+  user: persistedUserReducer,
+  users: usersReducer,
   products: productReducer,
   admin: adminReducer,
   cart: persistedCardReducer,
+  enquiry: enquiryReducer,
+  category: categoryReducer,
 };
 
 export const store = configureStore({

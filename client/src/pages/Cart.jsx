@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CartProduct from "../components/CartProduct";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
@@ -9,9 +9,10 @@ const Cart = () => {
   const [primeShipping, setPrimeShipping] = useState(false);
   const [isCod, setIsCod] = useState(false);
   const { items } = useSelector((state) => state.cart)
+  const {_id, given_name, family_name } = useSelector((state) => state.user)
   const [cartProducts, setCartProducts] = useState();
-  const userInfo = {}
-  // const navigate = useNavigation();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCartProducts(items)
@@ -35,10 +36,10 @@ const Cart = () => {
       },
 
       user: {
-        id: userInfo.id,
+        id: _id,
       },
       status: {
-        paymentMode: isCod ? "cash-on-delivery" : "stripe",
+        paymentMode: isCod ? "cash-on-delivery" : "paypal",
       },
       paymentIntent: "",
       price: getTotalAmount() + (primeShipping ? 40 : 0),
@@ -207,7 +208,7 @@ const Cart = () => {
                   </p>
                 </div>
               </div>
-              {userInfo ? (
+              {_id ? (
                 <button
                   className="bg-amazon-secondary hover:bg-amazon-primary transition-all duration-300 text-black rounded flex justify-between px-3 py-2 gap-10 font-bold w-full"
                   onClick={() => handleCheckoutRedirect()}
@@ -218,8 +219,8 @@ const Cart = () => {
                 </button>
               ) : (
                 <button
-                  className="bg-amazon-secondary hover:bg-amazon-primary transition-all duration-300 text-white rounded flex justify-center px-3 py-2 gap-10 font-bold w-full items-center"
-                  // onClick={() => navigate.push("/login")}
+                  className="bg-gray-300 hover:bg-gray-400 transition-all duration-300 text-black rounded flex justify-center px-3 py-2 gap-10 font-bold w-full items-center"
+                  onClick={() => navigate("/login")}
                 >
                   Login
                 </button>

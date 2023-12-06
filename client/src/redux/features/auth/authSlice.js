@@ -12,6 +12,12 @@ const initialState = {
   quote: '',
   isAdmin: false,
   artist: {},
+  orders: [],
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+  error: "",
 };
 
 export const signIn = createAsyncThunk('user/signin', async (userId) => {
@@ -23,6 +29,20 @@ export const getUser = createAsyncThunk('user/getUser', async (userId) => {
   const response = await axios.get(`${serverUrl}user/user/${userId}`);
   return response.data;
 });
+
+export const getOrders = createAsyncThunk(
+  "order/get-orders", async (config) => {
+    const response = await axios.get(`${serverUrl}user/getallorders`, config);
+    return response.data
+  }
+);
+export const getOrderByUser = createAsyncThunk(
+  "order/get-order",
+  async (id) => {
+    const response = await axios.get(`${serverUrl}user/getorderbyuser/${id}`);
+    return response.data
+  }
+);
 
 const authSlice = createSlice({
   name: 'user',
@@ -66,6 +86,38 @@ const authSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(getOrders.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrders.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.orders = action.payload;
+        state.message = "success";
+      })
+      .addCase(getOrders.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      .addCase(getOrderByUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrderByUser.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.orderbyuser = action.payload;
+        state.message = "success";
+      })
+      .addCase(getOrderByUser.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
       });
   },
 });

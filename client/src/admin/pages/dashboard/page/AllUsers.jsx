@@ -100,7 +100,7 @@ const AllUsers = ({ history }) => {
       <Fragment>
         <div className="flex w-full pr-10">
           <div className="w-full">
-            <h1  className="text-2xl mb-8">All users</h1>
+            <h1  className="mb-4 title">Users</h1>
 
             <DataGrid
               rows={rows}

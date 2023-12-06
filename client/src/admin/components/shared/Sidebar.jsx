@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
 import { FcBullish } from 'react-icons/fc'
 import { HiOutlineLogout } from 'react-icons/hi'
-import logo from '../../../assets/logo.png'
 import { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_BOTTOM_LINKS } from '../../../constants/index'
 
 const linkClass =

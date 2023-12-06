@@ -6,7 +6,10 @@ import {
 	HiOutlineDocumentText,
 	HiOutlineAnnotation,
 	HiOutlineQuestionMarkCircle,
-	HiOutlineCog
+	HiOutlineCog,
+  HiOutlineClipboardList,
+  HiOutlinePencilAlt,
+  HiOutlineNewspaper
 } from 'react-icons/hi'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
@@ -28,6 +31,18 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		path: 'admin/create-product',
 		icon: <HiOutlineCube />
 	},
+  {
+		key: 'category',
+		label: 'New category',
+		path: 'admin/create-category',
+		icon: <HiOutlinePencilAlt />
+	},
+  {
+		key: 'categories',
+		label: 'Categories',
+		path: 'admin/categories',
+		icon: <HiOutlineNewspaper />
+	},
 	{
 		key: 'orders',
 		label: 'Orders',
@@ -47,10 +62,10 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineDocumentText />
 	},
 	{
-		key: 'messages',
-		label: 'Messages',
-		path: '/messages',
-		icon: <HiOutlineAnnotation />
+		key: 'enquiries',
+		label: 'Enquiries',
+		path: 'admin/enquiries',
+		icon: <HiOutlineClipboardList />
 	}
 ]
 
