@@ -3,7 +3,7 @@
 Frontend: Built with the Vite App Router, & Tailwind
 Backend: Built with the Nodejs, Express, MongoDB, Mongoose
 
-![Project Image](https://github.com/Yonela-Johannes/be-pleasured-by-pinky/tree/main/client/src/assets/../../../../../../../../../client/src/assets/pinky.png)
+![Project Image](https://github.com/Yonela-Johannes/be-pleasured-by-pinky/main/../../../../../client/public/pinky.png)
 
 ## Key Features
 
