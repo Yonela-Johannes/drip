@@ -1,9 +1,13 @@
-# Be Pleasured  - A Modern Fullstack E-Commerce Marketplace for products + Dashboard & CMS, React, Tailwind, MongoDB
+# Be Pleasured by Pinky - A Modern Fullstack E-Commerce Marketplace for products + Dashboard & CMS, React, Tailwind, MongoDB
 
-Frontend: Built with the Vite App Router, & Tailwind
-Backend: Built with the Nodejs, Express, MongoDB, Mongoose
+### Frontend: Built with the Vite App Router, & Tailwind
+### Backend: Built with the Nodejs, Express, MongoDB, Mongoose
 
 ![Project Image](client/public/pinky.png)
+
+## Demo
+
+You can check out a live demo of the application [here](https://be-pleasered-by-pinky.vercel.app)
 
 ## Key Features
 
