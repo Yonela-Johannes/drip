@@ -3,7 +3,7 @@
 Frontend: Built with the Vite App Router, & Tailwind
 Backend: Built with the Nodejs, Express, MongoDB, Mongoose
 
-<!-- ![Project Image](https://github.com/joschan21/digitalhippo/blob/master/public/thumbnail.jpg) -->
+![Project Image](https://github.com/Yonela-Johannes/be-pleasured-by-pinky/tree/main/client/src/assets/../../../../../../../../../client/src/assets/pinky.png)
 
 ## Key Features
 
@@ -39,11 +39,9 @@ Backend: Built with the Nodejs, Express, MongoDB, Mongoose
 
 To get started with this project, run
 
-```bash
-  git clone https://github.com/joschan21/digitalhippo.git
+```~~bash~~
+  git clone https://github.com/Yonela-Johannes/be-pleasured-by-pinky
 ```
-
-and copy the .env.example variables into a separate .env file, fill them out & and that's all you need to get started!
 
 ### Start the app
 
