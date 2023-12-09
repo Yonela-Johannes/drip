@@ -6,7 +6,6 @@ import { getProducts } from '../redux/features/products/productSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import Items from '../components/Products/Products'
-import { Category } from '../components/category/Category'
 
 const parse = (param) => {
   return typeof param === 'string' ? param : undefined
@@ -38,12 +37,15 @@ const Products = ({ searchParams }) => {
 
   return (
     <MaxWidthWrapper>
-      <Category />
-      <ProductReel
-        title={label ?? 'Browse high-quality assets'}
-        products={products}
-      />
-      <Items />
+      <div className="flex flex-col items-center justify-between">
+        <div className='hidden lg:block'>
+          <Items />
+        </div>
+        <ProductReel
+          title={label ?? 'Browse high-quality assets'}
+          products={products}
+        />
+      </div>
     </MaxWidthWrapper>
   )
 }

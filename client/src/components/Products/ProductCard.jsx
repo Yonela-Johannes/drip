@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <>
-      <Link className={`rounded-md border border-pink-100 p-2 hover:bg-pink-100 cursor-pointer duration-300 visible animate-in fade-in-5' `} to={`/product/${product?._id}`}>
+      <Link className={`rounded-md border border-pink p-2 hover:bg-pink cursor-pointer duration-300 visible animate-in fade-in-5' `} to={`/product/${product?._id}`}>
             <img className='rounded-md h-[200px] w-[300px] object-cover object-center'
               src={product?.imageUrl}
               alt={product?.name}

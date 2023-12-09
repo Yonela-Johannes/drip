@@ -17,6 +17,12 @@ export const getProduct = createAsyncThunk('product/get product', async (product
   return response.data;
 });
 
+export const createProduct = createAsyncThunk('product/get product', async ({userId, product}) => {
+  console.log(product)
+  const response = await axios.post(`${serverUrl}product`, {userId: userId, product: product});
+  return response.data;
+});
+
 const products = createSlice({
   name: 'products',
   initialState,

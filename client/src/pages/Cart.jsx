@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartProduct from "../components/CartProduct";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
+import { setOrderInfo } from "../redux/features/order/orderSlice";
 
 const Cart = () => {
-  const [products, setProducts] = useState([]);
   const [primeShipping, setPrimeShipping] = useState(false);
   const [isCod, setIsCod] = useState(false);
   const { items } = useSelector((state) => state.cart)
-  const {_id, given_name, family_name } = useSelector((state) => state.user)
+  const { user } = useSelector((state) => state.auth)
   const [cartProducts, setCartProducts] = useState();
-
+  const dispatch = useDispatch()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +20,10 @@ const Cart = () => {
   }, [items]);
 
   const getTotalAmount = () => {
-    if(cartProducts?.length > 0) return cartProducts?.map((prod) => prod?.product?.total)?.reduce((acc, curr) => acc + curr)
+    if(cartProducts?.length > 0){
+      const totals = cartProducts?.map((prod) => Number(prod?.product?.total))?.reduce((acc, curr) => acc + curr);
+      return totals
+    }
   }
 
   useEffect(() => {
@@ -29,14 +32,12 @@ const Cart = () => {
 
   const handleCheckoutRedirect = () => {
     const data = {
-      products: {
-        connect: products.map((product) => {
-          return { id: product.id };
+      products: cartProducts.map((product) => {
+          return { _id: product?.product?._id};
         }),
-      },
 
       user: {
-        id: _id,
+        id: user?._id,
       },
       status: {
         paymentMode: isCod ? "cash-on-delivery" : "paypal",
@@ -44,15 +45,15 @@ const Cart = () => {
       paymentIntent: "",
       price: getTotalAmount() + (primeShipping ? 40 : 0),
     };
-    setOrdersInfo(data);
-    // navigate("/checkout");
+    dispatch(setOrderInfo(data))
+    navigate("/delivery");
   };
 
   return (
     <MaxWidthWrapper>
       <div className="px-10 py-10 ">
       <div className="flex items-center justify-between mb-10">
-        <h2 className="text-3xl text-amazon-dark">
+        <h2 className="text-2xl ">
           <strong>Shopping Cart</strong>
         </h2>
       </div>
@@ -61,8 +62,8 @@ const Cart = () => {
             <div className="w-3/4">
               <div className="flex flex-col gap-10">
                 <div className="flex flex-col gap-5">
-                  {cartProducts?.map((product) => (
-                    <CartProduct key={product?._id} cart={product} />
+                  {cartProducts?.map((product, i) => (
+                    <CartProduct key={`cart${i}`} cart={product} />
                   ))}
                 </div>
               </div>
@@ -139,14 +140,16 @@ const Cart = () => {
               </div>
             </div>
             <div className="flex-1 bg-gray-100 p-10 h-max">
-              <h5>
-                <strong>Kishan, the last step remains!</strong>
-              </h5>
+                {user && (
+                  <h5>
+                    <strong>{user?.name}, the last step remains!</strong>
+                  </h5>
+                )}
               <div className="flex flex-col gap-2 my-5">
                 <div className="flex">
                   <div className="flex items-center h-5">
                     <input
-                      id="stripe"
+                      id="paypal"
                       aria-describedby="payment-method-text"
                       type="radio"
                       value=""
@@ -158,10 +161,10 @@ const Cart = () => {
                   </div>
                   <div className="ml-2 text-sm">
                     <label
-                      htmlFor="stripe"
+                      htmlFor="paypal"
                       className="font-medium text-gray-900 dark:text-gray-500"
                     >
-                      Stripe
+                      Paypal
                     </label>
                   </div>
                 </div>
@@ -208,7 +211,7 @@ const Cart = () => {
                   </p>
                 </div>
               </div>
-              {_id ? (
+              {user?._id ? (
                 <button
                   className="bg-amazon-secondary hover:bg-amazon-primary transition-all duration-300 text-black rounded flex justify-between px-3 py-2 gap-10 font-bold w-full"
                   onClick={() => handleCheckoutRedirect()}

@@ -30,6 +30,7 @@ export default function Home() {
     fetchProducts()
   }, [items]);
 
+  console.log(products)
   return (
     <div className='w-full'>
     <ImageCarousel />
@@ -37,9 +38,12 @@ export default function Home() {
       <div className="text-center w-full items-center justify-start">
         <h2 className="text-center self-center p-10 text-xl m-5 text-black">Featured Products</h2>
         <div className="sm:grid grid-cols-4">
-          {products && products?.map((product) => (
+        {products
+          ?.filter(product => product?.category?.title === 'Featured')
+          ?.slice(0, 4)
+          .map(product => (
             <ProductCard key={product._id} product={product} />
-          ))?.slice(0, 4)}
+          ))}
         </div>
       </div>
       <Hero />
@@ -48,7 +52,7 @@ export default function Home() {
           <div className="flex items-start justify-start gap-4">
             <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
             Presenting your marketplace for high quality premium digital{' '}
-              <span className='text-pink-500'>
+              <span className='text-pink'>
                 digital assets
               </span>
               .
@@ -75,14 +79,6 @@ export default function Home() {
       </div>
         <Slider />
         <Newest products={products} />
-        {/* <ProductReel
-          query={{ sort: 'desc', limit: 4 }}
-          href='/products?sort=recent'
-          title='Brand new'
-        /> */}
-      </MaxWidthWrapper>
-      <MaxWidthWrapper>
-        <ProductGrid title="Specials" products={products} />
       </MaxWidthWrapper>
     </div>
   )

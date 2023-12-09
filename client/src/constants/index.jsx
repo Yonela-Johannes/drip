@@ -26,18 +26,6 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineCube />
 	},
   {
-		key: 'create',
-		label: 'New product',
-		path: 'admin/create-product',
-		icon: <HiOutlineCube />
-	},
-  {
-		key: 'category',
-		label: 'New category',
-		path: 'admin/create-category',
-		icon: <HiOutlinePencilAlt />
-	},
-  {
 		key: 'categories',
 		label: 'Categories',
 		path: 'admin/categories',
@@ -70,12 +58,6 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 ]
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
-	{
-		key: 'settings',
-		label: 'Settings',
-		path: '/settings',
-		icon: <HiOutlineCog />
-	},
 	{
 		key: 'support',
 		label: 'Help & Support',

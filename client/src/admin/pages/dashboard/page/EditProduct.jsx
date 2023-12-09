@@ -14,9 +14,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useParams } from "react-router-dom";
 import { getAdminProduct } from "../../../../redux/features/admin/adminProducts/adminReducer";
 import DashboardWrapper from "../../../components/DashboardWrapper";
+import { getCategories } from "../../../../redux/features/category/categorySlice";
 
 const EditProduct = ({ history, match }) => {
-  const [product, setProduct] = useState({})
+  const [product, setProduct] = useState({});
+  const categories = useSelector((state) => state.category.categories);
   const params = useParams()
   const dispatch = useDispatch();
   const { id } = params;
@@ -34,16 +36,9 @@ const EditProduct = ({ history, match }) => {
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  const categories = [
-    "Personal",
-    "cloth",
-    "Ladies Cloth",
-    "Shoes",
-    "Food",
-    "Electronics",
-    "Sports",
-    "Others"
-  ];
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
 
   const getProduct = async () => {
     if(id){
@@ -181,10 +176,10 @@ const EditProduct = ({ history, match }) => {
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
-                  <option value="">Choose Category</option>
-                  {categories.map((cate) => (
-                    <option key={cate} value={cate}>
-                      {cate}
+                  <option value="">Select Category</option>
+                  {categories?.map((category) => (
+                    <option key={category?._id} value={category?._id}>
+                      {category?.title}
                     </option>
                   ))}
                 </select>

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
-import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 import {
+  createCategory,
   deleteAProductCategory,
   getCategories,
   resetState,
 } from "../../../redux/features/category/categorySlice";
 
 import CustomModal from "../../components/CustomModal";
+import CustomInput from "../../components/CustomInput";
+import { toast } from "react-toastify";
 
 const columns = [
   {
@@ -30,6 +32,9 @@ const columns = [
 ];
 
 const CategoryList = () => {
+  const { user } = useSelector((state) => state.auth)
+  const category = useSelector((state) => state.category.categories);
+  const [title, setTitle] = useState('')
   const [open, setOpen] = useState(false);
   const [categoryId, setCategoryId] = useState("");
   const showModal = (e) => {
@@ -45,30 +50,26 @@ const CategoryList = () => {
     dispatch(resetState());
     dispatch(getCategories());
   }, []);
-  const pCatStat = useSelector((state) => state.category.categories);
+
+
   const data1 = [];
-  for (let i = 0; i < pCatStat.length; i++) {
+  for (let i = 0; i < category.length; i++) {
     data1.push({
       key: i + 1,
-      name: pCatStat?.[i].title,
+      name: category?.[i].title,
       action: (
-        <>
-          <Link
-            to={`/dashboard/admin/category/${pCatStat?.[i]._id}`}
-            className=" fs-3 text-danger"
-          >
-            <BiEdit />
-          </Link>
+        <div className="flex gap-4 items-center justify-start">
           <button
             className="ms-3 fs-3 text-danger bg-transparent border-0"
-            onClick={() => showModal(pCatStat?.[i]._id)}
+            onClick={() => showModal(category?.[i]._id)}
           >
             <AiFillDelete />
           </button>
-        </>
+        </div>
       ),
     });
   }
+
   const deleteCategory = (e) => {
     dispatch(deleteAProductCategory(e));
     setOpen(false);
@@ -76,7 +77,43 @@ const CategoryList = () => {
       dispatch(getCategories());
     }, 100);
   };
+
+  const saveCategory = () => {
+    if(title < 2) return toast('Please enter category.')
+    if(!user?._id) return toast('No user details provided.');
+    dispatch(createCategory({title, userId: user?._id}))
+    setTimeout(() => {
+      dispatch(getCategories());
+    }, 100);
+    setTitle('')
+  }
+
   return (
+    <>
+    <div>
+      <h3 className="mb-4  title">
+        Category
+      </h3>
+      <div>
+        <div className="flex my-4 items-center gap-4 justify-start">
+          <CustomInput
+            type="text"
+            label="Enter Product Category"
+            id="category"
+            name="category"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <button
+            onClick={saveCategory}
+            className="bg-pink border-0 rounded-3 cursor-pointer px-4 py-2 hover:underline duration-200"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
     <div>
       <h3 className="mb-4 title">Product Categories</h3>
       <div>
@@ -91,6 +128,7 @@ const CategoryList = () => {
         title="Are you sure you want to delete this Product Category?"
       />
     </div>
+    </>
   );
 };
 

@@ -1,317 +1,92 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Input,
-  Button,
-  Chip,
-  Pagination,
-  Selection,
-  SortDescriptor,
-  Tooltip,
-} from "@nextui-org/react";
-
-import { FaEye, FaSearch } from "react-icons/fa";
-import { useAppStore } from "@/store/store";
-import { getUserOrders } from "@/lib/api/orders";
-import { useRouter } from "next/navigation";
-
-const columns = [
-  { name: "Order ID", uid: "id" },
-  { name: "Products", uid: "_count" },
-  { name: "Price", uid: "price", sortable: true },
-  { name: "Order Date", uid: "createdAt" },
-  { name: "Payment Type", uid: "status" },
-  { name: "Payment Status", uid: "paymentStatus", sortable: true },
-  { name: "ACTIONS", uid: "actions" },
-];
+import { Table } from "antd";
+import CustomModal from "../../admin/components/CustomModal";
+import { AiFillDelete } from "react-icons/ai";
+import MaxWidthWrapper from "../../components/MaxWidthWrapper";
 
 export default function MyOrders() {
-  const router = useRouter();
-  const [filterValue, setFilterValue] = useState("");
-  const [selectedKeys, setSelectedKeys] = useState();
+  const [open, setOpen] = useState(false);
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [sortDescriptor, setSortDescriptor] = useState({
-    column: "price",
-    direction: "ascending",
-  });
+  const showModal = (e) => {
+    setOpen(true);
+    // setCategoryId(e);
+  };
 
-  const [page, setPage] = useState(1);
+  const hideModal = () => {
+    setOpen(false);
+  };
 
-  const hasSearchFilter = (filterValue);
+  const data = []
+  const columns = [
+    { title: "SNo", dataIndex: "key",  },
+    { title: "Name", dataIndex: "name", sorter: (a, b) => a.name.length - b.name.length },
+    { title: "Price", dataIndex: "price", sorter: (a, b) => a.name.length - b.name.length },
+    { title: "Date", dataIndex: "date", sorter: (a, b) => a.name.length - b.name.length },
+    { title: "Payment method", dataIndex: "paymentMethod", sorter: (a, b) => a.name.length - b.name.length },
+    { title: "Payment status", dataIndex: "paymentStatatus", sorter: (a, b) => a.name.length - b.name.length },
 
-  const { userInfo } = useAppStore();
-  const [orders, setOrders] = useState([]);
-  useEffect(() => {
-    const getOrders = async () => {
-      const response = await getUserOrders(userInfo.id);
-      setOrders(response.reverse());
-    };
-    if (userInfo) getOrders();
-  }, [userInfo]);
-
-  const headerColumns = columns;
-
-  const filteredItems = useMemo(() => {
-    let filteredUsers = [...orders];
-
-    if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.id.toLowerCase().includes(filterValue.toLowerCase())
-      );
-    }
-
-    return filteredUsers;
-  }, [orders, hasSearchFilter, filterValue]);
-
-  const pages = Math.ceil(filteredItems.length / rowsPerPage);
-
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return filteredItems.slice(start, end);
-  }, [page, filteredItems, rowsPerPage]);
-
-  const sortedItems = useMemo(() => {
-    return [...items].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
-      const cmp = first < second ? -1 : first > second ? 1 : 0;
-
-      return sortDescriptor.direction === "descending" ? -cmp : cmp;
-    });
-  }, [sortDescriptor, items]);
-
-  const renderCell = useCallback(
-    (order, columnKey => {
-      const cellValue = order[columnKey];
-
-      switch (columnKey) {
-        case "_count":
-          // Refine the type of cellValue as Count
-          const countValue = cellValue;
-          return <span>{countValue.products}</span>;
-        case "createdAt":
-          if (typeof cellValue === "string") {
-            return <span>{cellValue.split("T")[0]}</span>;
-          }
-          return <>{cellValue}</>;
-        case "status":
-          const statusValue = cellValue;
-          return (
-            <Chip
-              className="capitalize"
-              color={
-                statusValue.paymentMode === "stripe" ? "secondary" : "success"
-              }
-              size="sm"
-              variant="flat"
-            >
-              {statusValue.paymentMode === "stripe"
-                ? "Stripe"
-                : "Cash on delivery"}
-            </Chip>
-          );
-        case "paymentStatus":
-          return (
-            <Chip
-              className="capitalize"
-              color={cellValue ? "success" : "danger"}
-              size="sm"
-              variant="flat"
-            >
-              {cellValue ? "Completed" : "Pending"}
-            </Chip>
-          );
-        case "actions":
-          return (
-            <div className="relative flex justify-start items-center gap-2">
-              <Tooltip color="primary" content="View Order">
-                <Button
-                  isIconOnly
-                  size="sm"
-                  variant="light"
-                  className=""
-                  color="primary"
-                  onClick={() => router.push(`/my-orders/${order?.id}`)}
-                >
-                  <FaEye />
-                </Button>
-              </Tooltip>
-            </div>
-          );
-        default:
-          return <>{cellValue}</>;
-      }
+    {
+      title: "Action",
+      dataIndex: "action",
     },
-    [router]
-  ))
+  ];
 
-  const onNextPage = useCallback(() => {
-    if (page < pages) {
-      setPage(page + 1);
-    }
-  }, [page, pages]);
+  // const data = [];
+  // for (let i = 0; i < category.length; i++) {
+  //   data.push({
+  //     key: i + 1,
+  //     id: category?.[i]._id,
+  //     name: category?.[i].title,
+  //     price: category?.[i].price,
+  //     date: category?.[i].date,
+  //     paymentMethod: category?.[i].paymentMethod,
+  //     paymentStatus: category?.[i].paymentStatus,
+  //     name: category?.[i].title,
+  //     action: (
+  //       <div className="flex gap-4 items-center justify-start">
+  //         <button
+  //           className="ms-3 fs-3 text-danger bg-transparent border-0"
+  //           onClick={() => showModal(category?.[i]._id)}
+  //         >
+  //           <AiFillDelete />
+  //         </button>
+  //       </div>
+  //     ),
+  //   });
+  // }
 
-  const onPreviousPage = useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  }, [page]);
+  const deleteCategory = (e) => {
 
-  const onRowsPerPageChange = useCallback(
-    (e) => {
-      setRowsPerPage(Number(e.target.value));
-      setPage(1);
-    },
-    []
-  );
+    setOpen(false);
+    setTimeout(() => {
 
-  const onSearchChange = useCallback((value) => {
-    if (value) {
-      setFilterValue(value);
-      setPage(1);
-    } else {
-      setFilterValue("");
-    }
-  }, []);
+    }, 100);
+  };
 
-  const onClear = useCallback(() => {
-    setFilterValue("");
-    setPage(1);
-  }, []);
+  const saveCategory = (e) => {
+    // if(title < 2) return toast('Please enter category.')
 
-  const topContent = useMemo(() => {
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end">
-          <Input
-            isClearable
-            className="w-full sm:max-w-[44%]"
-            placeholder="Search by order id..."
-            startContent={<FaSearch />}
-            value={filterValue}
-            onClear={() => onClear()}
-            onValueChange={onSearchChange}
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">
-            Total {orders.length} Orders
-          </span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
-        </div>
-      </div>
-    );
-  }, [
-    filterValue,
-    onSearchChange,
-    orders.length,
-    onRowsPerPageChange,
-    onClear,
-  ]);
+    setTimeout(() => {
 
-  const bottomContent = React.useMemo(() => {
-    return (
-      <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span>
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          color="primary"
-          page={page}
-          total={pages}
-          onChange={setPage}
-        />
-        <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button
-            isDisabled={pages === 1}
-            size="sm"
-            variant="flat"
-            onPress={onPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button
-            isDisabled={pages === 1}
-            size="sm"
-            variant="flat"
-            onPress={onNextPage}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
-    );
-  }, [
-    selectedKeys,
-    filteredItems.length,
-    page,
-    pages,
-    onPreviousPage,
-    onNextPage,
-  ]);
-
+    }, 100);
+    setTitle('')
+  }
   return (
-    <div className="p-10">
-      <Table
-        aria-label="Example table with custom cells, pagination and sorting"
-        isHeaderSticky
-        bottomContent={bottomContent}
-        bottomContentPlacement="outside"
-        classNames={{
-          wrapper: "max-h-[382px]",
-        }}
-        selectedKeys={selectedKeys}
-        selectionMode="multiple"
-        sortDescriptor={sortDescriptor}
-        topContent={topContent}
-        topContentPlacement="outside"
-        onSelectionChange={setSelectedKeys}
-        onSortChange={setSortDescriptor}
-      >
-        <TableHeader columns={headerColumns}>
-          {(column) => (
-            <TableColumn
-              key={column.uid}
-              align={column.uid === "actions" ? "center" : "start"}
-              allowsSorting={column.sortable}
-            >
-              {column.name}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody emptyContent={"No orders found"} items={sortedItems}>
-          {(item) => (
-            <TableRow key={item.id}>
-              {(columnKey) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+    <MaxWidthWrapper>
+      <div className="mt-10">
+        <h3 className="mb-4 title">My Orders</h3>
+        <div>
+          <Table columns={columns} dataSource={data} />
+        </div>
+        <CustomModal
+          hideModal={hideModal}
+          open={open}
+          performAction={() => {
+            deleteCategory(categoryId);
+          }}
+          title="Are you sure you want to delete this Product Category?"
+        />
+      </div>
+    </MaxWidthWrapper>
   );
 }

@@ -2,13 +2,12 @@ import axios from "axios";
 import { serverUrl } from "../../../constants/base_urls";
 
 const getProductCategories = async () => {
-  const response = await axios.get(`${serverUrl}category/`);
+  const response = await axios.get(`${serverUrl}categories/`);
 
   return response.data;
 };
 const createCategory = async (category) => {
   const response = await axios.post(`${serverUrl}category/`, category);
-
   return response.data;
 };
 

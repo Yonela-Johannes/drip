@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../redux/features/cart/cartSlice';
 import { BiCartAdd } from "react-icons/bi";
 import { getProduct } from '../redux/features/products/productSlice';
+import Rating from '../components/shared/Rating'
 
 const BREADCRUMBS = [
   { id: 1, name: 'Home', href: '/' },
@@ -96,6 +97,10 @@ const Product = () => {
                 {product?.name}
               </h1>
             </div>
+            {/* <Rating
+                value={product.rating}
+                text={`${product.numReviews} Reviews`}
+              /> */}
             <div className="detailsBlock-2">
                 {/* <Rating {...options} /> */}
                 <span>({product?.numOfReviews} Reviews)</span>
@@ -149,7 +154,7 @@ const Product = () => {
           {/* add to cart part */}
           <div className='mt-8 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start'>
             <div>
-              <button className="flex items-center gap-4 justify-center rounded-md border border-gray-500 p-2 hover:bg-pink-200 cursor-pointer duration-300" onClick={() => dispatch(addItem(product))}>
+              <button className="flex items-center gap-4 justify-center rounded-md border border-gray-500 p-2 hover:bg-pink cursor-pointer duration-300" onClick={() => dispatch(addItem(product))}>
                 <BiCartAdd size={25} />
                 <p className='text-muted-foreground'>
                     Add to cart

@@ -1,91 +1,156 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { serverUrl } from '../../../constants/base_urls';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import authService from "./authServices";
 
 const initialState = {
-  _id: '',
-  name: '',
-  given_name: '',
-  family_name: '',
-  email: '',
-  picture: '',
-  quote: '',
-  isAdmin: false,
-  artist: {},
+  user: {},
   orders: [],
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: "",
-  error: "",
+  wishlist: []
 };
 
-export const signIn = createAsyncThunk('user/signin', async (userId) => {
-  const response = await axios.post(`${serverUrl}user/login`, { oauthCode: userId });
-  return response.data;
-});
+export const register = createAsyncThunk(
+  "auth/register",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.register(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
-export const getUser = createAsyncThunk('user/getUser', async (userId) => {
-  const response = await axios.get(`${serverUrl}user/user/${userId}`);
-  return response.data;
-});
+export const login = createAsyncThunk(
+  "auth/login",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.login(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const editUser = createAsyncThunk(
+  "auth/edit",
+  async ({userId, data}, thunkAPI) => {
+    try {
+      return await authService.edit(userId, data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
+  "auth/fetch",
+  async (userId, thunkAPI) => {
+    try {
+      return await authService.fetchUser(userId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const getOrders = createAsyncThunk(
-  "order/get-orders", async (config) => {
-    const response = await axios.get(`${serverUrl}user/getallorders`, config);
-    return response.data
+  "order/get-orders",
+  async (thunkAPI) => {
+    try {
+      return await authService.getOrders();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
+
 export const getOrderByUser = createAsyncThunk(
   "order/get-order",
-  async (id) => {
-    const response = await axios.get(`${serverUrl}user/getorderbyuser/${id}`);
-    return response.data
+  async (id, thunkAPI) => {
+    try {
+      return await authService.getOrder(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
-const authSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {},
+export const addToWishlist = createAsyncThunk(
+  "wishlist/add-product",
+  async ({userId, productId}, thunkAPI) => {
+    try {
+      return await authService.addWish(userId, productId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
+export const removeFromWishlist = createAsyncThunk(
+  "wishlist/remove-product",
+  async ({userId, productId}, thunkAPI) => {
+    try {
+      return await authService.removeWish(userId, productId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getWishlist = createAsyncThunk(
+  "wishlist/fetch-product",
+  async ({userId}, thunkAPI) => {
+    try {
+      return await authService.getWish(userId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState: initialState,
+  reducers: {
+    userUpdate: (state, action) => {
+      state.user = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(signIn.pending, (state) => {
-        state.status = 'loading';
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(signIn.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state._id = action.payload.user._id;
-        state.given_name = action.payload.user.name;
-        state.given_name = action.payload.user.given_name;
-        state.family_name = action.payload.user.family_name;
-        state.isAdmin = action.payload.user.isAdmin;
-        state.email = action.payload.user.email;
-        state.picture = action.payload.user.picture;
-        state.artist = action.payload.user.artist;
+      .addCase(login.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload.user;
+        state.message = "success";
       })
-      .addCase(signIn.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(login.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
       })
-      .addCase(getUser.pending, (state) => {
-        state.status = 'loading';
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
       })
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state._id = action.payload.user._id;
-        state.given_name = action.payload.user.name;
-        state.given_name = action.payload.user.given_name;
-        state.family_name = action.payload.user.family_name;
-        state.isAdmin = action.payload.user.isAdmin;
-        state.email = action.payload.user.email;
-        state.picture = action.payload.user.picture;
-        state.artist = action.payload.user.artist;
+      .addCase(register.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+        state.message = "success";
       })
-      .addCase(getUser.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(register.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
       })
       .addCase(getOrders.pending, (state) => {
         state.isLoading = true;
@@ -118,8 +183,87 @@ const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         state.isLoading = false;
-      });
+      })
+      .addCase(addToWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addToWishlist.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "success";
+      })
+      .addCase(addToWishlist.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      .addCase(removeFromWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(removeFromWishlist.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "success";
+      })
+      .addCase(removeFromWishlist.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      .addCase(getWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getWishlist.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.wishlist = action.payload
+        state.message = "success";
+      })
+      .addCase(getWishlist.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      .addCase(editUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.wishlist = action.payload
+        state.message = "success";
+      })
+      .addCase(editUser.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.wishlist = action.payload
+        state.message = "success";
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
   },
 });
 
+export const { userUpdate } = authSlice.actions;
 export default authSlice.reducer;

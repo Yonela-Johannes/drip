@@ -1,46 +1,88 @@
-// import { Login } from "@/lib/api/auth";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import logo from '../../../assets/logo.png'
+import React, { useEffect, useState } from "react";
+// import { toast } from 'react-toastify';
+import { Link, useNavigate } from "react-router-dom";
+import landing from '../../../assets/landing2.jpg'
+import { login } from "../../../redux/features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
+import { Notice } from "../../../helpers/Notice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("")
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const {user, message } = useSelector((state) => state.auth)
+  const { toast } = useContext(Notice)
+
+  useEffect(() => {
+    console.log(user)
+    if (user?._id){
+      // navigate('/')
+    }
+  }, []);
 
   const handleSignIn = async () => {
-    // if (email && password) {
-    //   const response = await Login(email, password);
-    //   if (response instanceof AxiosError) {
-    //     setToast(response?.response?.data.message);
-    //   }
-    //   if (response?.username) {
-    //     setUserInfo(response);
-    //     router.push("/admin/");
-    //   }
-    // } else {
-    //   setToast("Email and Password is required to Login.");
-    // }
+    const validateEmail = () => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
+    if(!role) return toast('Please select user or admin.');
+    if(!email) return toast('Please enter you email.');
+    if(!validateEmail()) return toast('Email format incorrect.');
+    if(password?.length < 8) return toast('Password too short.');
+
+    if (email && password && role) {
+      const response = await dispatch(login({email, password, role}));
+      if(response.payload.message.includes("Sign in successful")){
+        toast(response.payload.message)
+        navigate('/')
+      }else if(response.payload.message === 'Incorrect password.'){
+        toast(response.payload.message)
+      }
+    } else {
+      // setToast("Email and Password is required to Login.");
+    }
   };
 
   return (
-    <section className="">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-        <Link
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
-        >
-          <img
-            src={logo}
-            alt="amazon logo"
-            className="h-[50px] w-[50px] object-contain object-center"
-          />
-        </Link>
-        <div className="w-full rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 bg-gray-100">
+    <section className="mb-4 md:mb-10">
+      <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0 mb-4">
+        <div className="w-full rounded-lg dark:border md:mt-0 sm:max-w-md xl:p-0 bg-gray-100">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
               Sign in to your account
             </h1>
-
+            <div className="flex gap-4">
+              <div className="form-check ms-2">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name="role"
+                  value={"admin"}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                <label htmlFor="adminRadio" className="form-check-label">
+                  User
+                </label>
+              </div>
+              <div className="form-check ms-2">
+                <input
+                  type="radio"
+                  className="form-check-input"
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                <label htmlFor="adminRadio" className="form-check-label">
+                  Admin
+                </label>
+              </div>
+            </div>
             <div className="space-y-4 md:space-y-6">
               <div>
                 <label
@@ -117,13 +159,16 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="w-full text-black bg-pink-300 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-black bg-pink hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 onClick={handleSignIn}
               >
                 Sign in
               </button>
             </div>
           </div>
+        </div>
+        <div className="">
+          <img src={landing} className="rounded-md md:p-20 object-cover object-center" alt='landing' />
         </div>
       </div>
     </section>

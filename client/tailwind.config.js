@@ -8,6 +8,7 @@ module.exports = {
         background: '#181818',
         cl: '#212121',
         red: '#E50914',
+        pink: '#F7DDDC'
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',

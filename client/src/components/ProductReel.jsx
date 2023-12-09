@@ -12,21 +12,16 @@ const ProductReel = ({title, products}) => {
               {title}
             </h1>
           ) : null}
-          {/* {subtitle ? (
-            <p className='mt-2 text-sm text-muted-foreground'>
-              {subtitle}
-            </p>
-          ) : null} */}
         </div>
           <p
-            className='hidden text-sm font-medium text-pink-500 md:block'>
+            className='hidden text-sm font-medium text-gray-500 md:block'>
             Shop the collection
           </p>
       </div>
 
       <div className='relative'>
         <div className='mt-6 flex items-center w-full'>
-          <div className='w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8'>
+          <div className='w-full items-center justify-center grid md:grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4 md:gap-y-10 lg:gap-x-8'>
             {products?.map((product, i) => (
               <ProductListing
                 key={`product-${i}`}

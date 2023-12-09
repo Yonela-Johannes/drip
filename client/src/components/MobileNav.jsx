@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { product_categories } from '../config/index'
-// import { Menu, X } from 'lucide-react'
+import { BiMenu } from 'react-icons/bi'
+import { MdClose } from 'react-icons/md'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import avatar from '../assets/avatar.jpg'
 // import { usePathname } from 'next/navigation'
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false)
-
+  const {user, message } = useSelector((state) => state.auth)
   // const pathname = usePathname()
 
   // whenever we click an item in the menu and navigate away, we want to close the menu
@@ -13,15 +17,6 @@ const MobileNav = () => {
   //   setIsOpen(false)
   // }, [pathname])
 
-  // when we click the path we are currently on, we still want the mobile menu to close,
-  // however we cant rely on the pathname for it because that won't change (we're already there)
-  const closeOnCurrent = (href) => {
-    // if (pathname === href) {
-    //   setIsOpen(false)
-    // }
-  }
-
-  // remove second scrollbar when mobile menu is open
   useEffect(() => {
     if (isOpen)
       document.body.classList.add('overflow-hidden')
@@ -34,84 +29,110 @@ const MobileNav = () => {
         type='button'
         onClick={() => setIsOpen(true)}
         className='lg:hidden relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400'>
-        {/* <Menu className='h-6 w-6' aria-hidden='true' /> */}
+        <BiMenu className='h-6 w-6' aria-hidden='true' />
       </button>
     )
 
+  const logout = () => {
+    window.localStorage.removeItem('user')
+    setIsOpen(false)
+    toast('Logged out successful')
+  }
   return (
-    <div>
+    <div className='z-[9999]'>
       <div className='relative z-40 lg:hidden'>
-        <div className='fixed inset-0 bg-black bg-opacity-25' />
+        <div className='fixed inset-0 bg-black bg-opacity-70' />
       </div>
 
       <div className='fixed overflow-y-scroll overscroll-y-none inset-0 z-40 flex'>
-        <div className='w-4/5'>
-          <div className='relative flex w-full max-w-sm flex-col overflow-y-auto bg-white pb-12 shadow-xl'>
-            <div className='flex px-4 pb-2 pt-5'>
+        <div className='w-[40%]'>
+          <div className='relative flex w-full max-w-sm flex-col overflow-y-auto bg-white pb-4 shadow-xl'>
+            <div className='flex justify-end items-center px-2 pb-2 pt-2'>
               <button
                 type='button'
                 onClick={() => setIsOpen(false)}
                 className='relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400'>
-                {/* <X className='h-6 w-6' aria-hidden='true' /> */}
+                <MdClose size={20} aria-hidden='true' />
               </button>
             </div>
 
-            <div className='mt-2'>
-              <ul>
-                {product_categories.map((category) => (
-                  <li
-                    key={category.label}
-                    className='space-y-10 px-4 pb-8 pt-10'>
-                    <div className='border-b border-gray-200'>
-                      <div className='-mb-px flex'>
-                        <p className='border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 py-4 text-base font-medium'>
-                          {category.label}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className='grid grid-cols-2 gap-y-10 gap-x-4'>
-                      {category.featured.map((item) => (
-                        <div
-                          key={item.name}
-                          className='group relative text-sm'>
-                          <div className='relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75'>
-                            <img
-                              src={item.imageSrc}
-                              alt='product category image'
-                              className='object-cover object-center'
-                            />
-                          </div>
-                          <a
-                            href={item.href}
-                            className='mt-6 block font-medium text-gray-900'>
-                            {item.name}
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <div className="flex flex-col gap-4 sm:justify-end w-full border-t bg-pink px-4 py-4">
+              <div className='flex lg:ml-0'>
+                <Link to='/'>
+                  <p className='text-sm'>Home</p>
+                </Link>
+              </div>
+              <div className='flex lg:ml-0'>
+                <Link to='/products'>
+                  <p className='text-sm'>Shop</p>
+                </Link>
+              </div>
+              <div className='relative flex lg:ml-0'>
+                <Link to='/cart'>
+                <p className='text-sm'>Cart</p>
+                </Link>
+              </div>
+              <div className='flex lg:ml-0'>
+                <Link to='/about'>
+                  <p className='text-sm'>About</p>
+                </Link>
+              </div>
+              <div className='flex lg:ml-0'>
+                <Link to='/wishlist'>
+                  <p className='text-sm'>Wishlist</p>
+                </Link>
+              </div>
             </div>
 
-            <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
-              <div className='flow-root'>
-                <a
-                  onClick={() => closeOnCurrent('/sign-in')}
-                  href='/sign-in'
-                  className='-m-2 block p-2 font-medium text-gray-900'>
-                  Sign in
-                </a>
-              </div>
-              <div className='flow-root'>
-                <a
-                  onClick={() => closeOnCurrent('/sign-up')}
-                  href='/sign-up'
-                  className='-m-2 block p-2 font-medium text-gray-900'>
-                  Sign up
-                </a>
-              </div>
+            <div className='space-y-6 border-t border-gray-200 px-4 pt-4'>
+              {user?._id ? (
+                <>
+                  <div className='flow-root'>
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      to='/profile'
+                      className='capitalize -m-2 block p-2 font-medium text-gray-900'>
+                    <Link className='capitalize'
+                      to='profile'>
+                      <div className="flex flex-col rounded-md px-1">
+                          <div className="">{user && user?.avatar ? (<img src={user?.avatar} className='w-[30px] h-[30px] object-cover object-center rounded-full' alt='avatar' />) : (<img src={avatar} className='w-[40px] h-[40px] object-cover object-center rounded-full' alt='avatar' />)}</div>
+                        <div className="flex flex-col ">
+                          <p className='p-0 m-0'>{user?.name} {user.lastName}</p>
+                          <p className='p-0 m-0 text-sm text-gray-600'>{user?.role}</p>
+                        </div>
+                      </div>
+                    </Link>
+                    </Link>
+                  </div>
+                  <div className='flow-root'>
+                    <Link
+                      onClick={() => logout()}
+                      to='/sign-in'
+                      className='-m-2 block p-2 font-medium text-gray-900'>
+                      Sign out
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className='flow-root'>
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      to='/sign-in'
+                      className='-m-2 block p-2 font-medium text-gray-900'>
+                      Sign in
+                    </Link>
+                  </div>
+                  <div className='flow-root'>
+                    <Link
+                      onClick={() => setIsOpen(false)}
+                      to='/sign-up'
+                      className='-m-2 block p-2 font-medium text-gray-900'>
+                      Sign up
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

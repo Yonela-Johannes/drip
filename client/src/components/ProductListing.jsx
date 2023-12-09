@@ -1,14 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Skeleton } from './skeleton'
 import { product_categories } from '../config/index'
 import { Link } from 'react-router-dom'
-import { BiCartAdd } from "react-icons/bi";
+import { BiCartAdd, BiHeart } from "react-icons/bi";
 import { addItem } from '../redux/features/cart/cartSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToWishlist } from '../redux/features/auth/authSlice';
+import { Global } from '../helpers/GlobalContext';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 const ProductListing = ({product, index }) => {
+  const { user } = useSelector((state) => state.auth)
+  const { refreshWishlist, wishProducts } = useContext(Global);
   const [isVisible, setIsVisible] = useState(true);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true)
@@ -23,11 +29,16 @@ const ProductListing = ({product, index }) => {
     ({ value }) => value === product?.category
   )?.label
 
-  console.log(product)
+  const addProductToWishlist = async (userId, productId) => {
+    await dispatch(addToWishlist(userId, productId));
+    refreshWishlist();
+  }
+
+  console.log(wishProducts)
   if (isVisible && product) {
     return (
       <div
-      className={`rounded-md border border-pink-100 p-2 hover:bg-pink-100 cursor-pointer duration-300 ${isVisible ? 'visible animate-in fade-in-5' : ''} ${!isVisible && 'invisible h-full w-full cursor-pointer group/main'} `}
+      className={`relative rounded-md border border-pink p-2 hover:bg-pink cursor-pointer duration-300 ${isVisible ? 'visible animate-in fade-in-5' : ''} ${!isVisible && 'invisible h-full w-full cursor-pointer group/main'} `}
         to={`/product/${product?._id}`}>
         <div className='flex flex-col w-full'>
             <Link className="" to={`/product/${product?._id}`}>
@@ -48,11 +59,16 @@ const ProductListing = ({product, index }) => {
                   R{product?.price}
                 </p>
               </Link>
-              <button className="flex items-center gap-4 justify-center" onClick={() => dispatch(addItem(product))}>
+              <div className="flex items-center gap-4 justify-center" onClick={() => dispatch(addItem(product))}>
                 <BiCartAdd size={25} />
-              </button>
+              </div>
             </div>
           </div>
+          {user?._id && (
+            <div className="absolute right-4 top-4 flex items-center gap-4 justify-center" onClick={() => addProductToWishlist({userId: user?._id, productId:product?._id})}>
+              {wishProducts?.some((elem) => elem?._id == product?._id) ? (<AiFillHeart size={25} />) : (<AiOutlineHeart size={25} />)}
+            </div>
+          )}
       </div>
     )
   }
