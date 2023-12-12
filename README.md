@@ -11,33 +11,31 @@ You can check out a live demo of the application [here](https://be-pleasered-by-
 
 ## Key Features
 
-- We will be using Shadcn UI for the Admin!
 - Our admin dashboard is going to serve as both CMS, Admin and API!
-- You will be able to control mulitple vendors / stores through this single CMS! (For example you can have a "Shoe store" and a "Laptop store" and a "Suit store", and our CMS will generate API routes for all of those individually!)
 - create, update and delete categories!
 - create, update and delete products!
 - upload multiple images for products, and change them whenever you want!
-- search through all categories, products included pagination!
+- search through all products included pagination!
 - control which products are "featured" so they show on the homepage!
-- see your orders, sales, etc.
+- see your orders, sales, favourites etc.
 - see graphs of your revenue etc.
-- You will learn Clerk Authentication!
-- Order creation
-- Paypal checkout
+- order creation
+- Payment gateways
+- review and rate items
+- comment on items
+- add to cart/favorites
 
 ## Features
 
 - 🛠️ Complete marketplace built from scratch in React/Vite
 - 💻 Beautiful landing page & product pages included
-- 🎨 Custom artwork included
 - 💳 Full admin dashboard
 - 🛍️ Purchase and sell products
 - 🛒 Locally persisted shopping cart
 - 🔑 Authentication
 - 🌟 Clean, modern UI using Tailwind
-- ✉️ Beautiful emails for signing up and after purchase
-- ✅ Admins can verify products to ensure high quality
-- 🎁 ...much more
+- ✅ Admins manage stor
+- 🎁 ...and much more
 
 ## Getting started
 

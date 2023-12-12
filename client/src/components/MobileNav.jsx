@@ -118,7 +118,7 @@ const MobileNav = ({logout}) => {
                   <div className='flow-root'>
                     <Link
                       onClick={() => setIsOpen(false)}
-                      to='/sign-in'
+                      to='/login'
                       className='-m-2 block p-2 font-medium text-gray-900'>
                       Sign in
                     </Link>
@@ -126,7 +126,7 @@ const MobileNav = ({logout}) => {
                   <div className='flow-root'>
                     <Link
                       onClick={() => setIsOpen(false)}
-                      to='/sign-up'
+                      to='/register'
                       className='-m-2 block p-2 font-medium text-gray-900'>
                       Sign up
                     </Link>

@@ -27,7 +27,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className='w-full fixed z-50 top-0 inset-x-0 h-16'>
+    <div className='w-full md:fixed z-50 top-0 inset-x-0 h-16'>
       <header className='relative bg-white px-10'>
           <div className={`headerText border-b border-gray-200`}>
             <div className='flex justify-between h-16 items-center'>
@@ -138,7 +138,7 @@ const Navbar = () => {
               </>
             )}
           </div>
-          <div className="flex item-center justify-end my-3">
+          <div className="hidden md:flex item-center justify-end my-3">
           <form onSubmit={handleSearch} className="flex item-center w-full md:w-max justify-between md:justify-end border border-gray-500 p-2 rounded-md">
             <input
               type="text"
@@ -147,7 +147,7 @@ const Navbar = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button type="submit">
-            <MdSearch size={20} />
+              <MdSearch size={20} />
             </button>
           </form>
          </div>
