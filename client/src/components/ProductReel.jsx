@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import ProductListing from './ProductListing'
 
 const ProductReel = ({title, products}) => {

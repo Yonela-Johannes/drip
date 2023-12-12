@@ -34,7 +34,6 @@ const ProductListing = ({product, index }) => {
     refreshWishlist();
   }
 
-  console.log(wishProducts)
   if (isVisible && product) {
     return (
       <div

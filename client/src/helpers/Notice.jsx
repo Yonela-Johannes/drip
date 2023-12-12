@@ -10,7 +10,17 @@ const NoticeContext = ({children}) => {
       toast
     }}>
     <>
-      <ToastContainer />
+    <ToastContainer
+       position="bottom-center"
+       autoClose={2800}
+       hideProgressBar={false}
+       newestOnTop={false}
+       closeOnClick
+       rtl={false}
+       pauseOnFocusLoss
+       draggable
+       pauseOnHover
+       />
       {children}
     </>
     </Notice.Provider>

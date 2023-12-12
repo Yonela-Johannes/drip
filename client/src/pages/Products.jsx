@@ -1,4 +1,3 @@
-import axios from 'axios'
 import MaxWidthWrapper from '../components/MaxWidthWrapper'
 import ProductReel from '../components/ProductReel'
 import { product_categories } from '../config/index'
@@ -11,11 +10,9 @@ const parse = (param) => {
   return typeof param === 'string' ? param : undefined
 }
 
-const Products = ({ searchParams }) => {
-  const { items } = useSelector((state) => state.products);
+const Products = () => {
+  const { items , loading} = useSelector((state) => state.products);
   const [products, setProducts] = useState([])
-  const sort = parse(searchParams?.sort)
-  const category = parse(searchParams?.category)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -30,19 +27,14 @@ const Products = ({ searchParams }) => {
     fetchProducts()
   }, [items]);
 
-
-  const label = product_categories.find(
-    ({ value }) => value === category
-  )?.label
-
   return (
     <MaxWidthWrapper>
       <div className="flex flex-col items-center justify-between">
-        <div className='hidden lg:block'>
-          <Items />
+        <div className='lg:block'>
+          <Items items={items} loading={loading} category={'Featured'}/>
         </div>
         <ProductReel
-          title={label ?? 'Browse high-quality assets'}
+          title={'Browse high-quality assets'}
           products={products}
         />
       </div>

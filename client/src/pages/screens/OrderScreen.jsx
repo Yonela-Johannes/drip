@@ -4,7 +4,7 @@ import axios from "axios";
 // import { ORDER_PAY_RESET } from "../constants/orderConstant";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getOrderDetails, payOrder } from "../../redux/features/order/orderSlice";
+// import { getOrderDetails, payOrder } from "../../redux/features/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/shared/Message";
 import Loader from "../../components/shared/Loader";
@@ -32,7 +32,7 @@ const OrderScreen = ({ match }) => {
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
-    dispatch(payOrder(orderId, paymentResult));
+    // dispatch(payOrder(orderId, paymentResult));
   };
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const OrderScreen = ({ match }) => {
     };
     if (!order || successpay) {
       // dispatch({ type: ORDER_PAY_RESET });
-      dispatch(getOrderDetails(orderId));
+      // dispatch(getOrderDetails(orderId));/
     } else if (!order?.isPaid) {
       if (!window?.paypal) {
         addPaypalScript();

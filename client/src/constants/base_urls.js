@@ -1,1 +1,9 @@
-export const serverUrl = 'http://localhost:4000/api/'
+let apiUrl;
+
+if (process.env.NODE_ENV === 'production') {
+  apiUrl = 'https://myblog-707i.onrender.com/api/';
+} else {
+  apiUrl = 'http://localhost:4000/api/';
+}
+
+export const serverUrl = apiUrl;

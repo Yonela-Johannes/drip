@@ -3,19 +3,19 @@ import { product_categories } from '../config/index'
 import { BiMenu } from 'react-icons/bi'
 import { MdClose } from 'react-icons/md'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import avatar from '../assets/avatar.jpg'
 // import { usePathname } from 'next/navigation'
 
-const MobileNav = () => {
+const MobileNav = ({logout}) => {
   const [isOpen, setIsOpen] = useState(false)
-  const {user, message } = useSelector((state) => state.auth)
-  // const pathname = usePathname()
+  const {user } = useSelector((state) => state.auth)
+  const location = useLocation()?.pathname
 
   // whenever we click an item in the menu and navigate away, we want to close the menu
-  // useEffect(() => {
-  //   setIsOpen(false)
-  // }, [pathname])
+  useEffect(() => {
+    setIsOpen(false)
+  }, [location])
 
   useEffect(() => {
     if (isOpen)
@@ -33,20 +33,15 @@ const MobileNav = () => {
       </button>
     )
 
-  const logout = () => {
-    window.localStorage.removeItem('user')
-    setIsOpen(false)
-    toast('Logged out successful')
-  }
   return (
-    <div className='z-[9999]'>
+    <div className='z-[9999] bg-white'>
       <div className='relative z-40 lg:hidden'>
         <div className='fixed inset-0 bg-black bg-opacity-70' />
       </div>
 
       <div className='fixed overflow-y-scroll overscroll-y-none inset-0 z-40 flex'>
-        <div className='w-[40%]'>
-          <div className='relative flex w-full max-w-sm flex-col overflow-y-auto bg-white pb-4 shadow-xl'>
+        <div className='w-[70%]'>
+          <div className='relative flex w-full max-w-sm flex-col overflow-y-auto bg-white h-screen pb-4 shadow-xl'>
             <div className='flex justify-end items-center px-2 pb-2 pt-2'>
               <button
                 type='button'
@@ -82,6 +77,11 @@ const MobileNav = () => {
                   <p className='text-sm'>Wishlist</p>
                 </Link>
               </div>
+              <div className='relative flex lg:ml-0'>
+                <Link to='/orders'>
+                <p className='text-sm'>Orders</p>
+                </Link>
+              </div>
             </div>
 
             <div className='space-y-6 border-t border-gray-200 px-4 pt-4'>
@@ -94,7 +94,7 @@ const MobileNav = () => {
                       className='capitalize -m-2 block p-2 font-medium text-gray-900'>
                     <Link className='capitalize'
                       to='profile'>
-                      <div className="flex flex-col rounded-md px-1">
+                      <div className="flex items-center gap-2 bg-pink rounded-md px-1">
                           <div className="">{user && user?.avatar ? (<img src={user?.avatar} className='w-[30px] h-[30px] object-cover object-center rounded-full' alt='avatar' />) : (<img src={avatar} className='w-[40px] h-[40px] object-cover object-center rounded-full' alt='avatar' />)}</div>
                         <div className="flex flex-col ">
                           <p className='p-0 m-0'>{user?.name} {user.lastName}</p>

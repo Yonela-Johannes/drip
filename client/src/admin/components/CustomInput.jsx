@@ -1,4 +1,3 @@
-import React from "react";
 
 const CustomInput = (props) => {
   const { type, label, i_id, className, name, value, onChange, onBlur } = props;

@@ -1,20 +1,45 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import "./newProduct.css";
+import { Table } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { ToastContainer, toast } from 'react-toastify';
-import { getAdminUsers } from "../../../../redux/features/admin/adminProducts/adminReducer";
+import { deleteUser, getAdminUsers, updateUser } from "../../../../redux/features/admin/adminProducts/adminReducer";
+import CustomModal from "../../../components/CustomModal";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import RoleModal from "../../../components/RoleModal";
 
 const AllUsers = ({ history }) => {
   const { users: items } = useSelector((state) => state.admin);
 
   const [users, setUsers] = useState([])
   const dispatch = useDispatch()
+  const [open, setOpen] = useState(false);
+  const [role, setRole] = useState('')
+  const [openRoleModal, setOpenRoleModal] = useState(false);
+  const [userId, setUserId] = useState("");
 
+  const showModal = (id) => {
+    setOpen(true);
+    setUserId(id)
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
+
+  const showRoleModal = (id) => {
+    setOpenRoleModal(true);
+    setUserId(id)
+  };
+
+  const hideRoleModal = () => {
+    setOpenRoleModal(false);
+  };
 
   useEffect(() => {
     dispatch(getAdminUsers())
@@ -29,63 +54,32 @@ const AllUsers = ({ history }) => {
   }, [items]);
 
   const columns = [
-    { field: "id", headerName: "User ID", minWidth: 180, flex: 0.8 },
+    { dataIndex: "id", title: "User ID"},
 
     {
-      field: "email",
-      headerName: "Email",
-      minWidth: 200,
-      flex: 1,
+      dataIndex: "email",
+      title: "Email",
     },
     {
-      field: "name",
-      headerName: "Name",
-      minWidth: 150,
-      flex: 0.5,
+      dataIndex: "name",
+      title: "Name",
     },
 
     {
-      field: "role",
-      headerName: "Role",
-      type: "number",
-      minWidth: 150,
-      flex: 0.3,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "role") === ("admin")
-          ? "green"
-          : "red";
-      },
+      dataIndex: "role",
+      title: "Role",
+
     },
 
     {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/dashboard/admin/user/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
-            </Link>
-
-            <Button
-              onClick={() =>
-                deleteUserHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </Button>
-          </Fragment>
-        );
-      },
+      dataIndex: "action",
+      title: "Actions",
     },
   ];
 
   const rows = [];
 
+  console.log(role)
   users &&
     users?.forEach((item) => {
       rows?.push({
@@ -93,36 +87,64 @@ const AllUsers = ({ history }) => {
         role: item.role,
         email: item.email,
         name: item.name,
+        action: (
+          <div className="flex items-center space-around justify-between">
+            <Button onClick={() => showRoleModal(item?._id)}>
+              <AiFillEdit className='text-[18px]' />
+            </Button>
+            <Button onClick={() => showModal(item?._id)}>
+              <AiFillDelete className='text-[18px]' />
+            </Button>
+          </div>
+        )
       });
     });
 
+    const deleteUserHandler = (id) => {
+      dispatch(deleteUser(id));
+      setOpen(false);
+      setTimeout(() => {
+        dispatch(getAdminUsers());
+      }, 100);
+      toast('User deleted')
+    };
+
+    const editUserHandler = (id) => {
+      if(role?.length < 3) return toast("Please select user role")
+      dispatch(updateUser({userId: id, role}));
+      setOpenRoleModal(false);
+      setTimeout(() => {
+        dispatch(getAdminUsers());
+      }, 100);
+      toast('User role updated')
+    };
+
+    console.log(userId)
   return (
       <Fragment>
-        <div className="flex w-full pr-10">
+        <div className="flex w-full pr-10 mt-10">
           <div className="w-full">
-            <h1  className="mb-4 title">Users</h1>
-
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={10}
-              disableSelectionOnClick
-              className="productListTable"
-              autoHeight
-            />
+            <h1  className="mb-4 text-2xl">Users</h1>
+            <Table columns={columns} dataSource={rows} />
           </div>
-        </div>
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
+          <CustomModal
+            hideModal={hideModal}
+            open={open}
+            performAction={() => {
+              deleteUserHandler(userId);
+            }}
+            title="Are you sure you want to delete this user?"
           />
+          <RoleModal
+            hideModal={hideRoleModal}
+            open={openRoleModal}
+            setRole={setRole}
+            performAction={() => {
+              editUserHandler(userId);
+            }}
+            title="Change the user role"
+          />
+        </div>
       </Fragment>
   );
 };

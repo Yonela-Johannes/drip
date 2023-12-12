@@ -28,11 +28,11 @@ const WishlistProduct = ({product, index, user, refreshWishlist}) => {
   if (isVisible && product) {
     return (
       <div
-        className={`flex items-start justify-start gap-4 ${isVisible ? 'visible animate-in fade-in-5' : ''} ${!isVisible && 'invisible h-full w-full cursor-pointer group/main'} `}
+        className={`flex items-start rounded-md bg-gray-200 p-2 justify-between md:justify-start gap-4 ${isVisible ? 'visible animate-in fade-in-5' : ''} ${!isVisible && 'invisible h-full w-full cursor-pointer group/main'} `}
         >
         <Link className='flex flex-col sm:flex-row gap-4' to={`/product/${product?._id}`}>
           <div className='flex flex-col'>
-            <img className='-z-10 w-[80px] h-[80px] sm:h-[150px] sm:w-[200px] object-cover object-center'
+            <img className='w-[80px] h-[80px] sm:h-[150px] sm:w-[200px] object-cover object-center'
               src={product?.imageUrl}
               alt='Product image'
               />

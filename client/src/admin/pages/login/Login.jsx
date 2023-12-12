@@ -9,7 +9,6 @@ import { Notice } from "../../../helpers/Notice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("")
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -31,13 +30,12 @@ const Login = () => {
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
     };
-    if(!role) return toast('Please select user or admin.');
     if(!email) return toast('Please enter you email.');
     if(!validateEmail()) return toast('Email format incorrect.');
     if(password?.length < 8) return toast('Password too short.');
 
-    if (email && password && role) {
-      const response = await dispatch(login({email, password, role}));
+    if (email && password) {
+      const response = await dispatch(login({email, password}));
       if(response.payload.message.includes("Sign in successful")){
         toast(response.payload.message)
         navigate('/')
@@ -57,32 +55,6 @@ const Login = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
               Sign in to your account
             </h1>
-            <div className="flex gap-4">
-              <div className="form-check ms-2">
-                <input
-                  type="radio"
-                  className="form-check-input"
-                  name="role"
-                  value={"admin"}
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <label htmlFor="adminRadio" className="form-check-label">
-                  User
-                </label>
-              </div>
-              <div className="form-check ms-2">
-                <input
-                  type="radio"
-                  className="form-check-input"
-                  name="role"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <label htmlFor="adminRadio" className="form-check-label">
-                  Admin
-                </label>
-              </div>
-            </div>
             <div className="space-y-4 md:space-y-6">
               <div>
                 <label

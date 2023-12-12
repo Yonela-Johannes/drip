@@ -6,13 +6,13 @@ import imageTwo from '../assets/40.png'
 const ImageCarousel = () => {
   var items = [
     {
-      name: "Random Name #1",
-      description: "Probably the most random thing you have ever seen!",
+      name: "Be Pleasured by Pinky",
+      description: "Where Every Click Sparks Delight",
       image: imageOne,
     },
     {
-      name: "Random Name #2",
-      description: "Hello World!",
+      name: "Be Pleasured by Pinky",
+      description: "Where Every Click Sparks Delight",
       image: imageTwo,
     }
   ]
@@ -22,12 +22,9 @@ function Item(props)
     return (
       <div className='relative w-full'>
         <img src={props.item.image} className='w-full h-[700px] object-center object-cover'/>
-        <div className="absolute top-[50%] left-20">
-          <h2 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-6xl'>{props.item.name}</h2>
-          <p>{props.item.description}</p>
-          <button className='mt-6 text-base sm:text-lg max-w-prose text-muted-foreground'>
-            Check it out!
-          </button>
+        <div className="absolute top-[50%] left-20 bg-opacity-50 p-2 md:p-5 rounded-md bg-black">
+          <h2 className='text-2xl font-bold tracking-tight text-pink md:text-5xl'>{props.item.name}</h2>
+          <p className='text-white text-lg'>{props.item.description}</p>
         </div>
       </div>
     )

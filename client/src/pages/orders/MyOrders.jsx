@@ -1,92 +1,166 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect } from "react";
 import { Table } from "antd";
-import CustomModal from "../../admin/components/CustomModal";
-import { AiFillDelete } from "react-icons/ai";
-import MaxWidthWrapper from "../../components/MaxWidthWrapper";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import {
+  getOrderDetails,
+  getUserOrders,
+} from "../../redux/features/order/orderSlice";
+import moment from "moment";
+import Loader from "../../components/shared/Loader";
+import { useState } from "react";
+import MobileFirstOrders from "./MobileFirstOrders";
+import { AiOutlineEye } from "react-icons/ai";
 
-export default function MyOrders() {
-  const [open, setOpen] = useState(false);
-
-  const showModal = (e) => {
-    setOpen(true);
-    // setCategoryId(e);
+const MyOrders = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { order, loading, success } = useSelector((state) => state?.orders);
+  const [mobile, setMobile] = useState(window.innerWidth <= 400);
+  const [details, setDetails] = useState(false);
+  const handleWindowSizeChange = () => {
+    setMobile(window.innerWidth <= 400);
   };
 
-  const hideModal = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
 
-  const data = []
-  const columns = [
-    { title: "SNo", dataIndex: "key",  },
-    { title: "Name", dataIndex: "name", sorter: (a, b) => a.name.length - b.name.length },
-    { title: "Price", dataIndex: "price", sorter: (a, b) => a.name.length - b.name.length },
-    { title: "Date", dataIndex: "date", sorter: (a, b) => a.name.length - b.name.length },
-    { title: "Payment method", dataIndex: "paymentMethod", sorter: (a, b) => a.name.length - b.name.length },
-    { title: "Payment status", dataIndex: "paymentStatatus", sorter: (a, b) => a.name.length - b.name.length },
+  useEffect(() => {
+    if (user) {
+      dispatch(getUserOrders(user?._id));
+    }
+  }, [user]);
 
-    {
-      title: "Action",
-      dataIndex: "action",
-    },
-  ];
+  useEffect(() => {
+    if (mobile) {
+      setDetails(mobile);
+    }
+  }, [mobile]);
+  console.log(order);
 
-  // const data = [];
-  // for (let i = 0; i < category.length; i++) {
-  //   data.push({
-  //     key: i + 1,
-  //     id: category?.[i]._id,
-  //     name: category?.[i].title,
-  //     price: category?.[i].price,
-  //     date: category?.[i].date,
-  //     paymentMethod: category?.[i].paymentMethod,
-  //     paymentStatus: category?.[i].paymentStatus,
-  //     name: category?.[i].title,
-  //     action: (
-  //       <div className="flex gap-4 items-center justify-start">
-  //         <button
-  //           className="ms-3 fs-3 text-danger bg-transparent border-0"
-  //           onClick={() => showModal(category?.[i]._id)}
-  //         >
-  //           <AiFillDelete />
-  //         </button>
-  //       </div>
-  //     ),
-  //   });
-  // }
-
-  const deleteCategory = (e) => {
-
-    setOpen(false);
-    setTimeout(() => {
-
-    }, 100);
-  };
-
-  const saveCategory = (e) => {
-    // if(title < 2) return toast('Please enter category.')
-
-    setTimeout(() => {
-
-    }, 100);
-    setTitle('')
-  }
   return (
-    <MaxWidthWrapper>
-      <div className="mt-10">
-        <h3 className="mb-4 title">My Orders</h3>
-        <div>
-          <Table columns={columns} dataSource={data} />
+    <div className="md:px-20">
+      {loading ? (
+        <Loader />
+      ) : mobile ? (
+        <div className="flex md:hidden md:items-center bg-gray-50 flex-col px-2 mt-20 mb-2">
+          <div className="md:w-full">
+            <h3 className="mb-4 font-semibold md:font-normal md:text-2xl">
+              My order
+            </h3>
+            <div className="border-x border-gray-200 rounded-sm mt-3">
+                <table className="w-full text-gray-700">
+                  <thead>
+                    <tr>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                      <th>Order status</th>
+                      <th>View</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {order?.orders?.map((odr, i) => (
+                      <tr key={odr?._id}>
+                        <td>
+                          <p>{odr?.orderItems?.length}</p>
+                        </td>
+                        <td>
+                          <p>R{odr?.totalPrice}</p>
+                        </td>
+                        <td>
+                          <p>{odr?.orderStatus}</p>
+                        </td>
+                        <td>
+                          <p>
+                            <Link to={`${odr?._id}`}>
+                              <AiOutlineEye className="text-[18px]" />
+                            </Link>
+                          </p>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+          </div>
         </div>
-        <CustomModal
-          hideModal={hideModal}
-          open={open}
-          performAction={() => {
-            deleteCategory(categoryId);
-          }}
-          title="Are you sure you want to delete this Product Category?"
-        />
-      </div>
-    </MaxWidthWrapper>
+      ) : (
+        <>
+          <div className="hidden md:flex md:w-full md:items-center bg-gray-50 flex-col px-2 md:px-10 mt-20 md:mt-10 mb-2">
+            <div className="md:w-full">
+              <h3 className="mb-4 font-semibold md:font-normal md:text-2xl">
+                My order
+              </h3>
+              <div className="border-x border-gray-200 rounded-sm mt-3">
+                <table className="w-full text-gray-700">
+                  <thead>
+                    <tr>
+                      <th>Product ID</th>
+                      <th>Full name</th>
+                      <th>Email</th>
+                      <th>Payment Method</th>
+                      <th>Order date</th>
+                      <th>Paid at</th>
+                      <th>Quantity</th>
+                      <th>Total</th>
+                      <th>Order status</th>
+                      <th>View</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {order?.orders?.map((odr, i) => (
+                      <tr key={odr?._id}>
+                        <td className="hidden md:block">
+                          <p>#{1 + i}</p>
+                        </td>
+                        <td>
+                          <p>
+                            {odr?.user?.name} {odr?.user?.lastName}
+                          </p>
+                        </td>
+                        <td>
+                          <p>{odr?.user?.email}</p>
+                        </td>
+                        <td>
+                          <p>{odr?.user?.email}</p>
+                        </td>
+                        <td>
+                          <p>{moment(odr?.createdAt).format("dd-mm-yyyy")}</p>
+                        </td>
+                        <td>
+                          <p>{moment(odr?.paidAt).format("dd-mm-yyyy")}</p>
+                        </td>
+                        <td>
+                          <p>{odr?.orderItems?.length}</p>
+                        </td>
+                        <td>
+                          <p>R{odr?.totalPrice}</p>
+                        </td>
+                        <td>
+                          <p>{odr?.orderStatus}</p>
+                        </td>
+                        <td>
+                          <p>
+                            <Link to={`${odr?._id}`}>
+                              <AiOutlineEye className="text-[18px]" />
+                            </Link>
+                          </p>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
-}
+};
+
+export default MyOrders;

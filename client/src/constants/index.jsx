@@ -1,3 +1,4 @@
+import { AiOutlineComment } from 'react-icons/ai'
 import {
 	HiOutlineViewGrid,
 	HiOutlineCube,
@@ -11,6 +12,7 @@ import {
   HiOutlinePencilAlt,
   HiOutlineNewspaper
 } from 'react-icons/hi'
+import { MdOutlineReviews } from 'react-icons/md'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
@@ -38,16 +40,22 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineShoppingCart />
 	},
 	{
-		key: 'customers',
-		label: 'Customers',
-		path: 'admin/customers',
-		icon: <HiOutlineUsers />
-	},
-	{
 		key: 'users',
 		label: 'Users',
 		path: 'admin/users',
-		icon: <HiOutlineDocumentText />
+		icon: <HiOutlineUsers />
+	},
+  {
+		key: 'reviews',
+		label: 'Reviews',
+		path: 'admin/reviews',
+		icon: <MdOutlineReviews />
+	},
+  {
+		key: 'comments',
+		label: 'Comments',
+		path: 'admin/comments',
+		icon: <AiOutlineComment />
 	},
 	{
 		key: 'enquiries',

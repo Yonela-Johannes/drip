@@ -1,74 +1,104 @@
 import React, { useEffect } from "react";
-import { Table } from "antd";
+import { Table, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiFillEye, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
-// import { getOrders } from "../../redux/features/order/orderSlice";
-
-const columns = [
-  {
-    title: "SNo",
-    dataIndex: "key",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-  {
-    title: "Product",
-    dataIndex: "product",
-  },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-  },
-  {
-    title: "Date",
-    dataIndex: "date",
-  },
-
-  {
-    title: "Action",
-    dataIndex: "action",
-  },
-];
+import { getOrders } from "../../redux/features/order/orderSlice";
+import moment from 'moment'
 
 const Orders = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    // dispatch(getOrders());
-  }, []);
-  const orderState = useSelector((state) => state?.orders);
+  const { order, loading, success } = useSelector((state) => state?.orders);
 
-  const data1 = [];
-  for (let i = 0; i < orderState?.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: orderState[i]?.orderby?.firstname,
-      product: (
-        <Link to={`/admin/order/${orderState[i]?.orderby?._id}`}>
-          View Orders
-        </Link>
-      ),
-      amount: orderState[i]?.paymentIntent?.amount,
-      date: new Date(orderState[i]?.createdAt).toLocaleString(),
-      action: (
-        <>
-          <Link to="/" className=" fs-3 text-danger">
-            <BiEdit />
-          </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
-            <AiFillDelete />
-          </Link>
-        </>
-      ),
+  useEffect(() => {
+    dispatch(getOrders());
+  }, []);
+
+  const columns = [
+    {
+      title: "No",
+      dataIndex: "n",
+    },
+    {
+      title: "Order No",
+      dataIndex: "key",
+    },
+    {
+      title: "Customer",
+      dataIndex: "customer",
+    },
+    {
+      title: "Payment No",
+      dataIndex: "paymentId",
+    },
+    {
+      title: "Payment method",
+      dataIndex: "method",
+    },
+    {
+      title: "Items amount",
+      dataIndex: "itemsAmount",
+    },
+    {
+      title: "Delivery price",
+      dataIndex: "deliveryAmount",
+    },
+    {
+      title: "Total price",
+      dataIndex: "totalAmount",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+    },
+    {
+      title: "total Items",
+      dataIndex: "totalItems",
+    },
+    {
+      title: "Order status",
+      dataIndex: "status",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+    },
+  ];
+  const rows = [];
+  order && order?.orders?.length > 1 &&
+    order?.orders?.forEach((item, i) => {
+      rows?.push({
+        n : 1 + i,
+        key: item._id,
+        customer: item?.user?.name,
+        paymentId: item?.paymentInfo?.id,
+        method: item?.paymentInfo?.status,
+        itemsAmount: item.itemsPrice,
+        deliveryAmount: item?.deliveryPrice,
+        totalAmount: item?.totalPrice,
+        date: moment(item?.paidAt).format("dd-mm-yyyy"),
+        totalItems: item?.orderItems?.length,
+        status: item?.orderStatus,
+        action: (
+          <div className="flex items-center gap-2 space-around justify-between">
+            <Button>
+              <AiFillEdit className='text-[18px]' />
+            </Button>
+            <Link to={`${item?._id}`}>
+              <AiOutlineEye className='text-[18px]' />
+            </Link>
+          </div>
+        )
+      });
     });
-  }
+
   return (
-    <div>
-      <h3 className="mb-4 title">Orders</h3>
-      <div>{<Table columns={columns} dataSource={data1} />}</div>
+    <div className="flex w-full pr-10 mt-10">
+      <div className="w-full">
+          <h3 className="mb-4 text-2xl">Orders</h3>
+        <div>{<Table columns={columns} dataSource={rows} />}</div>
+      </div>
     </div>
   );
 };

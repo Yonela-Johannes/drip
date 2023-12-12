@@ -10,6 +10,7 @@ import enquiryReducer from './features/enquiry/enquirySlice'
 import usersReducer from './features/cutomers/customerSlice'
 import categoryReducer from './features/category/categorySlice'
 import orderReducer from './features/order/orderSlice'
+import addressReducer from './features/address/addressSlice'
 
 const persistConfig = {
   key: 'root',
@@ -29,6 +30,7 @@ const rootReducer = {
   enquiry: enquiryReducer,
   category: categoryReducer,
   orders: persistedOrderReducer,
+  address: addressReducer,
 };
 
 export const store = configureStore({

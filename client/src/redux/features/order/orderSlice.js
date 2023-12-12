@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { serverUrl } from '../../../constants/base_urls';
 import axios from 'axios';
 
 const initialState = {
@@ -10,33 +11,28 @@ const initialState = {
 
 export const createOrder = createAsyncThunk('order/create', async (order) => {
   try {
-    const { data } = await axios.post("/api/orders", order);
+    const { data } = await axios.post(`${serverUrl}order/new`, order);
     return data
   } catch (error) {
     console.log(error)
-    // dispatch({
-    //   type: ORDER_CREATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message
-    //       : error.message,
-    // });
+  }
+});
+
+export const getOrders = createAsyncThunk('order/get orders', async (id) => {
+  try {
+    const { data } = await axios.get(`${serverUrl}admin/orders`);
+    return data
+  } catch (error) {
+    console.log(error)
   }
 });
 
 export const getOrderDetails = createAsyncThunk('order/get order', async (id) => {
   try {
-    const { data } = await axios.get(`/api/orders/${id}`);
+    const { data } = await axios.get(`${serverUrl}order/${id}`);
     return data
   } catch (error) {
     console.log(error)
-    // dispatch({
-    //   type: ORDER_CREATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message
-    //       : error.message,
-    // });
   }
 });
 
@@ -46,37 +42,15 @@ export const payOrder = createAsyncThunk('order/pay order', async (orderId, paym
     return data
   } catch (error) {
     console.log(error)
-    // dispatch({
-    //   type: ORDER_CREATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message
-    //       : error.message,
-    // });
   }
 });
 
-export const listMyOrders = createAsyncThunk('order/list my-orders', async (userInfo, getState) => {
+export const getUserOrders = createAsyncThunk('order/list my-orders', async (userId) => {
   try {
-    const {
-      userLogin: { userInfo },
-    } = getState();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(`/api/orders/myorders`, config);
+    const { data } = await  axios.get(`${serverUrl}orders/me/${userId}`);
     return data
   } catch (error) {
     console.log(error)
-    // dispatch({
-    //   type: ORDER_CREATE_FAIL,
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message
-    //       : error.message,
-    // });
   }
 });
 
@@ -84,8 +58,11 @@ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    setOrderInfo : (state = {}, action) => {
+    setOrderInfo : (state, action) => {
       state.orderDetails = action.payload
+    },
+    resetOrderInfo : (state) => {
+      state.orderDetails = {}
     },
     setAddressInfo : (state, action) => {
       state.orderDetails = { ...state.orderDetails, deliveryAddress: action.payload}
@@ -138,22 +115,37 @@ const orderSlice = createSlice({
         state.success = false,
         state.order = state.order
       })
-      .addCase(listMyOrders.pending, (state) => {
+      .addCase(getUserOrders.pending, (state) => {
         state.loading = true;
         state.success = false,
         state.order = state.order
       })
-      .addCase(listMyOrders.fulfilled, (state, action) => {
+      .addCase(getUserOrders.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true,
         state.order = action.payload
       })
-      .addCase(listMyOrders.rejected, (state, action) => {
+      .addCase(getUserOrders.rejected, (state, action) => {
+        state.loading = true;
+        state.success = false,
+        state.order = state.order
+      })
+      .addCase(getOrders.pending, (state) => {
+        state.loading = true;
+        state.success = false,
+        state.order = state.order
+      })
+      .addCase(getOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true,
+        state.order = action.payload
+      })
+      .addCase(getOrders.rejected, (state, action) => {
         state.loading = true;
         state.success = false,
         state.order = state.order
       })
   }
 });
-export const { setOrderInfo, setAddressInfo } = orderSlice.actions
+export const { setOrderInfo, setAddressInfo, resetOrderInfo } = orderSlice.actions
 export default orderSlice.reducer;

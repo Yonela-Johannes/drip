@@ -20,8 +20,8 @@ function Footer() {
             <span>Be Pleasured by Pinky</span>
             <span className="dot">.</span>
           </div>
-          <p className="description">
-            Build a modern and creative website with and
+          <p className="description mb-4">
+            Here we put your business description/quote/motto
           </p>
 
           <ul className="flex items-center sm:items-start justify-center sm:justify-start gap-4">

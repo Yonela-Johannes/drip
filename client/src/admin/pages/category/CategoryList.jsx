@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 
 const columns = [
   {
-    title: "SNo",
+    title: "ID",
     dataIndex: "key",
   },
   {
@@ -55,7 +55,7 @@ const CategoryList = () => {
   const data1 = [];
   for (let i = 0; i < category.length; i++) {
     data1.push({
-      key: i + 1,
+      key: category?.[i]?._id,
       name: category?.[i].title,
       action: (
         <div className="flex gap-4 items-center justify-start">
@@ -76,6 +76,7 @@ const CategoryList = () => {
     setTimeout(() => {
       dispatch(getCategories());
     }, 100);
+    toast('Category deleted')
   };
 
   const saveCategory = () => {
@@ -89,9 +90,9 @@ const CategoryList = () => {
   }
 
   return (
-    <>
+    <div className="mt-10">
     <div>
-      <h3 className="mb-4  title">
+      <h3 className="mb-4  text-2xl">
         Category
       </h3>
       <div>
@@ -115,7 +116,7 @@ const CategoryList = () => {
       </div>
     </div>
     <div>
-      <h3 className="mb-4 title">Product Categories</h3>
+      <h3 className="mb-4 text-2xl">Product Categories</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
@@ -128,7 +129,7 @@ const CategoryList = () => {
         title="Are you sure you want to delete this Product Category?"
       />
     </div>
-    </>
+    </div>
   );
 };
 

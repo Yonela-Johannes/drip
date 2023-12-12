@@ -1,23 +1,21 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { DataGrid } from "@material-ui/data-grid";
+import React, { useEffect, useState } from "react";
 import "./AllProducts.css";
+import { Table } from "antd";
 import "./newProduct.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { getAdminProducts } from "../../../../redux/features/admin/adminProducts/adminReducer";
 import { getCategories } from "../../../../redux/features/category/categorySlice";
 import Button from "../../../../components/button/Button";
-import { createProduct } from "../../../../redux/features/products/productSlice";
+import { createProduct, deleteProduct, resetState } from "../../../../redux/features/products/productSlice";
 import CustomInput from "../../../components/CustomInput";
+import { AiFillDelete } from "react-icons/ai";
+import CustomModal from "../../../components/CustomModal";
 
 const AllProducts = () => {
-  const {  items } = useSelector((state) => state.admin);
+  const { items } = useSelector((state) => state.admin);
   const { user } = useSelector((state) => state.auth);
   const categories = useSelector((state) => state.category.categories);
-  const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState("");
@@ -26,19 +24,23 @@ const AllProducts = () => {
   const [image, setImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [productId, setProductId] = useState("");
+
+  const showModal = (id) => {
+    setOpen(true);
+    setProductId(id)
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     dispatch(getAdminProducts())
     dispatch(getCategories());
+    dispatch(resetState())
   }, []);
-
-  const fetchProducts = () => {
-    setProducts(items)
-  }
-
-  useEffect(() => {
-    fetchProducts()
-  }, [items]);
 
   const createProductSubmitHandler = (e) => {
 
@@ -57,8 +59,6 @@ const AllProducts = () => {
       stock,
       image
     }}));
-    toast('Item added to shop');
-    setProducts("")
     setName("")
     setPrice("")
     setDescription("")
@@ -69,7 +69,9 @@ const AllProducts = () => {
     setTimeout(() => {
       dispatch(getAdminProducts())
       dispatch(getCategories());
+      dispatch(resetState())
     }, 100)
+    toast('Product created')
   };
 
   const createProductImagesChange = (e) => {
@@ -90,85 +92,67 @@ const AllProducts = () => {
     }
   };
 
-  const deleteProductHandler = (id) => {
-
-  };
-
-const columns = [
-    { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },
+  const columns = [
+    { dataIndex: "id", title: "Product ID" },
 
     {
-      field: "name",
-      headerName: "Name",
-      width: 80,
-      flex: 1,
+      dataIndex: "name",
+      title: "Name",
     },
     {
-      field: "stock",
-      headerName: "Stock",
-      type: "number",
-      width: 20,
-      flex: 1,
+      dataIndex: "stock",
+      title: "Stock",
     },
 
     {
-      field: "price",
-      headerName: "Price",
-      type: "number",
-      width: 100,
-      flex: 1,
+      dataIndex: "price",
+      title: "Price",
     },
 
     {
-      field: "reviews",
-      headerName: "Reviews",
-      type: "number",
-      width: 50,
-      flex: 1,
+      dataIndex: "reviews",
+      title: "Reviews",
     },
-
     {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            <Link to={`/dashboard/admin/edit/product/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
-            </Link>
-
-            <Button
-            onClick={() =>
-                deleteProductHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </Button>
-          </Fragment>
-        );
-      },
+      dataIndex: "action",
+      title: "Action",
     },
   ];
 
   const rows = [];
 
-  products &&
-    products.forEach((item) => {
+  items &&
+    items.forEach((item) => {
       rows.push({
         id: item._id,
         stock: item?.stockCount,
         price: item?.price,
         name: item?.name,
         reviews: item?.numOfReviews,
+        action: (
+          <div className="flex gap-4 items-center justify-start">
+            <button
+              className="ms-3 fs-3 text-danger bg-transparent border-0"
+              onClick={() => showModal(item?._id)}
+            >
+              <AiFillDelete />
+            </button>
+          </div>
+        ),
       });
     });
 
+    const deleteProductHandler = (id) => {
+      dispatch(deleteProduct(id));
+      setOpen(false);
+      setTimeout(() => {
+        dispatch(getAdminProducts());
+      }, 100);
+      toast('Product deleted')
+    };
+
   return (
-    <div className="flex">
+    <div className="flex mt-10">
       <div className="h-full">
         <div className="flex flex-col  px-6 mx-auto lg:py-0">
           <div className=" rounded-md md:px-10 lg:w-[500px]">
@@ -287,27 +271,19 @@ const columns = [
       <div className="flex w-full pr-10">
         <div className="w-full">
           <h1 className="text-2xl mb-[32px]">Products</h1>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            disableSelectionOnClick
-            className=""
-            autoHeight
+            <div>
+            <Table columns={columns} dataSource={rows} />
+          </div>
+          <CustomModal
+            hideModal={hideModal}
+            open={open}
+            performAction={() => {
+              deleteProductHandler(productId);
+            }}
+            title="Are you sure you want to delete this product?"
           />
         </div>
       </div>
-    <ToastContainer
-      position="bottom-center"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      />
     </div>
   )
 }

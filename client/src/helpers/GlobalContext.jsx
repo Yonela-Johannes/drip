@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getWishlist } from '../redux/features/auth/authSlice';
 import { toast } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Global = createContext();
 
@@ -11,6 +12,8 @@ const GlobalContext = ({children}) => {
   const [loading, setLoading] = useState(false)
   const [wishProducts, setWishProducts] = useState();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const location = useLocation()?.pathname
 
   const refreshWishlist = async () => {
     if(user?._id){
@@ -30,12 +33,20 @@ const GlobalContext = ({children}) => {
     refreshWishlist()
   }, [user]);
 
+  const logout = () => {
+    window.localStorage.clear();
+    navigate(location)
+    toast.success('Logged out successfully');
+    window.location.reload()
+  };
+
   return (
     <Global.Provider value={{
       refreshWishlist,
       user,
       wishProducts,
-      loading
+      loading,
+      logout
     }}>
     <>
       {children}

@@ -1,13 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Rating } from "@material-ui/lab";
+import Rating from "../shared/Rating";
+
 
 const ProductCard = ({ product }) => {
-  const options = {
-    value: product.ratings,
-    readOnly: true,
-    precision: 0.5,
-  };
 
   return (
     <>
@@ -18,7 +14,6 @@ const ProductCard = ({ product }) => {
             />
             <p className='mt-4 font-medium text-sm text-gray-700'>{product?.name}</p>
             <div className="flex items-center">
-            <Rating {...options} />
               <span className="text-sm text-gray-500">({product?.numOfReviews} Reviews)</span>
             </div>
             <div
@@ -27,6 +22,12 @@ const ProductCard = ({ product }) => {
                 justifyContent: "space-between",
               }}
             >
+              <Rating
+                rating={product?.ratings}
+                view={false}
+                select={false}
+                hover={false}
+               />
               <div className="offerPriceBox">
                 <h1
                    className='mt-1 font-medium text-sm text-gray-900'

@@ -3,14 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "./ProductCard";
 import "./Product.css";
 
-const Products = () => {
-  const [products, setProducts] = useState([])
-  const [category,setCategory] = useState("");
-  const { items, loading } = useSelector((state) => state.products);
-
-  useEffect(() => {
-    setProducts(items)
-  }, [products]);
+const Products = ({items, loading, category}) => {
 
   return (
     <>
@@ -21,15 +14,15 @@ const Products = () => {
           <div className='md:flex md:items-center md:justify-between mb-4'>
             <div className='max-w-2xl px-4 lg:max-w-4xl lg:px-0'>
               <h1 className='text-2xl font-bold text-gray-900 sm:text-3xl'>
-                Shop items
+                {category} items
               </h1>
             </div>
               <p className='hidden text-sm font-medium text-gray-500 md:block'>
-                Featured items
+                shop {category} items
               </p>
           </div>
           <div className="flex flex-1 gap-8">
-            {products?.length === 0 ?
+            {items?.length === 0 ?
             <span style={{
               display:"block",
               padding:"30px 0",
@@ -39,10 +32,10 @@ const Products = () => {
             }}>No Product Found ....</span>
             :
             <div
-            className="grid grid-cols-4 gap-4">
-            {products &&
-              products
-                ?.filter((product) => product?.category?.title === 'Featured')
+            className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {items &&
+              items
+                ?.filter((product) => product?.category?.title === category)
                 ?.slice(0, 8)
                 ?.map((product) =>
                  (

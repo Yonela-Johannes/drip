@@ -10,8 +10,6 @@ import ImageCarousel from '../components/ImageCarousel';
 import ProductCard from '../components/Products/ProductCard';
 import Hero from '../components/Hero';
 import Newest from '../components/Newest';
-import { Slider } from '../components/hero/Slider';
-
 
 export default function Home() {
   const { items } = useSelector((state) => state.products);
@@ -30,7 +28,6 @@ export default function Home() {
     fetchProducts()
   }, [items]);
 
-  console.log(products)
   return (
     <div className='w-full'>
     <ImageCarousel />
@@ -51,7 +48,7 @@ export default function Home() {
         <div className='relative py-20 mx-auto sm:text-center flex flex-col items-center '>
           <div className="flex items-start justify-start gap-4">
             <h1 className='text-2xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
-            Presenting your marketplace for high quality premium digital{' '}
+            Presenting your marketplace for high quality premium{' '}
               <span className='text-pink'>
                 digital assets
               </span>
@@ -71,13 +68,9 @@ export default function Home() {
               to='/products'>
               Browse Trending
             </Link>
-            <button>
-              Our quality promise &rarr;
-            </button>
           </div>
         </div>
       </div>
-        <Slider />
         <Newest products={products} />
       </MaxWidthWrapper>
     </div>

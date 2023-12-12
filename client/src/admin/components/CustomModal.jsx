@@ -11,8 +11,9 @@ const CustomModal = (props) => {
       onCancel={hideModal}
       okText="Ok"
       cancelText="Cancel"
+      className="text-black"
     >
-      <p>{title}</p>
+      <p className="text-black">{title}</p>
     </Modal>
   );
 };

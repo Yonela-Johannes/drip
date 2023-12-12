@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CartProduct from "../components/CartProduct";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import { setOrderInfo } from "../redux/features/order/orderSlice";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const [primeShipping, setPrimeShipping] = useState(false);
@@ -11,6 +12,7 @@ const Cart = () => {
   const { items } = useSelector((state) => state.cart)
   const { user } = useSelector((state) => state.auth)
   const [cartProducts, setCartProducts] = useState();
+  const [paymentMethod, setPaymentMethod] = useState()
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
@@ -31,19 +33,21 @@ const Cart = () => {
   }, [cartProducts]);
 
   const handleCheckoutRedirect = () => {
+    if(!paymentMethod) return toast("Select payment method")
     const data = {
       products: cartProducts.map((product) => {
-          return { _id: product?.product?._id};
+          return product?.product
         }),
 
       user: {
         id: user?._id,
       },
       status: {
-        paymentMode: isCod ? "cash-on-delivery" : "paypal",
+        paymentMethod,
       },
       paymentIntent: "",
       price: getTotalAmount() + (primeShipping ? 40 : 0),
+      deliveryPrice: (primeShipping ? 40 : 0)
     };
     dispatch(setOrderInfo(data))
     navigate("/delivery");
@@ -74,13 +78,13 @@ const Cart = () => {
                   </h4>
                   <div className="flex  gap-5 mt-3">
                     <div className="flex">
-                      <div className="flex items-center h-5">
+                      <div className="flex items-center h-5 cursor-pointer">
                         <input
                           id="helper-radio"
                           aria-describedby="helper-radio-text"
                           type="radio"
                           value=""
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 rounded-full dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                           name="shipping-method"
                           onClick={() => setPrimeShipping(false)}
                           checked={!primeShipping}
@@ -102,13 +106,13 @@ const Cart = () => {
                       </div>
                     </div>
                     <div className="flex">
-                      <div className="flex items-center h-5">
+                      <div className="flex items-center h-5 cursor-pointer">
                         <input
                           id="helper-radio2"
                           aria-describedby="helper-radio-text"
                           type="radio"
                           value=""
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 rounded-full dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                           name="shipping-method"
                           onClick={() => setPrimeShipping(true)}
                           checked={primeShipping}
@@ -146,17 +150,35 @@ const Cart = () => {
                   </h5>
                 )}
               <div className="flex flex-col gap-2 my-5">
-                <div className="flex">
-                  <div className="flex items-center h-5">
+              <div className="flex">
+                  <div className="flex items-center h-5 cursor-pointer">
                     <input
-                      id="paypal"
                       aria-describedby="payment-method-text"
                       type="radio"
-                      value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      value="debit"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 rounded-full dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       name="payment-method"
-                      onClick={() => setIsCod(false)}
-                      checked={!isCod}
+                      onClick={(e) => setPaymentMethod(e.target.value)}
+                    />
+                  </div>
+                  <div className="ml-2 text-sm">
+                    <label
+                      htmlFor="debit"
+                      className="font-medium text-gray-900 dark:text-gray-500"
+                    >
+                      Debit card
+                    </label>
+                  </div>
+                </div>
+                <div className="flex">
+                  <div className="flex items-center h-5 cursor-pointer">
+                    <input
+                      aria-describedby="payment-method-text"
+                      type="radio"
+                      value="paypal"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 rounded-full dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      name="payment-method"
+                      onClick={(e) => setPaymentMethod(e.target.value)}
                     />
                   </div>
                   <div className="ml-2 text-sm">
@@ -169,16 +191,14 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="flex ">
-                  <div className="flex items-center h-5">
+                  <div className="flex items-center h-5 cursor-pointer">
                     <input
-                      id="cod"
                       aria-describedby="payment-method-text"
                       type="radio"
-                      value=""
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-500 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      value="cod"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-500 focus:ring-blue-500 rounded-full dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       name="payment-method"
-                      onClick={() => setIsCod(true)}
-                      checked={isCod}
+                      onClick={(e) => setPaymentMethod(e.target.value)}
                     />
                   </div>
                   <div className="ml-2 text-sm">

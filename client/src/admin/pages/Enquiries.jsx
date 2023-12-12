@@ -31,7 +31,7 @@ const columns = [
     dataIndex: "mobile",
   },
   {
-    title: "Staus",
+    title: "Status",
     dataIndex: "status",
   },
 
@@ -113,8 +113,8 @@ const Enquiries = () => {
     }, 100);
   };
   return (
-    <div>
-      <h3 className="mb-4 title">Enquiries</h3>
+    <div className="mt-10">
+      <h3 className="md:text-2xl">Enquiries</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>

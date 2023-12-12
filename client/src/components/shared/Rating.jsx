@@ -1,64 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import StarRatings from 'react-star-ratings';
 
-const Rating = ({ value, text }) => {
+const Rating = ({ rating, setRating, view, select, hover = false}) => {
+
   return (
-    <div className="rating">
-      <span style={{ color: "yellow" }}>
-        <i
-          className={
-            value >= 1
-              ? "fas fa-star"
-              : value >= 0.5
-              ? "fas fa-star-half-alt"
-              : "fas fa-start"
-          }
-        ></i>
-      </span>
-      <span style={{ color: "yellow" }}>
-        <i
-          className={
-            value >= 2
-              ? "fas fa-star"
-              : value >= 1.5
-              ? "fas fa-star-half-alt"
-              : "fas fa-start"
-          }
-        ></i>
-      </span>
-      <span style={{ color: "yellow" }}>
-        <i
-          className={
-            value >= 3
-              ? "fas fa-star"
-              : value >= 2.5
-              ? "fas fa-star-half-alt"
-              : "fas fa-start"
-          }
-        ></i>
-      </span>
-      <span style={{ color: "yellow" }}>
-        <i
-          className={
-            value >= 4
-              ? "fas fa-star"
-              : value >= 3.5
-              ? "fas fa-star-half-alt"
-              : "fas fa-start"
-          }
-        ></i>
-      </span>
-      <span style={{ color: "yellow" }}>
-        <i
-          className={
-            value >= 5
-              ? "fas fa-star"
-              : value >= 4.5
-              ? "fas fa-star-half-alt"
-              : "fas fa-start"
-          }
-        ></i>
-      </span>
-      <span>{text && text}</span>
+    <div className="font-bold w-max text-center flex items-center justify-start gap-4">
+      <StarRatings
+        rating={rating == undefined ? 0 : Number(rating)}
+        starRatedColor="pink"
+        starHoverColor={hover ? 'pink' : 'rgb(203, 211, 227)'}
+        changeRating={setRating == undefined ? 0 : setRating}
+        numberOfStars={5}
+        name='rating'
+        starDimension="20px"
+        starSpacing="10px"
+        isSelectable={select}
+      />
+      {view && rating}
     </div>
   );
 };

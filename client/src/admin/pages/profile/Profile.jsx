@@ -1,4 +1,3 @@
-// import { Profile } from "@/lib/api/auth";
 import React, { useState, useEffect } from "react";
 import MaxWidthWrapper from "../../../components/MaxWidthWrapper";
 import CustomInput from "../../components/CustomInput";
@@ -6,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../components/button/Button";
 import { toast } from "react-toastify";
 import { editUser, getUser, userUpdate } from "../../../redux/features/auth/authSlice";
+import { createAddress, getAddress } from "../../../redux/features/address/addressSlice";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
-  const [currentUser, setCurrentUser] = useState("")
+  const { address, isLoading } = useSelector((state) => state.address);
+  const [currentUser, setCurrentUser] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [image, setImage] = useState("");
@@ -24,17 +25,35 @@ const Profile = () => {
   const getCurrentUser = async () => {
     if(user && user?._id){
       const response = await dispatch(getUser(user?._id))
-      setCurrentUser(response?.payload?.user);
-      dispatch(userUpdate(response?.payload?.user));
+      if(response?.payload?.user){
+        setCurrentUser(response?.payload?.user);
+        dispatch(userUpdate(response?.payload?.user));
+      }
+    }
+  }
+
+  const getCurrentUserAddress = () => {
+    if(user && user?._id){
+      dispatch(getAddress(user?._id))
     }
   }
 
   useEffect(() => {
     getCurrentUser()
-  }, [user])
+    getCurrentUserAddress()
+  }, [])
+
+  useEffect(() => {
+    if(address && address?.address && address?.address?._id){
+      setStreet(address?.address?.street)
+      setCity(address?.address?.city)
+      setTown(address?.address?.town)
+      setPostalCode(address?.address?.postalCode)
+    }
+  }, [address])
 
   const updateUser = () => {
-    // phone && phone.length < 10 ?  toast('You phone number must be 10 digits') : phone.length > 10 && toast('You phone number must be 10 digits')
+    phone && phone.length < 10 ?  toast('Your phone number must be 10 digits') : phone.length > 10 && toast('Your phone number must be 10 digits')
     dispatch(editUser({userId: user?._id , data: {
       name,
       lastName,
@@ -48,8 +67,8 @@ const Profile = () => {
     toast('Profile updated successful')
     setName('')
     setLastName('')
-    setPhone('')
     setImage('')
+    setPhone('')
   }
 
   const createAvatarImageChange = (e) => {
@@ -69,6 +88,40 @@ const Profile = () => {
       reader.readAsDataURL(file);
     }
   };
+
+
+  const saveAddress = () => {
+    if(user?._id?.length < 4) return  toast('No user details provided')
+    if(street?.length < 4) return  toast('Please enter your street')
+    if(city?.length < 4) return  toast('Please enter your city')
+    if(town?.length < 4) return  toast('Please enter your town')
+    if(city?.length < 4) return  toast('Please enter your area code')
+
+    if(postalCode && postalCode?.length < 4){
+      toast('Your area code must be 4 digits')
+    }else if(postalCode.length > 4){
+      toast('Your postal code must be 4 digits')
+    }
+
+    dispatch(createAddress({ data: {
+      addressId: address && address?.address && address?.address?._id,
+      userId: user?._id,
+      street,
+      city,
+      town,
+      postalCode
+    }}));
+
+    setTimeout(() => {
+      getAddress();
+    }, 100)
+    toast('Address updated successful')
+    setStreet('')
+    setCity('')
+    setTown('')
+    setPostalCode('')
+  }
+
   return (
     <MaxWidthWrapper>
       <div className="flex flex-col md:flex-row gap-6 px-6 mx-auto lg:py-10 py-4">
@@ -162,7 +215,7 @@ const Profile = () => {
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-          <div onClick={updateUser} className="">
+          <div onClick={updateUser}>
             <Button text='Save' />
           </div>
         </div>
@@ -170,12 +223,15 @@ const Profile = () => {
           <h2 className="text-lg md:text-2xl">Delivery</h2>
           <div className="capitalize">
             <div>
-              <p>Street: {user?.name}</p>
-              <p>City: {user?.lastName}</p>
+              <p>Street: {address?.address?.street}</p>
+              <div className="flex">
+                <p>City: {address?.address?.city}</p>,{' '}
+                <p>{address?.address?.country}</p>
+              </div>
             </div>
             <div>
-              <p>Town: {user?.email}</p>
-              <p>Postal code: {user?.number}</p>
+              <p>Town: {address?.address?.town}</p>
+              <p>Postal code: {address?.address?.postalCode}</p>
             </div>
           </div>
           <h1 className="text-lg md:text-2xl">Your delivery details</h1>
@@ -255,7 +311,7 @@ const Profile = () => {
               onChange={(e) => setPostalCode(e.target.value)}
             />
           </div>
-        <div className="">
+        <div  onClick={saveAddress}>
           <Button text="Save" />
         </div>
         </div>

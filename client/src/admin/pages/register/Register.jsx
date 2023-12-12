@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import landing from '../../../assets/reglanding.jpg'
 import { register } from "../../../redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -14,13 +15,16 @@ const Register = () => {
   const navigate = useNavigate()
 
   const handleRegister = async () => {
-    if (name && lastName && email && password && validPassword) {
+    if(password !== validPassword) return toast("Passwords do not match")
+    if (name && lastName && email && password && validPassword && password === validPassword) {
       const data = await dispatch(register({name, lastName, email, password}));
+      console.log(data)
       if(data?.payload.message === 'User already exists'){
+        toast('User already exists')
         navigate("/login");
       }
-    } else {
-      // setToast("Email and Password is required to Register.");
+    } else if(data && data?.payload && data?.payload?._id) {
+      toast('Registered successfully')
     }
   };
 
@@ -123,20 +127,6 @@ const Register = () => {
                 <div className="">
                   <div className="flex items-start gap-3">
                     <div className="flex items-center h-5">
-                      <input
-                        id="remember"
-                        aria-describedby="remember"
-                        type="checkbox"
-                        className="w-4 h-4 border cursor-pointer border-gray-300 rounded focus:ring-3 focus:ring-primary-300 bg-gray-200 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-gray-500"
-                      >
-                        Remember me
-                      </label>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -150,12 +140,11 @@ const Register = () => {
                     </div>
                   </div>
                 </div>
-                <a
-                  href="#"
+                <p
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
-                  lkjjdskljf
-                </a>
+                  {password === validPassword && "Passwords matching"}
+                </p>
               </div>
 
               <button

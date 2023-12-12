@@ -14,18 +14,28 @@ export const getAdminProducts = createAsyncThunk('products/get admin products', 
   return response?.data?.products;
 });
 
-export const getAdminProduct = createAsyncThunk('product/get admin product', async (productId) => {
+export const getAdminProduct = createAsyncThunk('product/get-product', async (productId) => {
   const response = await axios.get(`${serverUrl}product/${productId}`);
   return response?.data;
 });
 
-export const getAdminUsers = createAsyncThunk('users/get admin users', async () => {
+export const getAdminUsers = createAsyncThunk('users/get-users', async () => {
   const response = await axios.get(`${serverUrl}admin/users`);
   return response?.data;
 });
 
-export const getAdminUser = createAsyncThunk('user/get admin user', async (productId) => {
+export const getAdminUser = createAsyncThunk('user/get-user', async (productId) => {
   const response = await axios.get(`${serverUrl}user/${productId}`);
+  return response?.data?.user;
+});
+
+export const deleteUser = createAsyncThunk('user/delete-user', async (userId) => {
+  const response = await axios.delete(`${serverUrl}admin/user/${userId}`);
+  return response?.data?.user;
+});
+
+export const updateUser = createAsyncThunk('user/update-user', async ({userId, role}) => {
+  const response = await axios.put(`${serverUrl}admin/user/${userId}`, {role});
   return response?.data?.user;
 });
 
@@ -77,6 +87,28 @@ const admin = createSlice({
         state.status = 'success';
       })
       .addCase(getAdminUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.user = action.payload.users
+        state.status = 'success';
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload.users
+        state.status = 'success';
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
