@@ -4,7 +4,7 @@ import logo from '../assets/logo.png'
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
-const MainFooter = () => {
+const   MainFooter = () => {
   return (
     <div className="flex flex-col w-full px-10 bg-pink py-4">
 
@@ -33,7 +33,7 @@ const MainFooter = () => {
           </div>
         </div>
 
-        <div className="flex gap-6 mr-4">
+        <div className="grid grid-cols-2 md:flex gap-6 mr-4">
           <div className="">
             <p className="font-semibold text-black">Account</p>
             <Link to="/login"><p>Sign In</p></Link>

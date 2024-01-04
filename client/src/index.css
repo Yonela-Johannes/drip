@@ -15,7 +15,7 @@
     transform: translateX(-110%);
   }
 }
-
+/*
 .container {
   display: flex;
   margin: 2vmax auto;
@@ -23,7 +23,7 @@
   flex-wrap: wrap;
   justify-content: center;
   max-width: 100%;
-}
+} */
 
 input::file-selector-button {
   cursor: pointer;

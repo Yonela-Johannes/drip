@@ -32,6 +32,7 @@ function Item(props)
 
   return (
     <Carousel
+     data-aos="fade-up"
       className='w-full'
       autoPlay
       duration={3000}

@@ -2,6 +2,8 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
 import Cart from "./pages/Cart"
+import AOS from "aos";
+import "aos/dist/aos.css";
 import Home from "./pages/Home"
 import Product from "./pages/Product"
 import Products from "./pages/Products"
@@ -40,16 +42,26 @@ import Reviews from './admin/pages/dashboard/page/Reviews';
 import Success from './pages/success/Success';
 import Order from './admin/pages/Order';
 import MyOrder from './pages/orders/MyOrder';
+import { useEffect } from 'react';
 
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 100,
+    });
+    AOS.refresh();
+  }, []);
 
   return (
     <div className='flex flex-col items-center justify-start overflow-hidden min-h-screen'>
       <GlobalContext>
         <Navbar />
           <NoticeContext>
-            <div className="w-full flex-1 pt-28 md:pt-[225px]">
+            <div className="w-full flex-1 pt-28 md:pt-[225px] overflow-hidden">
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
@@ -91,7 +103,7 @@ function App() {
               </Routes>
             </div>
           </NoticeContext>
-        <div className="bg-neutral-200 flex flex-col w-full items-center justify-center">
+        <div data-aos="zoom-in" className="bg-neutral-200 flex flex-col w-full items-center justify-center">
           <Footer />
           <DeveloperFooter />
           <MainFooter />

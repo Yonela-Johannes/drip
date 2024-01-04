@@ -13,6 +13,7 @@ import avatar from '../assets/avatar.jpg'
 import { toast } from 'react-toastify';
 import MoreOption from './more/MoreOption';
 import { MdSearch } from 'react-icons/md';
+import DarkMode from "./DarkMode";
 
 const Navbar = () => {
   const { items } = useSelector((state) => state.cart)
@@ -138,7 +139,7 @@ const Navbar = () => {
               </>
             )}
           </div>
-          <div className="hidden md:flex item-center justify-end my-3">
+          <div className="hidden md:flex item-center justify-end my-3 gap-8 items-center">
           <form onSubmit={handleSearch} className="flex item-center w-full md:w-max justify-between md:justify-end border border-gray-500 p-2 rounded-md">
             <input
               type="text"
@@ -150,6 +151,9 @@ const Navbar = () => {
               <MdSearch size={20} />
             </button>
           </form>
+            <div>
+              <DarkMode />
+            </div>
          </div>
         <MoreOption />
       </header>
