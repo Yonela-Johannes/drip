@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
 // import { toast } from 'react-toastify';
 import { Link, useNavigate } from "react-router-dom";
-import landing from '../../../assets/landing2.jpg'
 import { login } from "../../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useContext } from "react";
-import { Notice } from "../../../helpers/Notice";
+import { toast } from 'react-toastify';
+import { MdClose } from "react-icons/md";
 
-const Login = () => {
+const Login = ({ close, handleSignup  }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const {user, message } = useSelector((state) => state.auth)
-  const { toast } = useContext(Notice)
 
   useEffect(() => {
-    console.log(user)
     if (user?._id){
       // navigate('/')
     }
@@ -38,7 +35,7 @@ const Login = () => {
       const response = await dispatch(login({email, password}));
       if(response.payload.message.includes("Sign in successful")){
         toast(response.payload.message)
-        navigate('/')
+        close()
       }else if(response.payload.message === 'Incorrect password.'){
         toast(response.payload.message)
       }
@@ -49,6 +46,9 @@ const Login = () => {
 
   return (
     <section className="mb-4 md:mb-10">
+      <div className='flex justify-end w-full p-2 cursor-pointer' onClick={() => close()}>
+        <MdClose size={18} />
+      </div>
       <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0 mb-4">
         <div className="w-full rounded-lg dark:border md:mt-0 sm:max-w-md xl:p-0 bg-gray-100">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -101,33 +101,15 @@ const Login = () => {
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                       />
                     </div>
-                    <div className="ml-3 text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-gray-500"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="font-semibold text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-gray-500"
-                      >
-                        Don't have a account <Link className="cursor-pointer hover:underline text-blue-500" to="/register">register</Link>
-                      </label>
-                    </div>
                   </div>
                 </div>
+              </div>
                 <Link
                   to="/forgot-password"
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Forgot password?
                 </Link>
-              </div>
 
               <button
                 type="submit"
@@ -138,9 +120,12 @@ const Login = () => {
               </button>
             </div>
           </div>
-        </div>
-        <div className="">
-          <img src={landing} className="rounded-md md:p-20 object-cover object-center" alt='landing' />
+          <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
+              Not registered?&nbsp;
+              <p onClick={() => handleSignup()} className="cursor-pointer text-cyan-700 hover:underline dark:text-cyan-500 duration-200">
+                Create account
+              </p>
+            </div>
         </div>
       </div>
     </section>

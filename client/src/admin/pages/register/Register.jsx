@@ -4,32 +4,35 @@ import landing from '../../../assets/reglanding.jpg'
 import { register } from "../../../redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { MdClose } from "react-icons/md";
 
-const Register = () => {
+const Register = ({ close , handleSignin }) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState("");
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const handleRegister = async () => {
     if(password !== validPassword) return toast("Passwords do not match")
     if (name && lastName && email && password && validPassword && password === validPassword) {
       const data = await dispatch(register({name, lastName, email, password}));
-      console.log(data)
       if(data?.payload.message === 'User already exists'){
-        toast('User already exists')
-        navigate("/login");
+        toast('User already exists');
+        handleSignin()
       }
     } else if(data && data?.payload && data?.payload?._id) {
       toast('Registered successfully')
+      close()
     }
   };
 
   return (
     <section className="mb-4 md:mb-10">
+      <div className='flex justify-end w-full p-2 cursor-pointer' onClick={() => close()}>
+        <MdClose size={18} />
+      </div>
       <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0">
         <div className="w-full rounded-lg dark:border md:mt-0 sm:max-w-md xl:p-0 bg-gray-100">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -109,7 +112,7 @@ const Register = () => {
               <div>
                 <label
                   htmlFor="validPassword"
-                  className="block mb-2 text-sm font-medium text-gray-900"
+                  className="block text-sm font-medium text-gray-900"
                 >
                   Re-type password
                 </label>
@@ -124,22 +127,6 @@ const Register = () => {
                 />
               </div>
               <div className="flex items-start justify-between">
-                <div className="">
-                  <div className="flex items-start gap-3">
-                    <div className="flex items-center h-5">
-                    </div>
-                  </div>
-                  <div className="flex items-start">
-                    <div className="font-semibold text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-gray-500"
-                      >
-                        Do have an account <Link className="cursor-pointer text-blue-500 hover:underline" to="/login">login</Link>
-                      </label>
-                    </div>
-                  </div>
-                </div>
                 <p
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
@@ -155,9 +142,12 @@ const Register = () => {
               </button>
             </div>
           </div>
-        </div>
-        <div className="md:h[800px] md:w-[800px]">
-          <img src={landing} className="rounded-md md:p-10 object-cover object-center" alt='landing' />
+          <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
+              Already registered?&nbsp;
+              <p onClick={() => handleSignin()} className="text-cyan-700 hover:underline dark:text-cyan-500 duration-200 cursor-pointer">
+                Sign in
+              </p>
+            </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import CartProduct from "../components/CartProduct";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
@@ -56,12 +56,14 @@ const Cart = () => {
   return (
     <MaxWidthWrapper>
       <div className="px-10 py-10 ">
-      <div className="flex items-center justify-between mb-10">
-        <h2 className="text-2xl ">
-          <strong>Shopping Cart</strong>
-        </h2>
-      </div>
-        {cartProducts?.length ? (
+      {cartProducts?.length > 0 && (
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-2xl ">
+            <strong>Shopping Cart</strong>
+          </h2>
+        </div>
+      )}
+        {cartProducts?.length > 0 ? (
           <div className="flex flex-col sm:flex-row gap-10">
             <div className="w-3/4">
               <div className="flex flex-col gap-10">
@@ -252,7 +254,10 @@ const Cart = () => {
           </div>
         ) : (
           <div className="flex items-center gap-6 justify-center h-[50vh] text-4xl bg-amazon-background font-bold">
-            <div>Cart is Empty</div>
+            <p className="text-xl">Cart is Empty.</p>
+            <p className="text-xl text-gray-400 cursor-pointer hover:text-pink2 duration-200">
+              <Link to="/products">Go to shop</Link>
+            </p>
           </div>
         )}
       </div>

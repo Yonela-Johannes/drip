@@ -1,5 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import Footer from "./components/Footer"
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 import Cart from "./pages/Cart"
 import AOS from "aos";
@@ -10,7 +9,6 @@ import Products from "./pages/Products"
 import AllProducts from './admin/pages/dashboard/page/AllProducts';
 import AllUsers from './admin/pages/dashboard/page/AllUsers';
 import UpdateUser from './admin/pages/dashboard/page/UpdateUser';
-import { DeveloperFooter } from './components/footer/DeveloperFooter';
 import Layout from './admin/components/shared/Layout';
 import Dashboard from './admin/pages/Dashboard';
 import Login from './admin/pages/login/Login';
@@ -44,8 +42,8 @@ import Order from './admin/pages/Order';
 import MyOrder from './pages/orders/MyOrder';
 import { useEffect } from 'react';
 
-
 function App() {
+  const  { pathname } = useLocation()
   useEffect(() => {
     AOS.init({
       offset: 100,
@@ -56,18 +54,19 @@ function App() {
     AOS.refresh();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <div className='flex flex-col items-center justify-start overflow-hidden min-h-screen'>
       <GlobalContext>
         <Navbar />
           <NoticeContext>
-            <div className="w-full flex-1 pt-28 md:pt-[225px] overflow-hidden">
+            <div className="w-full flex-1 pt-10 md:pt-[170px] overflow-hidden">
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<RegisterRoute><Register /></RegisterRoute>} />
-
                 <Route path="/products" element={<Products />} />
                 <Route path="/product/:id" element={<Product />} />
                 <Route path="/cart" element={<Cart />} />
@@ -103,9 +102,7 @@ function App() {
               </Routes>
             </div>
           </NoticeContext>
-        <div data-aos="zoom-in" className="bg-neutral-200 flex flex-col w-full items-center justify-center">
-          <Footer />
-          <DeveloperFooter />
+        <div className="bg-pink flex flex-col w-full items-center justify-center">
           <MainFooter />
         </div>
       </GlobalContext>

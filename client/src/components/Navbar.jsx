@@ -14,11 +14,18 @@ import { toast } from 'react-toastify';
 import MoreOption from './more/MoreOption';
 import { MdSearch } from 'react-icons/md';
 import DarkMode from "./DarkMode";
+import { Modal } from 'flowbite-react';
+import Login from "../admin/pages/login/Login";
+import Register from "../admin/pages/register/Register";
+import { Menu } from 'antd';
 
 const Navbar = () => {
   const { items } = useSelector((state) => state.cart)
   const { user, wishProducts, logout } = useContext(Global);
   const [searchTerm, setSearchTerm] = useState('')
+  const [openSignIn, setOpenSignin] = useState(false);
+  const [openSignup, setOpenSignup] = useState(false);
+  const [openUserModal, setOpenUserModal] = useState(false);
   const navigate = useNavigate()
 
   const handleSearch = (e) => {
@@ -26,6 +33,52 @@ const Navbar = () => {
     if(searchTerm?.length < 3) return toast("Please enter product name to search for")
     navigate(`/search/${searchTerm}`)
   }
+
+  function onCloseSignin() {
+    setOpenSignup(false)
+    setOpenSignin(false);
+    setOpenUserModal(false)
+  }
+
+  function handleSignin() {
+    setOpenSignup(false)
+    setOpenSignin(true);
+    setOpenUserModal(false)
+  }
+
+  function handleSignup() {
+    setOpenUserModal(false)
+    setOpenSignin(false);
+    setOpenSignup(true)
+  }
+
+  function handleUserModal() {
+    setOpenSignin(false);
+    setOpenSignup(false)
+    setOpenUserModal(true)
+  }
+
+  function handleDashboard() {
+    setOpenSignin(false);
+    setOpenSignup(false)
+    setOpenUserModal(false)
+    navigate('/dashboard')
+  }
+
+  function handleProfile() {
+    setOpenSignin(false);
+    setOpenSignup(false)
+    setOpenUserModal(false)
+    navigate('/profile')
+  }
+
+  function handleLogout() {
+    setOpenSignin(false);
+    setOpenSignup(false)
+    setOpenUserModal(false)
+    logout()
+  }
+
 
   return (
     <div className='w-full md:fixed z-50 top-0 inset-x-0 h-16'>
@@ -46,21 +99,9 @@ const Navbar = () => {
               </div>
                 <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end'>
                   <div className="flex gap-4">
-                    {user && user?._id && user?.role === 'admin' && (
-                        <Link className='capitalize'
-                          to='dashboard'>
-                          <div className="flex bg-gray-200 rounded-md px-1 items-center font-semibold">
-                            <div className="flex flex-col ">
-                              <p className='p-0 m-0 text-sm text-gray-600'>{user?.role}</p>
-                              <p className='p-0 m-0'>Dashboard</p>
-                            </div>
-                          </div>
-                        </Link>
-                      )
-                    }
                     {user?._id ? (
-                      <Link className='capitalize'
-                        to='profile'>
+                      <div className='capitalize cursor-pointer'
+                        onClick={handleUserModal}>
                         <div className="flex bg-gray-200 rounded-md px-1 items-center">
                             <div className="">{user && user?.avatar ? (<img src={user?.avatar} className='w-[35px] h-[35px] object-cover object-center rounded-full' alt='avatar' />) : (<img src={avatar} className='w-[40px] h-[40px] object-cover object-center rounded-full' alt='avatar' />)}</div>
                           <div className="flex flex-col ">
@@ -68,20 +109,20 @@ const Navbar = () => {
                             <p className='p-0 m-0 text-sm text-gray-600'>{user?.role}</p>
                           </div>
                         </div>
-                      </Link>
+                      </div>
                     ): (
-                      <div className='flex items-center justify-center gap-4'>
-                        <div className='underline'>
-                          <Link
-                            to='/login'>
+                      <div className='flex items-center justify-center gap-4 cursor-pointer'>
+                        <div onClick={handleSignin} className='underline'>
+                          <p
+                            >
                             Sign in
-                          </Link>
+                          </p>
                         </div>
-                          <div>
-                            <Link
-                              to='/register'>
+                          <div onClick={handleSignup}>
+                            <p
+                              >
                               Sign up
-                            </Link>
+                            </p>
                           </div>
                       </div>
                     )}
@@ -95,6 +136,20 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex gap-10 items-center my-4 justify-center sm:justify-end w-full">
+          {/* Search bar */}
+            <div className="hidden md:flex item-center justify-end my-3 gap-8 items-center">
+              <form onSubmit={handleSearch} className="flex item-center w-full md:w-max justify-between md:justify-end border border-gray-500 p-2 rounded-md">
+                <input
+                  type="text"
+                  placeholder="Search for items ..."
+                  className='text-sm md:text-base w-min rounded-md bg-white focus-ring-0 border-none focus:border-none outline-none focus:outline-none'
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button type="submit">
+                  <MdSearch size={20} />
+                </button>
+              </form>
+          </div>
             <div className='flex lg:ml-0'>
               <Link to='/'>
                 <p className='hidden sm:block'>Home</p>
@@ -107,24 +162,24 @@ const Navbar = () => {
                 <HiOutlineShoppingBag className='block sm:hidden h-5 w-5' />
               </Link>
             </div>
-            <div className='relative flex lg:ml-0'>
-              <p className='absolute text-sm w-5 h-5 -top-3 text-center -right-3  bg-pink m-0 text-black rounded-full'>{items?.length || 0}</p>
-              <Link to='/cart'>
-              {items?.length > 0 ? (<BsCartCheckFill size={25} />) : (<BsCartPlus size={25} />)}
-              </Link>
-            </div>
             <div className='flex lg:ml-0'>
               <Link to='/about'>
                 <p className='hidden sm:block'>About</p>
                 <LuContact2 className='block sm:hidden h-5 w-5' />
               </Link>
             </div>
+            <div className='relative flex lg:ml-0'>
+              <p className='absolute text-sm w-4 h-4 -top-1 text-center -right-3  bg-pink2 m-0 text-black rounded-full'>{items?.length || 0}</p>
+              <Link to='/cart'>
+                {items?.length > 0 ? (<BsCartCheckFill size={18} />) : (<BsCartPlus size={18} />)}
+              </Link>
+            </div>
             {user?._id && (
               <>
                 <div className='relative flex lg:ml-0'>
-                  <p className='absolute text-sm w-5 h-5 -top-3 text-center -right-3  bg-pink m-0 text-black rounded-full'>{wishProducts?.length || 0}</p>
+                  <p className='absolute text-sm w-4 h-4 -top-1 text-center -right-3  bg-violet-400 m-0 text-black rounded-full'>{wishProducts?.length || 0}</p>
                   <Link to='/wishlist'>
-                    {wishProducts?.length > 0 ? (<AiFillHeart size={25} />) : (<AiOutlineHeart size={25} />)}
+                    {wishProducts?.length > 0 ? (<AiFillHeart size={18} />) : (<AiOutlineHeart size={18} />)}
                   </Link>
                 </div>
                 <div className='hidden md:flex lg:ml-0'>
@@ -133,30 +188,49 @@ const Navbar = () => {
                     <LuContact2 className='block sm:hidden h-5 w-5' />
                   </Link>
                 </div>
-                <div onClick={logout} className='hidden md:flex lg:ml-0 cursor-pointer'>
-                    <p className='hidden sm:block'>Logout</p>
-                </div>
               </>
             )}
           </div>
-          <div className="hidden md:flex item-center justify-end my-3 gap-8 items-center">
-          <form onSubmit={handleSearch} className="flex item-center w-full md:w-max justify-between md:justify-end border border-gray-500 p-2 rounded-md">
-            <input
-              type="text"
-              placeholder="Search for items ..."
-              className='text-sm md:text-base w-min rounded-md bg-white focus-ring-0 border-none focus:border-none outline-none focus:outline-none'
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button type="submit">
-              <MdSearch size={20} />
-            </button>
-          </form>
-            <div>
-              <DarkMode />
-            </div>
-         </div>
-        <MoreOption />
       </header>
+      <Modal show={openSignIn} size="md" onClose={onCloseSignin} popup>
+        <Login close={onCloseSignin} handleSignup={handleSignup} />
+      </Modal>
+      <Modal show={openSignup} size="md" onClose={onCloseSignin} popup>
+        <Register close={onCloseSignin} handleSignin={handleSignin} />
+      </Modal>
+      {user && user?._id ? (
+        <Modal
+          show={openUserModal}
+          position={'top-right'}
+          onClose={onCloseSignin}
+          size="sm"
+        >
+        <div className="flex flex-col">
+          {user && user?._id ? (
+              <div className='capitalize'
+                onClick={handleProfile}>
+                    <p className='hover:bg-pink2 duration-200 cursor-pointer p-2'>Profile</p>
+              </div>
+            ) : ('')
+          }
+          <div>
+            {user && user?._id && user?.role === 'admin' ? (
+                <div className='capitalize'
+                  onClick={handleDashboard}>
+                      <p className='hover:bg-pink2 duration-200 cursor-pointer p-2'>Dashboard</p>
+                </div>
+              ) : ('')
+            }
+          </div>
+          <div>
+            {user && user?._id ? (
+              <p onClick={handleLogout} className="hover:bg-pink2 duration-200 cursor-pointer p-2">Logout</p>
+            ) : ""}
+            </div>
+        </div>
+
+        </Modal>
+      ) : ''}
     </div>
   )
 }

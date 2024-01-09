@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "./ProductCard";
 import "./Product.css";
+import Loader from "../shared/Loader";
 
 const Products = ({items, loading, category}) => {
 
   return (
     <>
       {loading ? (
-        ''
+        <Loader />
       ) : (
         <div className="py-12">
           <div className='md:flex md:items-center md:justify-between mb-4'>
@@ -17,9 +18,6 @@ const Products = ({items, loading, category}) => {
                 {category} items
               </h1>
             </div>
-              <p className='hidden text-sm font-medium text-gray-500 md:block'>
-                shop {category} items
-              </p>
           </div>
           <div className="flex flex-1 gap-8">
             {items?.length === 0 ?

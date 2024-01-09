@@ -1,10 +1,8 @@
 import MaxWidthWrapper from '../components/MaxWidthWrapper'
 import ProductReel from '../components/ProductReel'
-import { product_categories } from '../config/index'
-import { getProducts } from '../redux/features/products/productSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import Items from '../components/Products/Products'
+import Loader from '../components/shared/Loader'
 
 const parse = (param) => {
   return typeof param === 'string' ? param : undefined
@@ -12,32 +10,25 @@ const parse = (param) => {
 
 const Products = () => {
   const { items , loading} = useSelector((state) => state.products);
-  const [products, setProducts] = useState([])
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getProducts())
-  }, []);
-
-  const fetchProducts = () => {
-    setProducts(items)
-  }
-
-  useEffect(() => {
-    fetchProducts()
-  }, [items]);
 
   return (
     <MaxWidthWrapper>
+      {loading ? (
+        <Loader />
+      ) : (
       <div className="flex flex-col items-center justify-between">
         <div className='lg:block'>
           <Items items={items} loading={loading} category={'Featured'}/>
         </div>
+        <div className='lg:block'>
+          <Items items={items} loading={loading} category={'Low Prices'}/>
+        </div>
         <ProductReel
-          title={'Browse high-quality assets'}
-          products={products}
+          title={'Browse high-quality products'}
+          products={items}
         />
-      </div>
+      </div>)
+      }
     </MaxWidthWrapper>
   )
 }

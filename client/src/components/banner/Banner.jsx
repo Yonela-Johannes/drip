@@ -45,7 +45,7 @@ const Banner = () => {
   return (
     <div className="relative overflow-x-hidden w-screen min-h-[550px] sm:min-h-[650px] bg-gray-100 flex justify-center items-center text-cl duration-200 ">
       {/* background pattern */}
-      <div className="h-[700px] w-[700px] bg-pink absolute -top-1/2 right-0 rounded-3xl rotate-45"></div>
+      <div className="h-[700px] w-[700px] bg-pink2 absolute -top-1/2 right-0 rounded-3xl rotate-45"></div>
       {/* hero section */}
       <div className="container pb-8 sm:pb-0">
         <Slider {...settings}>
@@ -86,8 +86,8 @@ const Banner = () => {
                   >
                     <img
                       src={data.img}
-                      alt=""
-                      className="w-[300px] h-[300px] sm:h-[450px] sm:w-[450px] sm:scale-105 lg:scale-120 object-contain mx-auto"
+                      alt="landing"
+                      className="w-[300px] h-[300px] sm:h-[450px] rounded-md sm:w-[450px] object-cover mx-auto  drop-shadow-[-12px_10px_0px_rgba(243,207,198,5)] "
                     />
                   </div>
                 </div>

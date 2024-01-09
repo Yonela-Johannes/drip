@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: "class",
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}', 'node_modules/flowbite-react/lib/esm/**/*.js',],
+  plugins: [
+    // ...
+    require('flowbite/plugin'),
+  ],
   theme: {
     extend: {
       colors: {
@@ -9,7 +12,9 @@ module.exports = {
         background: '#181818',
         cl: '#212121',
         red: '#E50914',
-        pink: '#F7DDDC'
+        pink: '#F7DDDC',
+        pink1: '#F2D2BD',
+        pink2: '#F3CFC6'
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',

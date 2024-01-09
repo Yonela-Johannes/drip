@@ -12,10 +12,6 @@ const ProductReel = ({title, products}) => {
             </h1>
           ) : null}
         </div>
-          <p
-            className='hidden text-sm font-medium text-gray-500 md:block'>
-            Shop the collection
-          </p>
       </div>
 
       <div className='relative'>

@@ -31,7 +31,7 @@ const TestimonialData = [
 const Testimonials = () => {
   var settings = {
     dots: true,
-    arrows: false,
+    arrows: true,
     infinite: true,
     speed: 500,
     slidesToScroll: 1,
@@ -69,19 +69,16 @@ const Testimonials = () => {
 
   return (
     <div className="py-10 mb-10">
-      <div className="container">
+      <div  data-aos="fade-up" data-aos-duration="500" className="container">
         {/* header section */}
         <div className="text-center mb-10 max-w-[600px] mx-auto">
-          <p data-aos="fade-up" className="text-base text-primary">
-            What our customers are saying
-          </p>
-          <h1 data-aos="fade-up" className="text-center self-center text-xl m-5 text-black">
+          <h1 className="text-center self-center text-xl m-5 text-black">
             Testimonials
           </h1>
         </div>
 
         {/* Testimonial cards */}
-        <div data-aos="zoom-in">
+        <div>
           <Slider {...settings}>
             {TestimonialData.map((data) => (
               <div className="my-6">
