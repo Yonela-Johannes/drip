@@ -16,12 +16,6 @@ import { MdOutlineReviews } from 'react-icons/md'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
-		key: 'dashboard',
-		label: 'Dashboard',
-		path: '/dashboard',
-		icon: <HiOutlineViewGrid />
-	},
-	{
 		key: 'products',
 		label: 'Products',
 		path: 'admin/products',

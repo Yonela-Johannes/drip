@@ -124,7 +124,7 @@ const Profile = () => {
 
   return (
     <MaxWidthWrapper>
-      <div className="flex flex-col md:flex-row gap-6 px-6 mx-auto lg:py-10 py-4">
+      <div className="flex flex-col md:flex-row gap-6 px-6 mx-auto md:py-10 py-4 md:mt-20">
         <div className=" rounded-md md:px-10 lg:w-[500px]">
         <div>
           <h2 className="text-lg md:text-2xl">Details</h2>

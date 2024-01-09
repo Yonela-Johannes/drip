@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 import Cart from "./pages/Cart"
 import AOS from "aos";
@@ -10,9 +10,6 @@ import AllProducts from './admin/pages/dashboard/page/AllProducts';
 import AllUsers from './admin/pages/dashboard/page/AllUsers';
 import UpdateUser from './admin/pages/dashboard/page/UpdateUser';
 import Layout from './admin/components/shared/Layout';
-import Dashboard from './admin/pages/Dashboard';
-import Login from './admin/pages/login/Login';
-import Register from './admin/pages/register/Register';
 import Forgot from './admin/pages/forgot-password/Forgot';
 import Reset from './admin/pages/forgot-password/Reset';
 import Orders from './admin/pages/Orders';
@@ -32,7 +29,6 @@ import Rules from './components/more/Rules';
 import Support from './components/more/Support';
 import UserRoute from './PrivateRoute/UserRoute';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
-import RegisterRoute from './PrivateRoute/RegisterRoute';
 import Search from './pages/Search';
 import About from './pages/about/About';
 import Comments from './admin/pages/dashboard/page/Comments';
@@ -87,7 +83,7 @@ function App() {
                 <Route path="/success" element={<UserRoute><Success /></UserRoute>} />
                 {/* Admin Routes */}
                 <Route path="/dashboard" element={<PrivateRoute><Layout /></PrivateRoute>}>
-                  <Route index element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                  <Route index element={<PrivateRoute><AllProducts /></PrivateRoute>} />
                   <Route path="admin/products" element={<PrivateRoute><AllProducts /></PrivateRoute>} />
                   <Route path="admin/users" element={<PrivateRoute><AllUsers /></PrivateRoute>} />
                   <Route path="admin/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
