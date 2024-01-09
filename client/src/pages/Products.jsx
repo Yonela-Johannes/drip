@@ -4,10 +4,6 @@ import { useSelector } from 'react-redux'
 import Items from '../components/Products/Products'
 import Loader from '../components/shared/Loader'
 
-const parse = (param) => {
-  return typeof param === 'string' ? param : undefined
-}
-
 const Products = () => {
   const { items , loading} = useSelector((state) => state.products);
 
@@ -15,7 +11,7 @@ const Products = () => {
     <MaxWidthWrapper>
       {loading ? (
         <Loader />
-      ) : (
+      ) : items?.length > 0 ? (
       <div className="flex flex-col items-center justify-between">
         <div className='lg:block'>
           <Items items={items} loading={loading} category={'Featured'}/>
@@ -27,7 +23,9 @@ const Products = () => {
           title={'Browse high-quality products'}
           products={items}
         />
-      </div>)
+      </div>) : (
+        <Loader />
+      )
       }
     </MaxWidthWrapper>
   )
