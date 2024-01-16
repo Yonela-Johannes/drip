@@ -253,9 +253,9 @@ const Cart = () => {
             </div>
           </div>
         ) : (
-          <div className="flex items-center gap-6 justify-center h-[50vh] text-4xl bg-amazon-background font-bold">
-            <p className="text-xl">Cart is Empty.</p>
-            <p className="text-xl text-gray-400 cursor-pointer hover:text-pink2 duration-200">
+          <div className="flex items-center flex-col gap-2 md:gap-6 justify-center h-[50vh] text-4xl bg-amazon-background font-bold">
+            <p className="text-xl md:text-2xl text-black">Cart is Empty.</p>
+            <p className="text-base md:text-xl text-black rounded-md px-2 cursor-pointer hover:text-pink2 duration-200 bg-pink1">
               <Link to="/products">Go to shop</Link>
             </p>
           </div>

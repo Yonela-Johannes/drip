@@ -8,23 +8,23 @@ const ImageList = [
   {
     id: 1,
     img: Image1,
-    title: "Upto 50% off on all Men's Wear",
+    title: "Up to 50% off on all Men's Wear",
     description:
-      "lorem His Life will forever be Changed dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Lorem His Life will forever be Changed dolor sit amet, Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 2,
     img: Image2,
     title: "30% off on all Women's Wear",
     description:
-      "Who's there lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Who's there Lorem ipsum dolor sit amet, Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 3,
     img: Image3,
     title: "70% off on all Products Sale",
     description:
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
 ];
 
@@ -43,11 +43,12 @@ const Banner = () => {
   };
 
   return (
-    <div className="relative overflow-x-hidden w-screen min-h-[550px] sm:min-h-[650px] bg-gray-100 flex justify-center items-center text-cl duration-200 ">
+    <div className="relative overflow-x-hidden w-screen min-h-[550px] sm:min-h-[650px] bg-lgray flex justify-center items-center text-cl duration-200 ">
       {/* background pattern */}
-      <div className="h-[700px] w-[700px] bg-pink2 absolute -top-1/2 right-0 rounded-3xl rotate-45"></div>
+      <div className="w-[500px] h-[500px] md:h-[700px] md:w-[700px] bg-pink2 absolute -top-1/2 right-0 rounded-sm rotate-45"></div>
       {/* hero section */}
-      <div className="container pb-8 sm:pb-0">
+      <div  data-aos="zoom-out"
+        data-aos-duration="500" className="container pb-8 sm:pb-0">
         <Slider {...settings}>
           {ImageList.map((data, i) => (
             <div key={i}>
@@ -55,39 +56,25 @@ const Banner = () => {
                 {/* text content section */}
                 <div className="flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
                   <h1
-                    data-aos="zoom-out"
-                    data-aos-duration="500"
-                    data-aos-once="true"
-                    className="text-5xl sm:text-6xl lg:text-7xl font-bold text-cl"
+                    className="text-2xl sm:text-6xl lg:text-7xl font-bold text-cl"
                   >
                     {data.title}
                   </h1>
                   <p
-                    data-aos="fade-up"
-                    data-aos-duration="500"
-                    data-aos-delay="100"
-                    className="text-sm"
+                    className="text-sm md:text-xl"
                   >
                     {data.description}
                   </p>
-                  <div
-                    data-aos="fade-up"
-                    data-aos-duration="500"
-                    data-aos-delay="300"
-                  >
-                  </div>
                 </div>
                 {/* image section */}
                 <div className="order-1 sm:order-2">
                   <div
-                    data-aos="zoom-in"
-                    data-aos-once="true"
                     className="relative z-10"
                   >
                     <img
                       src={data.img}
                       alt="landing"
-                      className="w-[300px] h-[300px] sm:h-[450px] rounded-md sm:w-[450px] object-cover mx-auto  drop-shadow-[-12px_10px_0px_rgba(243,207,198,5)] "
+                      className="w-[300px] h-[300px] sm:h-[450px] rounded-md sm:w-[450px] object-cover mx-auto  md:drop-shadow-[-12px_10px_0px_rgba(243,207,198,5)] "
                     />
                   </div>
                 </div>

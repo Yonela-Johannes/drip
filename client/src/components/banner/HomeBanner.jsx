@@ -6,51 +6,48 @@ import { GiFoodTruck } from "react-icons/gi";
 
 const HomeBanner = () => {
   return (
-    <div className="min-h-[550px] flex justify-center items-center py-12 sm:py-0">
-      <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+    <div className="flex py-2 md:my-20 max-w-2xl sm:pb-6 lg:max-w-7xl">
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-2 items-start justify-start text-start md:gap-4 gap-2 md:mb-16" >
           {/* image section */}
-          <div data-aos="fade-up" data-aos-duration="500">
+          <div className="md:relative flex w-full bg-black items-start justify-start">
             <img
               src={BannerImg}
               alt=""
-              className="max-w-[400px] h-[350px] rounded-lg w-full mx-auto drop-shadow-[-2px_10px_12px_rgba(0,0,0,9)] object-cover"
+              className="absolute left-0 max-w-[400px] h-[350px] self-start justify-start rounded-lg w-full mx-auto shadow-black drop-shadow-xl object-cover"
             />
           </div>
 
           {/* text details section */}
-          <div className="flex flex-col justify-center gap-6 sm:pt-0">
-            <h1 data-aos="fade-up" data-aos-duration="500" className="text-3xl sm:text-4xl font-bold">
-              Winter Sale upto 50% Off
+          <div className="mb-6 flex w-full flex-col justify-center">
+            <h1  className="text-3xl sm:text-4xl font-bold">
+              Winter Sale Up to 50% Off
             </h1>
             <p
-              data-aos="fade-up" data-aos-duration="500"
-              className="text-sm text-gray-500 tracking-wide leading-5"
+              className="text-base md:text-xl text-gray-500 tracking-wide leading-5 mt-1 mb-3"
             >
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque
+              Lorem ipsum, dolor sit amet Consectetur adipisicing elit. Eaque
               reiciendis inventore iste ratione ex alias quis magni at optio
             </p>
             <div className="flex flex-col gap-4">
-              <div data-aos="fade-up" data-aos-duration="500" className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
                 <GrSecure className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-violet-400 dark:bg-violet-400" />
-                <p>Quality Products</p>
+                <p className="text-base md:text-xl">Quality Products</p>
               </div>
-              <div data-aos="fade-up" data-aos-duration="500" className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
                 <IoFastFood className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-orange-400 dark:bg-orange-400" />
-                <p>Fast Delivery</p>
+                <p className="text-base md:text-xl">Fast Delivery</p>
               </div>
-              <div data-aos="fade-up" data-aos-duration="500" className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
                 <GiFoodTruck className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-green-400 dark:bg-green-400" />
-                <p>Easy Payment method</p>
+                <p className="text-base md:text-xl">Easy Payment method</p>
               </div>
-              <div data-aos="fade-up" data-aos-duration="500" className="flex items-center gap-4">
+              <div className="flex items-center gap-4">
                 <GiFoodTruck className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-yellow-400 dark:bg-yellow-400" />
-                <p>Get Offers</p>
+                <p className="text-base md:text-xl">Get Offers</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };

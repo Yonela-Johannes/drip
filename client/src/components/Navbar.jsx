@@ -93,7 +93,7 @@ const Navbar = () => {
                       src={logo}
                       alt='logo'
                       />
-                    <p className='hidden sm:block text-xl'>Be Pleasured by Pinky</p>
+                    <p className='hidden sm:block text-base md:text-lg md:text-xl'>Be Pleasured by Pinky</p>
                   </div>
                 </Link>
               </div>
@@ -106,7 +106,7 @@ const Navbar = () => {
                             <div className="">{user && user?.avatar ? (<img src={user?.avatar} className='w-[35px] h-[35px] object-cover object-center rounded-full' alt='avatar' />) : (<img src={avatar} className='w-[40px] h-[40px] object-cover object-center rounded-full' alt='avatar' />)}</div>
                           <div className="flex flex-col ">
                             <p className='p-0 m-0'>{user?.name} {user.lastName}</p>
-                            <p className='p-0 m-0 text-sm text-gray-600'>{user?.role}</p>
+                            <p className='p-0 m-0 text-base md:text-xl text-gray-600'>{user?.role}</p>
                           </div>
                         </div>
                       </div>
@@ -129,8 +129,8 @@ const Navbar = () => {
                   </div>
                 </div>
             </div>
-            <div className="hidden sm:block">
-              <p className={ `anitext text-sm sm:text-lg bg-pink text-center sm:w-[660px]`}>Welcome to our shop...You can find anything in here as your
+            <div className="hidden sm:block text-base md:text-lg">
+              <p className={ `anitext text-base md:text-xl bg-pink text-center sm:w-[660px]`}>Welcome to our shop...You can find anything in here as your
                 favourites
             </p>
             </div>
@@ -142,7 +142,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search for items ..."
-                  className='text-sm md:text-base w-min rounded-md bg-white focus-ring-0 border-none focus:border-none outline-none focus:outline-none'
+                  className='text-base md:text-xl w-min rounded-md bg-white focus-ring-0 border-none focus:border-none outline-none focus:outline-none'
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button type="submit">
@@ -152,24 +152,24 @@ const Navbar = () => {
           </div>
             <div className='flex lg:ml-0'>
               <Link to='/'>
-                <p className='hidden sm:block'>Home</p>
+                <p className='hidden sm:block text-base md:text-lg'>Home</p>
                 <AiOutlineHome className='block sm:hidden h-5 w-5' />
               </Link>
             </div>
             <div className='flex lg:ml-0'>
               <Link to='/products'>
-                <p className='hidden sm:block'>Shop</p>
+                <p className='hidden sm:block text-base md:text-lg'>Shop</p>
                 <HiOutlineShoppingBag className='block sm:hidden h-5 w-5' />
               </Link>
             </div>
             <div className='flex lg:ml-0'>
               <Link to='/about'>
-                <p className='hidden sm:block'>About</p>
+                <p className='hidden sm:block text-base md:text-lg'>About</p>
                 <LuContact2 className='block sm:hidden h-5 w-5' />
               </Link>
             </div>
             <div className='relative flex lg:ml-0'>
-              <p className='absolute text-sm w-4 h-4 -top-1 text-center -right-3  bg-pink2 m-0 text-black rounded-full'>{items?.length || 0}</p>
+              <p className='absolute text-base w-5 h-5 -top-1 text-center -right-3  bg-pink2 m-0 text-black rounded-full'>{items?.length || 0}</p>
               <Link to='/cart'>
                 {items?.length > 0 ? (<BsCartCheckFill size={18} />) : (<BsCartPlus size={18} />)}
               </Link>
@@ -177,14 +177,14 @@ const Navbar = () => {
             {user?._id && (
               <>
                 <div className='relative flex lg:ml-0'>
-                  <p className='absolute text-sm w-4 h-4 -top-1 text-center -right-3  bg-violet-400 m-0 text-black rounded-full'>{wishProducts?.length || 0}</p>
+                  <p className='absolute text-base w-5 h-5 -top-1 text-center -right-3  bg-violet-400 m-0 text-black rounded-full'>{wishProducts?.length || 0}</p>
                   <Link to='/wishlist'>
                     {wishProducts?.length > 0 ? (<AiFillHeart size={18} />) : (<AiOutlineHeart size={18} />)}
                   </Link>
                 </div>
                 <div className='hidden md:flex lg:ml-0'>
                   <Link to='/orders'>
-                    <p className='hidden sm:block'>Orders</p>
+                    <p className='hidden sm:block text-base md:text-lg'>Orders</p>
                     <LuContact2 className='block sm:hidden h-5 w-5' />
                   </Link>
                 </div>

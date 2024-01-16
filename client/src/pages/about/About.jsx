@@ -20,8 +20,8 @@ const About = () => {
             <div className="col__2">
               <div className="meta">
                 <p
-                  className="text-pink"
-                  data-aos="fade-up"
+                  className="text-black"
+
                   style={{
                     fontSize: "40px",
                     fontWeight: "700",
@@ -30,14 +30,14 @@ const About = () => {
                 >
                   Welcome to Be Pleasured by Pinky
                 </p>
-                <p data-aos="fade-up">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                <p  className="text-base md:text-xl">
+                  Lorem ipsum dolor sit amet, Consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                   laboris nisi ut aliquip ex ea commodo consequat. Duis aute
                   irure dolor in reprehenderit in voluptate id est laborum.
                 </p>
-                <p data-aos="fade-up">
+                <p className="text-base md:text-xl">
                   lus ferri velit sanctus cu, sed at soleat accusata. Dictas
                   prompta et Ut placerat legendos interpre.Donec vitae sapien ut
                   libero venenatis faucibus. Nullam quis ante Etiam sit amet
@@ -53,7 +53,7 @@ const About = () => {
               <h2>What We Provide?</h2>
             </div>
             <div className="row flex">
-              <div className="col__3" data-aos="fade-up">
+              <div className="col__3" >
                 <div
                   style={{
                     padding: "10px",
@@ -62,14 +62,14 @@ const About = () => {
                   }}
                 >
                   <span>Best Prices & Offers</span>
-                  <p>
+                  <p  className="text-base md:text-xl">
                     There are many variations of passages of Lorem Ipsum
                     available, but the majority have suffered alteration in some
                     form
                   </p>
                 </div>
               </div>
-              <div className="col__3" data-aos="fade-up">
+              <div className="col__3" >
                 <div
                   style={{
                     padding: "10px",
@@ -78,14 +78,14 @@ const About = () => {
                   }}
                 >
                   <span>Best For Trust & Quality</span>
-                  <p>
+                  <p  className="text-base md:text-xl">
                     There are many variations of passages of Lorem Ipsum
                     available, but the majority have suffered alteration in some
                     form
                   </p>
                 </div>
               </div>
-              <div className="col__3" data-aos="fade-up">
+              <div className="col__3" >
                 <div
                   style={{
                     padding: "15px",
@@ -94,7 +94,7 @@ const About = () => {
                   }}
                 >
                   <span>Fast Delivery System</span>
-                  <p>
+                  <p  className="text-base md:text-xl">
                     There are many variations of passages of Lorem Ipsum
                     available, but the majority have suffered alteration in some
                     form
@@ -102,7 +102,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="col__3" data-aos="fade-up">
+              <div className="col__3" >
                 <div
                   style={{
                     padding: "15px",
@@ -111,7 +111,7 @@ const About = () => {
                   }}
                 >
                   <span>Easy Returns Service</span>
-                  <p>
+                  <p  className="text-base md:text-xl">
                     There are many variations of passages of Lorem Ipsum
                     available, but the majority have suffered alteration in some
                     form
@@ -119,7 +119,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="col__3" data-aos="fade-up">
+              <div className="col__3" >
                 <div
                   style={{
                     padding: "15px",
@@ -128,7 +128,7 @@ const About = () => {
                   }}
                 >
                   <span>100% satisfication</span>
-                  <p>
+                  <p  className="text-base md:text-xl">
                     There are many variations of passages of Lorem Ipsum
                     available, but the majority have suffered alteration in some
                     form
@@ -136,7 +136,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="col__3" data-aos="fade-up">
+              <div className="col__3" >
                 <div
                   style={{
                     padding: "15px",
@@ -145,7 +145,7 @@ const About = () => {
                   }}
                 >
                   <span>Great Daily Deal</span>
-                  <p>
+                  <p  className="text-base md:text-xl">
                     There are many variations of passages of Lorem Ipsum
                     available, but the majority have suffered alteration in some
                     form

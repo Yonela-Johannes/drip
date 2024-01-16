@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 export default function Newest({products}) {
 
   return (
-    <div className="bg-white">
-      <div data-aos="fade-up"  data-aos-duration="1000" className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <div className="flex justify-between items-center tex-center">
-          <h2 className="text-2xl tracking-tight text-gray-900">
-            Newest products
+    <div className="flex flex-col">
+      <div   className="flex flex-col text-center w-full items-center justify-start">
+        <div className="flex justify-between text-center items-center">
+          <h2 className="tp-10 text-xl p-4 md:p-8 md:text-2xl text-black">
+            New
           </h2>
         </div>
-
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products?.map((product) => (
             <div key={product?._id} className="group relative">
@@ -19,7 +18,7 @@ export default function Newest({products}) {
                 <img
                   src={product?.imageUrl}
                   alt="Product image"
-                  className="w-[300px] h-[300px] object-contain object-center lg:h-full lg:w-full"
+                  className="w-[300px] h-[300px] object-cover object-center lg:h-full lg:w-full"
                 />
               </div>
 
@@ -41,6 +40,7 @@ export default function Newest({products}) {
             </div>
           ))?.slice(0, 4)}
         </div>
+
       </div>
     </div>
   );

@@ -34,14 +34,14 @@ export default function Home() {
     <div className="w-screen overflow-x-hidden">
       <Banner />
       <MaxWidthWrapper>
-        <div className="text-center w-full items-center justify-start">
+        <div className="flex flex-col text-center w-full items-center justify-start">
           <h2
-            data-aos="fade-up"
-            className="text-center self-center p-10 text-xl m-5 text-black"
+
+            className="text-center self-center p-4 md:p-8 text-xl md:text-2xl m-5 text-black"
           >
-            Featured Products
+            Featured
           </h2>
-          <div data-aos="fade-up" className="sm:grid grid-cols-4">
+          <div  className="sm:grid grid-cols-4">
             {products
               ?.filter((product) => product?.category?.title === "Featured")
               ?.slice(0, 4)
@@ -52,33 +52,34 @@ export default function Home() {
         </div>
         <Hero />
         </MaxWidthWrapper>
-        <div  data-aos="fade-up" data-aos-duration="500" className="w-full bg-pink">
+        <div   data-aos-duration="500" className="relative w-full bg-lgray">
+        <div className="h-[200px] w-[200px] bg-pink2 -top-10 absolute right-0 rotate-45"></div>
           <MaxWidthWrapper>
             <div className="flex flex-col">
               <div className="relative py-20 mx-auto sm:text-center flex flex-col items-center ">
                 <div className="flex items-start justify-start gap-4">
                   <h1
-                    data-aos="fade-up"
-                    className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+
+                    className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-4xl"
                   >
                     Presenting your marketplace for high quality premium{" "}
-                    <span className="text-gray-400">
+                    <span className="">
                       digital assets
                     </span>
                     .
                   </h1>
                   <img
-                    data-aos="fade-up"
+
                     src={logo}
                     className="object-center object-contain w-20 h-20 sm:w-28 sm:h-28"
                   />
                 </div>
                 <p
-                  data-aos="fade-up"
-                  className="mt-6 text-base sm:text-lg max-w-prose text-muted-foreground"
+
+                  className="mt-6 text-base md:text-xl max-w-prose text-black"
                 >
-                  Welcome to{" "}
-                  <span className="font-semibold">Be Pleasured by Pinky</span>.
+                  Welcome to,{" "}
+                  <span className="">Be Pleasured by Pinky</span>.
                   Every asset on our platform is verified by our team to ensure our
                   highest quality standards. Explore a variety of offerings designed
                   to elevate your online experience. Welcome to the hub of digital
@@ -93,8 +94,8 @@ export default function Home() {
           <Newest products={products} />
           <HomeBanner />
           <Testimonials />
+          <Rules />
         </MaxWidthWrapper>
-        <Rules />
     </div>
   );
 }

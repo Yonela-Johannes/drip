@@ -5,25 +5,25 @@ const TestimonialData = [
   {
     id: 1,
     name: "Pinky",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
     img: "https://picsum.photos/101/101",
   },
   {
     id: 2,
     name: "Pinky",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
     img: "https://picsum.photos/102/102",
   },
   {
     id: 3,
     name: "Pinky",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
     img: "https://picsum.photos/104/104",
   },
   {
     id: 5,
     name: "Pinky",
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
+    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
     img: "https://picsum.photos/103/103",
   },
 ];
@@ -69,7 +69,7 @@ const Testimonials = () => {
 
   return (
     <div className="py-10 mb-10">
-      <div  data-aos="fade-up" data-aos-duration="500" className="container">
+      <div   className="container">
         {/* header section */}
         <div className="text-center mb-10 max-w-[600px] mx-auto">
           <h1 className="text-center self-center text-xl m-5 text-black">
@@ -95,8 +95,8 @@ const Testimonials = () => {
                   </div>
                   <div className="flex flex-col items-center gap-4">
                     <div className="space-y-3">
-                      <p className="text-xs text-gray-500">{data.text}</p>
-                      <h1 className="text-base font-bold text-black/80 dark:text-primary">
+                      <p className="text-base md:text-xl text-gray-500">{data.text}</p>
+                      <h1 className="text-base md:text-base font-bold text-black/80 dark:text-primary">
                         {data.name}
                       </h1>
                     </div>

@@ -10,6 +10,9 @@ module.exports = {
       colors: {
         black: '#282828',
         background: '#181818',
+        lgray:  '#C8C8C8',
+        mdgray: '#989898',
+        dgray: '#686868',
         cl: '#212121',
         red: '#E50914',
         pink: '#F7DDDC',
@@ -17,8 +20,8 @@ module.exports = {
         pink2: '#F3CFC6'
       },
       animation: {
-        slideup: 'slideup 1s ease-in-out',
-        slidedown: 'slidedown 1s ease-in-out',
+        slideup: 'slideup 1s ease-in',
+        slidedown: 'slidedown 1s ease-out',
         slideleft: 'slideleft 1s ease-in-out',
         slideright: 'slideright 1s ease-in-out',
         wave: 'wave 1.2s linear infinite',

@@ -4,19 +4,19 @@ import Rating from "../shared/Rating";
 
 const ProductCard = ({ product }) => {
   return (
-    <>
+    <div >
       <Link
         className={`rounded-md border border-pink p-2 hover:bg-pink cursor-pointer duration-300 visible animate-in fade-in-5' `}
         to={`/product/${product?._id}`}
       >
         <img
-          data-aos="fade-up"
+
           className="rounded-md h-[200px] w-[300px] object-cover object-center"
           src={product?.imageUrl}
           alt={product?.name}
         />
         <p
-          data-aos="fade-up"
+
           className="mt-4 font-medium text-sm text-gray-700"
         >
           {product?.name}
@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
         <div
-          data-aos="fade-up"
+
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -39,7 +39,7 @@ const ProductCard = ({ product }) => {
             select={false}
             hover={false}
           />
-          <div data-aos="fade-up" className="offerPriceBox">
+          <div className="offerPriceBox">
             <h1
               className="mt-1 font-medium text-sm text-gray-900"
               style={{
@@ -51,13 +51,13 @@ const ProductCard = ({ product }) => {
               {product?.offerPrice > 0 ? `$${product?.offerPrice}` : ""}
             </h1>
             <span
-              data-aos="fade-up"
+
               className="mt-1 font-medium text-sm text-gray-900"
             >{`R${product?.price}`}</span>
           </div>
         </div>
       </Link>
-    </>
+    </div>
   );
 };
 

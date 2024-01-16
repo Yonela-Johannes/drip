@@ -10,15 +10,12 @@
     flex-direction: column;
 }
 .meta p{
-    color: #7E7E7E;
-    font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 25px;
 }
 .meta span{
     font-family: "Roboto";
     padding: 20px 0px;
-    color: #253D4E;
 }
 .Description p {
     padding-left: 5px;
@@ -64,8 +61,6 @@
     display: block;
 }
 .col__3 > div > p{
-    color: #7E7E7E;
-    font-size: 1rem;
     line-height: 1.5;
     text-align: center;
     padding: 15px 0;
@@ -80,7 +75,6 @@
 }
 .heading h2{
     text-align: center;
-    color: pink;
     font-weight: 700;
     font-size: 40px;
     line-height: 1.2;

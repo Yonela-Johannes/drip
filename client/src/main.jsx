@@ -8,7 +8,7 @@ import App from './App.jsx'
 import "./bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import './index.css'
+import './globals.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
