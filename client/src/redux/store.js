@@ -11,6 +11,7 @@ import usersReducer from './features/cutomers/customerSlice'
 import categoryReducer from './features/category/categorySlice'
 import orderReducer from './features/order/orderSlice'
 import addressReducer from './features/address/addressSlice'
+import modalsReducer from './features/modals/modalsSlice';
 
 const persistConfig = {
   key: 'root',
@@ -31,6 +32,7 @@ const rootReducer = {
   category: categoryReducer,
   orders: persistedOrderReducer,
   address: addressReducer,
+  modals: modalsReducer
 };
 
 export const store = configureStore({

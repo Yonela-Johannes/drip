@@ -6,7 +6,6 @@ import Loader from '../components/shared/Loader'
 
 const Products = () => {
   const { items , loading} = useSelector((state) => state.products);
-
   return (
     <MaxWidthWrapper>
       {loading ? (

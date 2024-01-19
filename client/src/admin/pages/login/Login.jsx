@@ -6,18 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { MdClose } from "react-icons/md";
 
-const Login = ({ close, handleSignup  }) => {
+const Login = ({ close, handleSignup }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const {user, message } = useSelector((state) => state.auth)
-
-  useEffect(() => {
-    if (user?._id){
-      // navigate('/')
-    }
-  }, []);
 
   const handleSignIn = async () => {
     const validateEmail = () => {
@@ -35,7 +29,7 @@ const Login = ({ close, handleSignup  }) => {
       const response = await dispatch(login({email, password}));
       if(response.payload.message.includes("Sign in successful")){
         toast(response.payload.message)
-        close()
+        dispatch(close())
       }else if(response.payload.message === 'Incorrect password.'){
         toast(response.payload.message)
       }
@@ -46,7 +40,7 @@ const Login = ({ close, handleSignup  }) => {
 
   return (
     <section className="mb-4 md:mb-10">
-      <div className='flex justify-end w-full p-2 cursor-pointer' onClick={() => close()}>
+      <div className='flex justify-end w-full p-2 cursor-pointer' onClick={() => dispatch(close())}>
         <MdClose size={18} />
       </div>
       <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0 mb-4">

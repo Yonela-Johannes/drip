@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MobileNav from './MobileNav'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AiFillHeart, AiOutlineHeart, AiOutlineHome } from "react-icons/ai";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { LuContact2 } from "react-icons/lu";
@@ -11,74 +11,45 @@ import { Global } from '../helpers/GlobalContext';
 import { BsCartCheckFill, BsCartPlus } from 'react-icons/bs';
 import avatar from '../assets/avatar.jpg'
 import { toast } from 'react-toastify';
-import MoreOption from './more/MoreOption';
 import { MdSearch } from 'react-icons/md';
-import DarkMode from "./DarkMode";
 import { Modal } from 'flowbite-react';
 import Login from "../admin/pages/login/Login";
 import Register from "../admin/pages/register/Register";
-import { Menu } from 'antd';
+import { handleSignin, handleUserModal, onCloseSignin, handleSignup } from "../redux/features/modals/modalsSlice";
 
 const Navbar = () => {
-  const { items } = useSelector((state) => state.cart)
+  const { items } = useSelector((state) => state.cart);
+  const { openSignIn, openSignup, openUserModal } = useSelector((state) => state.modals)
   const { user, wishProducts, logout } = useContext(Global);
   const [searchTerm, setSearchTerm] = useState('')
-  const [openSignIn, setOpenSignin] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
-  const [openUserModal, setOpenUserModal] = useState(false);
+  const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const handleSearch = (e) => {
     e.preventDefault()
     if(searchTerm?.length < 3) return toast("Please enter product name to search for")
     navigate(`/search/${searchTerm}`)
   }
 
-  function onCloseSignin() {
-    setOpenSignup(false)
-    setOpenSignin(false);
-    setOpenUserModal(false)
-  }
-
-  function handleSignin() {
-    setOpenSignup(false)
-    setOpenSignin(true);
-    setOpenUserModal(false)
-  }
-
-  function handleSignup() {
-    setOpenUserModal(false)
-    setOpenSignin(false);
-    setOpenSignup(true)
-  }
-
-  function handleUserModal() {
-    setOpenSignin(false);
-    setOpenSignup(false)
-    setOpenUserModal(true)
-  }
-
   function handleDashboard() {
-    setOpenSignin(false);
-    setOpenSignup(false)
-    setOpenUserModal(false)
+    dispatch(onCloseSignin())
     navigate('/dashboard')
   }
 
   function handleProfile() {
-    setOpenSignin(false);
-    setOpenSignup(false)
-    setOpenUserModal(false)
+    dispatch(onCloseSignin())
     navigate('/profile')
   }
 
   function handleLogout() {
-    setOpenSignin(false);
-    setOpenSignup(false)
-    setOpenUserModal(false)
+    dispatch(onCloseSignin())
     logout()
   }
 
+  function handleClose() {
+    console.log('Close')
+    dispatch(onCloseSignin())
+  }
+  console.log(openSignIn)
 
   return (
     <div className='w-full md:fixed z-50 top-0 inset-x-0 h-16'>
@@ -112,13 +83,13 @@ const Navbar = () => {
                       </div>
                     ): (
                       <div className='flex items-center justify-center gap-4 cursor-pointer'>
-                        <div onClick={handleSignin} className='underline'>
+                        <div onClick={() => dispatch(handleSignin())} className='underline'>
                           <p
                             >
                             Sign in
                           </p>
                         </div>
-                          <div onClick={handleSignup}>
+                          <div onClick={() => dispatch(handleSignup())}>
                             <p
                               >
                               Sign up
@@ -192,17 +163,17 @@ const Navbar = () => {
             )}
           </div>
       </header>
-      <Modal show={openSignIn} size="md" onClose={onCloseSignin} popup>
+      <Modal show={openSignIn} size="md" onClose={() => handleClose()} popup>
         <Login close={onCloseSignin} handleSignup={handleSignup} />
       </Modal>
-      <Modal show={openSignup} size="md" onClose={onCloseSignin} popup>
+      <Modal show={openSignup} size="md" onClose={() => handleClose()} popup>
         <Register close={onCloseSignin} handleSignin={handleSignin} />
       </Modal>
       {user && user?._id ? (
         <Modal
           show={openUserModal}
           position={'top-right'}
-          onClose={onCloseSignin}
+          onClose={dispatch(onCloseSignin())}
           size="sm"
         >
         <div className="flex flex-col">

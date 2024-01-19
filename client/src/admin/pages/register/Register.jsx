@@ -20,17 +20,17 @@ const Register = ({ close , handleSignin }) => {
       const data = await dispatch(register({name, lastName, email, password}));
       if(data?.payload.message === 'User already exists'){
         toast('User already exists');
-        handleSignin()
+        dispatch(handleSignin());
       }
     } else if(data && data?.payload && data?.payload?._id) {
       toast('Registered successfully')
-      close()
+      dispatch(close())
     }
   };
 
   return (
     <section className="mb-4 md:mb-10">
-      <div className='flex justify-end w-full p-2 cursor-pointer' onClick={() => close()}>
+      <div className='flex justify-end w-full p-2 cursor-pointer' onClick={() => dispatch(close())}>
         <MdClose size={18} />
       </div>
       <div className="flex flex-col md:flex-row items-center justify-center px-6 py-8 mx-auto lg:py-0">
