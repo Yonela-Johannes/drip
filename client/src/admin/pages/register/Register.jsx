@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import landing from '../../../assets/reglanding.jpg'
 import { register } from "../../../redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -144,7 +142,7 @@ const Register = ({ close , handleSignin }) => {
           </div>
           <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
               Already registered?&nbsp;
-              <p onClick={() => handleSignin()} className="text-cyan-700 hover:underline dark:text-cyan-500 duration-200 cursor-pointer">
+              <p onClick={() => dispatch(handleSignin())} className="text-cyan-700 hover:underline dark:text-cyan-500 duration-200 cursor-pointer">
                 Sign in
               </p>
             </div>

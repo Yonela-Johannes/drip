@@ -5,15 +5,15 @@ import CartProduct from "../components/CartProduct";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import { setOrderInfo } from "../redux/features/order/orderSlice";
 import { toast } from "react-toastify";
+import { handleSignin } from "../redux/features/modals/modalsSlice";
 
 const Cart = () => {
   const [primeShipping, setPrimeShipping] = useState(false);
-  const [isCod, setIsCod] = useState(false);
   const { items } = useSelector((state) => state.cart)
   const { user } = useSelector((state) => state.auth)
   const [cartProducts, setCartProducts] = useState();
   const [paymentMethod, setPaymentMethod] = useState()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -245,7 +245,7 @@ const Cart = () => {
               ) : (
                 <button
                   className="bg-gray-300 hover:bg-gray-400 transition-all duration-300 text-black rounded flex justify-center px-3 py-2 gap-10 font-bold w-full items-center"
-                  onClick={() => navigate("/login")}
+                  onClick={() => dispatch(handleSignin())}
                 >
                   Login
                 </button>

@@ -72,7 +72,7 @@ const Navbar = () => {
                   <div className="flex gap-4">
                     {user?._id ? (
                       <div className='capitalize cursor-pointer'
-                        onClick={handleUserModal}>
+                        onClick={() => dispatch(handleUserModal())}>
                         <div className="flex bg-gray-200 rounded-md px-1 items-center">
                             <div className="">{user && user?.avatar ? (<img src={user?.avatar} className='w-[35px] h-[35px] object-cover object-center rounded-full' alt='avatar' />) : (<img src={avatar} className='w-[40px] h-[40px] object-cover object-center rounded-full' alt='avatar' />)}</div>
                           <div className="flex flex-col ">
@@ -173,7 +173,7 @@ const Navbar = () => {
         <Modal
           show={openUserModal}
           position={'top-right'}
-          onClose={dispatch(onCloseSignin())}
+          onClose={() => handleClose()}
           size="sm"
         >
         <div className="flex flex-col">
