@@ -1,34 +1,26 @@
 import React from "react";
 import Slider from "react-slick";
+import Title from "../../utils/Title";
+import { faker } from '@faker-js/faker';
 
-const TestimonialData = [
-  {
-    id: 1,
-    name: "Pinky",
-    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
-    img: "https://picsum.photos/101/101",
-  },
-  {
-    id: 2,
-    name: "Pinky",
-    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
-    img: "https://picsum.photos/102/102",
-  },
-  {
-    id: 3,
-    name: "Pinky",
-    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
-    img: "https://picsum.photos/104/104",
-  },
-  {
-    id: 5,
-    name: "Pinky",
-    text: "Lorem ipsum dolor sit amet Consectetur adipisicing elit. Eaque reiciendis inventore iste ratione ex alias quis magni at optio",
-    img: "https://picsum.photos/103/103",
-  },
-];
+const data = []
 
-const Testimonials = () => {
+
+const testimonialData = () =>
+{
+  for (let x = 0; x < 10; x++)
+    data.push({
+      id: faker.database.mongodbObjectId(),
+      name: faker.person.firstName(),
+      text: faker.commerce.productDescription().slice(0, 50),
+      img: faker.image.url(),
+    })
+}
+testimonialData()
+
+console.log(data)
+const Testimonials = () =>
+{
   var settings = {
     dots: true,
     arrows: true,
@@ -69,18 +61,13 @@ const Testimonials = () => {
 
   return (
     <div className="py-10 mb-10">
-      <div   className="container">
+      <div className="container">
         {/* header section */}
-        <div className="text-center mb-10 max-w-[600px] mx-auto">
-          <h1 className="text-center self-center text-xl m-5 text-black">
-            Testimonials
-          </h1>
-        </div>
-
+        <Title title="Testimonials" />
         {/* Testimonial cards */}
         <div>
           <Slider {...settings}>
-            {TestimonialData.map((data) => (
+            {data?.map((data) => (
               <div className="my-6">
                 <div
                   key={data.id}

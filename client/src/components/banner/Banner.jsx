@@ -1,7 +1,7 @@
 import React from "react";
-import Image1 from "../../assets/40.png";
-import Image2 from "../../assets/40.png";
-import Image3 from "../../assets/60.png";
+import Image1 from "../../assets/Content/riri.webp";
+import Image2 from "../../assets/Content/puma.webp";
+import Image3 from "../../assets/Content/pumaO.webp";
 import Slider from "react-slick";
 
 const ImageList = [
@@ -28,7 +28,8 @@ const ImageList = [
   },
 ];
 
-const Banner = () => {
+const Banner = () =>
+{
   var settings = {
     dots: false,
     arrows: false,
@@ -43,11 +44,11 @@ const Banner = () => {
   };
 
   return (
-    <div className="relative overflow-x-hidden w-screen min-h-[550px] sm:min-h-[650px] bg-lgray flex justify-center items-center text-cl duration-200 ">
+    <div className="relative overflow-x-hidden w-screen min-h-screen bg-lgray flex justify-center items-center text-cl duration-200 ">
       {/* background pattern */}
       <div className="w-[500px] h-[500px] md:h-[700px] md:w-[700px] bg-pink2 absolute -top-1/2 right-0 rounded-sm rotate-45"></div>
       {/* hero section */}
-      <div  data-aos="zoom-out"
+      <div data-aos="zoom-out"
         data-aos-duration="500" className="container pb-8 sm:pb-0">
         <Slider {...settings}>
           {ImageList.map((data, i) => (
@@ -74,7 +75,7 @@ const Banner = () => {
                     <img
                       src={data.img}
                       alt="landing"
-                      className="w-[300px] h-[300px] sm:h-[450px] rounded-md sm:w-[450px] object-cover mx-auto  md:drop-shadow-[-12px_10px_0px_rgba(243,207,198,5)] "
+                      className="w-[300px] h-[300px] sm:h-[450px] rounded-md sm:w-[450px] object-cover mx-auto  "
                     />
                   </div>
                 </div>

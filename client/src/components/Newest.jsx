@@ -1,16 +1,14 @@
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Title from "../utils/Title";
 
-export default function Newest({products}) {
+export default function Newest({ products })
+{
 
   return (
     <div className="flex flex-col">
-      <div   className="flex flex-col text-center w-full items-center justify-start">
-        <div className="flex justify-between text-center items-center">
-          <h2 className="tp-10 text-xl p-4 md:p-8 md:text-2xl text-black">
-            New
-          </h2>
-        </div>
+      <Title title="Brand new" />
+      <div className="flex flex-col w-full items-center justify-start">
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products?.map((product) => (
             <div key={product?._id} className="group relative">

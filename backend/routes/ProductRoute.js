@@ -11,6 +11,7 @@ const {
   getAdminProducts,
   commentProduct,
   deleteCommentProduct,
+  insertProduct,
 } = require("../controllers/ProductController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
@@ -28,6 +29,10 @@ router
 router
   .route("/product")
   .post(createProduct)
+
+router
+  .route("/products")
+  .post(insertProduct)
 
 router
   .route("/product/:id")

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import imageOne from '../assets/40.png'
+import imageOne from '../assets/Content/nikees.webp'
 
 export default function Hero() {
 

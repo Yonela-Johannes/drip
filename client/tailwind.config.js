@@ -10,14 +10,14 @@ module.exports = {
       colors: {
         black: '#282828',
         background: '#181818',
-        lgray:  '#C8C8C8',
+        lgray: '#FABB04',
         mdgray: '#989898',
         dgray: '#686868',
         cl: '#212121',
         red: '#E50914',
-        pink: '#F7DDDC',
-        pink1: '#F2D2BD',
-        pink2: '#F3CFC6'
+        pink: '#E94335',
+        pink1: '#E94335',
+        pink2: '#E94335'
       },
       animation: {
         slideup: 'slideup 1s ease-in',

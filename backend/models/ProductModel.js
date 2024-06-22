@@ -9,7 +9,6 @@ const productSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please enter a name of a product"],
-    maxLength: [20, "Product name not exceed than 20 characters"],
   },
   slug: {
     type: String,
@@ -20,7 +19,7 @@ const productSchema = mongoose.Schema({
   description: {
     type: String,
     required: [true, "Please add a description of your product"],
-    maxlength: [4000, "Description is can not exceed than 4000 characters"],
+    maxlength: [500, "Description is can not exceed than 4000 characters"],
   },
   imageUrl: {
     type: String,
@@ -39,10 +38,6 @@ const productSchema = mongoose.Schema({
     type: Number,
     maxLength: [4, "Discount price can not exceed than 4 characters"],
   },
-  sold: {
-    type: Number,
-    default: 0,
-  },
   ratings: {
     type: Number,
     default: 0,
@@ -59,7 +54,7 @@ const productSchema = mongoose.Schema({
   },
   inStock: {
     type: Boolean,
-    required: [true, "Please add some stoke for your product"],
+    default: true,
   },
   stockCount: {
     type: Number,
@@ -94,7 +89,7 @@ const productSchema = mongoose.Schema({
     default: new Date(),
   },
 },
-{ timestamps: true }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Product", productSchema);

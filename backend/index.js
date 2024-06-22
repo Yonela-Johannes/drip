@@ -4,8 +4,8 @@ const mongoose = require('mongoose')
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
-const { authMiddleware, isAdmin } = require("./middlewares/authMiddleware");
-const { handleError, notFound } = require("./middlewares/errorHandler");
+const { authMiddleware, isAdmin } = require("./middleware/authMiddleware");
+const { handleError, notFound } = require("./middleware/errorHandler");
 // Route imports
 const product = require("./routes/ProductRoute");
 const user = require("./routes/UserRoute");
@@ -17,6 +17,7 @@ const address = require('./routes/AddressRouter');
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const cloudinary = require("cloudinary");
+const { createProducts } = require("./data/createProducts");
 const dotenv = require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
@@ -42,23 +43,26 @@ app.use(cookieParser())
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended : true }))
-app.use(cors({origin: ['http://localhost:5173', 'https://be-pleasered-by-pinky.vercel.app'], credentials: true}));
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors({ origin: ['http://localhost:5173', 'https://be-pleasered-by-pinky.vercel.app'], credentials: true }));
 
-app.use("/api",product);
-app.use("/api",user);
-app.use("/api",order);
-app.use("/api",category);
-app.use("/api",address);
+app.use("/api", product);
+app.use("/api", user);
+app.use("/api", order);
+app.use("/api", category);
+app.use("/api", address);
 
+// createProducts()
 // app.use("/api/v1",payment);
 // app.use("/api/v2",cart);
 
 app.use(notFound)
 app.use(handleError)
 
-app.listen(PORT, () => {
-  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true})
+
+app.listen(PORT, () =>
+{
+  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("db connected"))
     .catch((err) => console.log(err.message));
   console.log(`Server is running at http://localhost:${PORT}`)

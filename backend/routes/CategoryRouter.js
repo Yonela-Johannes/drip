@@ -5,9 +5,9 @@ const {
   updateCategory,
   getCategory,
   createCategory,
- } = require("../controllers/CategoryController");
- const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
- const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
+} = require("../controllers/CategoryController");
+const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+const { authMiddleware, isAdmin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 

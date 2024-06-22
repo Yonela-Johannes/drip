@@ -1,7 +1,7 @@
 const express = require("express");
 const { createAddress, getAddress, updateAddress } = require("../controllers/AddressController");
- const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
- const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
+const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
+const { authMiddleware, isAdmin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 

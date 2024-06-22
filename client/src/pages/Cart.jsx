@@ -7,7 +7,8 @@ import { setOrderInfo } from "../redux/features/order/orderSlice";
 import { toast } from "react-toastify";
 import { handleSignin } from "../redux/features/modals/modalsSlice";
 
-const Cart = () => {
+const Cart = () =>
+{
   const [primeShipping, setPrimeShipping] = useState(false);
   const { items } = useSelector((state) => state.cart)
   const { user } = useSelector((state) => state.auth)
@@ -16,28 +17,34 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     setCartProducts(items)
     getTotalAmount()
   }, [items]);
 
-  const getTotalAmount = () => {
-    if(cartProducts?.length > 0){
+  const getTotalAmount = () =>
+  {
+    if (cartProducts?.length > 0)
+    {
       const totals = cartProducts?.map((prod) => Number(prod?.product?.total))?.reduce((acc, curr) => acc + curr);
       return totals
     }
   }
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     getTotalAmount()
   }, [cartProducts]);
 
-  const handleCheckoutRedirect = () => {
-    if(!paymentMethod) return toast("Select payment method")
+  const handleCheckoutRedirect = () =>
+  {
+    if (!paymentMethod) return toast("Select payment method")
     const data = {
-      products: cartProducts.map((product) => {
-          return product?.product
-        }),
+      products: cartProducts.map((product) =>
+      {
+        return product?.product
+      }),
 
       user: {
         id: user?._id,
@@ -54,15 +61,15 @@ const Cart = () => {
   };
 
   return (
-    <MaxWidthWrapper>
+    <div className="flex flex-col mx-auto w-full max-w-screen-xl px-2.5 md:pt-12  overflow-hidden justify-start">
       <div className="px-10 py-10 ">
-      {cartProducts?.length > 0 && (
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-2xl ">
-            <strong>Shopping Cart</strong>
-          </h2>
-        </div>
-      )}
+        {cartProducts?.length > 0 && (
+          <div className="flex items-center justify-between mb-10">
+            <h2 className="text-2xl ">
+              <strong>Shopping Cart</strong>
+            </h2>
+          </div>
+        )}
         {cartProducts?.length > 0 ? (
           <div className="flex flex-col sm:flex-row gap-10">
             <div className="w-3/4">
@@ -146,13 +153,13 @@ const Cart = () => {
               </div>
             </div>
             <div className="flex-1 bg-gray-100 p-10 h-max">
-                {user && (
-                  <h5>
-                    <strong>{user?.name}, the last step remains!</strong>
-                  </h5>
-                )}
+              {user && (
+                <h5>
+                  <strong>{user?.name}, the last step remains!</strong>
+                </h5>
+              )}
               <div className="flex flex-col gap-2 my-5">
-              <div className="flex">
+                <div className="flex">
                   <div className="flex items-center h-5 cursor-pointer">
                     <input
                       aria-describedby="payment-method-text"
@@ -229,7 +236,7 @@ const Cart = () => {
                 <div className="flex gap-3 justify-between">
                   <p>Total:</p>
                   <p className="font-semibold text-sm">
-                      R{getTotalAmount() + (primeShipping ? 40 : 0)}
+                    R{getTotalAmount() + (primeShipping ? 40 : 0)}
                   </p>
                 </div>
               </div>
@@ -261,7 +268,7 @@ const Cart = () => {
           </div>
         )}
       </div>
-    </MaxWidthWrapper>
+    </div>
   );
 };
 

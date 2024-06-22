@@ -4,27 +4,28 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Notice = createContext();
 
-const NoticeContext = ({children}) => {
+const NoticeContext = ({ children }) =>
+{
   return (
     <Notice.Provider value={{
       toast
     }}>
-    <>
-    <ToastContainer
-       position="bottom-center"
-       autoClose={2800}
-       hideProgressBar={false}
-       newestOnTop={false}
-       closeOnClick
-       rtl={false}
-       pauseOnFocusLoss
-       draggable
-       pauseOnHover
-       />
-      {children}
-    </>
+      <>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={2800}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        {children}
+      </>
     </Notice.Provider>
   )
 }
 
-export { Notice, NoticeContext}
+export { Notice, NoticeContext }
