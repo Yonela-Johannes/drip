@@ -1,4 +1,4 @@
-# Be Pleasured by Pinky - A Modern Fullstack E-Commerce Marketplace for products + Dashboard & CMS, React, Tailwind, MongoDB
+# Drip - A Modern Fullstack E-Commerce Marketplace for products + Dashboard & CMS, React, Tailwind, MongoDB
 
 ### Frontend: Built with the Vite App Router, & Tailwind
 ### Backend: Built with the Nodejs, Express, MongoDB, Mongoose
@@ -7,7 +7,7 @@
 
 ## Demo
 
-You can check out a live demo of the application [here](https://be-pleasered-by-pinky.vercel.app)
+You can check out a live demo of the application [here](https://drip-theta.vercel.app/)
 
 ## Key Features
 
@@ -42,7 +42,7 @@ You can check out a live demo of the application [here](https://be-pleasered-by-
 To get started with this project, run
 
 ```~~bash~~
-  git clone https://github.com/Yonela-Johannes/be-pleasured-by-pinky
+  git clone https://github.com/Yonela-Johannes/drip.git
 ```
 
 ### Start the app
