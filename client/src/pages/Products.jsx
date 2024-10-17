@@ -39,7 +39,9 @@ const Products = () =>
             </div>
           </MaxWidthWrapper>
         </div>) : (
-        <Loader />
+        <p className='pt-10 text-base text-black lg:text-xl'>
+          No product available
+        </p>
       )
       }
     </div>
