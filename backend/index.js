@@ -18,6 +18,7 @@ const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const cloudinary = require("cloudinary");
 const { createProducts } = require("./data/createProducts");
+const { getAllUsers } = require("./controllers/UserController");
 const dotenv = require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
@@ -45,6 +46,8 @@ app.use(passport.session())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors({ origin: ['http://localhost:5173', 'https://be-pleasered-by-pinky.vercel.app'], credentials: true }));
+
+app.use("/", getAllUsers());
 
 app.use("/api", product);
 app.use("/api", user);
