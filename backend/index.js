@@ -67,3 +67,5 @@ app.listen(PORT, () =>
     .catch((err) => console.log(err.message));
   console.log(`Server is running at http://localhost:${PORT}`)
 });
+
+module.exports = app;
