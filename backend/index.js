@@ -47,8 +47,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors({ origin: ['http://localhost:5173', 'https://be-pleasered-by-pinky.vercel.app'], credentials: true }));
 
-app.get("/", getAllUsers());
-
 app.use("/api", product);
 app.use("/api", user);
 app.use("/api", order);
