@@ -20,7 +20,7 @@ const cloudinary = require("cloudinary");
 const { createProducts } = require("./data/createProducts");
 const dotenv = require("dotenv").config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(
   session({
@@ -67,3 +67,5 @@ app.listen(PORT, () =>
     .catch((err) => console.log(err.message));
   console.log(`Server is running at http://localhost:${PORT}`)
 });
+
+module.exports = app;

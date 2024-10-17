@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === 'production')
   apiUrl = 'drip-api-mu.vercel.app/api/';
 } else
 {
-  apiUrl = 'http://localhost:5000/api/';
+  apiUrl = 'http://localhost:9000/api/';
 }
 
 export const serverUrl = apiUrl;

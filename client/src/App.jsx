@@ -60,7 +60,7 @@ function App()
       <GlobalContext>
         <Navbar />
         <NoticeContext>
-          <div className="w-full flex-1 pt-10 overflow-hidden flex flex-col gap-16 relative">
+          <div className="w-full flex-1 pt-24 overflow-hidden flex flex-col gap-16 relative">
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Home />} />
