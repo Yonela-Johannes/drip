@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === 'production')
   apiUrl = 'https://pinky-api.onrender.com/api/';
 } else
 {
-  apiUrl = 'http://localhost:5000/api/';
+  apiUrl = 'http://localhost:9000/api/';
 }
 
 export const serverUrl = apiUrl;
