@@ -8,23 +8,17 @@ const ImageList = [
   {
     id: 1,
     img: Image1,
-    title: "Up to 50% off on all Men's Wear",
-    description:
-      "Lorem His Life will forever be Changed dolor sit amet, Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "Up to 10% off on all Men's Sneakers",
   },
   {
     id: 2,
     img: Image2,
-    title: "30% off on all Women's Wear",
-    description:
-      "Who's there Lorem ipsum dolor sit amet, Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "15% off on all Women's Sneakers",
   },
   {
     id: 3,
     img: Image3,
-    title: "70% off on all Products Sale",
-    description:
-      "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "25% off on all kids Sneakers",
   },
 ];
 
@@ -61,11 +55,6 @@ const Banner = () =>
                   >
                     {data.title}
                   </h1>
-                  <p
-                    className="text-sm md:text-xl"
-                  >
-                    {data.description}
-                  </p>
                 </div>
                 {/* image section */}
                 <div className="order-1 sm:order-2">

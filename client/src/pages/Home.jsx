@@ -7,11 +7,9 @@ import Hero from "../components/Hero";
 import Newest from "../components/Newest";
 import Banner from "../components/banner/Banner";
 import HomeBanner from "../components/banner/HomeBanner";
-import Testimonials from "../components/Testimonials/Testimonials";
 import Main from "../components/common/Hero";
 import { heroapi, popularsales, story } from "../data/data";
 import Sales from "../components/common/Sales";
-import Stories from "../components/common/Stories";
 
 export default function Home()
 {
@@ -68,8 +66,6 @@ export default function Home()
       </MaxWidthWrapper>
       <MaxWidthWrapper>
         <HomeBanner />
-        <Stories story={story} />
-        <Testimonials />
       </MaxWidthWrapper>
     </div>
   );

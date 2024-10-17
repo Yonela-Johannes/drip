@@ -2,7 +2,7 @@ let apiUrl;
 
 if (process.env.NODE_ENV === 'production')
 {
-  apiUrl = 'https://pinky-api.onrender.com/api/';
+  apiUrl = 'drip-api-mu.vercel.app/api/';
 } else
 {
   apiUrl = 'http://localhost:5000/api/';
