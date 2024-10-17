@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 
-const Title = ({ title }) => {
+const Title = ({ title, secondary }) => {
   return (
-   <>
-      <div className='grid items-center'>
-        <h1 className='text-5xl lg:text-4xl md:text-3xl font-bold text-slate-900 filter
-         drop-shadow-lg'>{title}</h1>
-      </div>
-   </>
-  )
-}
+    <h1
+      className={`{text-xl lg:text-4xl md:text-3xl font-bold ${!secondary ? "text-white" : "text-black"} filter
+         drop-shadow-md`}
+    >
+      {title}
+    </h1>
+  );
+};
 
-export default Title
+export default Title;

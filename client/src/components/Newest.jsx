@@ -6,7 +6,7 @@ export default function Newest({ products })
 {
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-background rounded-md p-4">
       <Title title="Brand new" />
       <div className="flex flex-col w-full items-center justify-start">
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
@@ -22,7 +22,7 @@ export default function Newest({ products })
 
               <div className="mt-4 flex justify-between">
                 <div>
-                  <h3 className="text-sm text-gray-700">
+                  <h3 className="text-sm text-cl">
                     <Link to={`/product/${product._id}`}>
                       {product?.name}
                     </Link>

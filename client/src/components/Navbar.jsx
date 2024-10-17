@@ -16,6 +16,8 @@ import { Modal } from 'flowbite-react';
 import Login from "../admin/pages/login/Login";
 import Register from "../admin/pages/register/Register";
 import { handleSignin, handleUserModal, onCloseSignin, handleSignup } from "../redux/features/modals/modalsSlice";
+import { FaCartShopping, FaShop } from "react-icons/fa6";
+import { FaHome, FaSearch, FaShoppingBasket } from "react-icons/fa";
 
 const Navbar = () =>
 {
@@ -29,7 +31,7 @@ const Navbar = () =>
 
   const onNavScroll = () =>
   {
-    if (window.scrollY > 30)
+    if (window.scrollY > 0)
     {
       setNavState(true);
     } else
@@ -77,28 +79,24 @@ const Navbar = () =>
 
   function handleClose()
   {
-    console.log('Close')
     dispatch(onCloseSignin())
   }
 
   return (
-    <div className={navState ? 'w-full md:fixed z-50 top-0 inset-x-0' : 'absolute top-0 left-0 right-0 opacity-100 z-50'}>
-      <header className={`${navState ? 'bg-white opacity-100' : 'bg-lgray'} relative px-10`}>
-        <div className={`headerText  ${navState ? "border-b border-gray-200" : ""}`}>
-          <div className='flex justify-between h-16 items-center'>
+    <div className={navState ? 'md:fixed z-50 top-0 inset-x-0 bg-background' : 'absolute top-0 left-0 right-0 opacity-100 z-50 bg-background'}>
+      <header className={`${navState ? '' : ''} grid grid-cols-2 relative px-10`}>
+        <div className={`headerText flex items-center justify-between`}>
+          <div className='flex justify-between items-center'>
             <MobileNav logout={logout} />
             <div className="">
               <Link to='/'>
                 <div className='flex items-center justify-center lg:ml-0'>
-                  <img className='h-[50px] w-[50px] object-contain object-center'
-                    src={logo}
-                    alt='logo'
-                  />
-                  <p className='hidden sm:block text-base text-black md:text-xl'>Drip</p>
+                  <p className='hidden sm:block text-base lg:text-md text-[#9A031E] md:text-xl'>NetMark</p>
                 </div>
               </Link>
             </div>
-            <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end'>
+          </div>
+            <div className='hidden lg:flex lg:flex-1 text-white lg:items-center lg:justify-end'>
               <div className="flex gap-4">
                 {user?._id ? (
                   <div className='capitalize cursor-pointer'
@@ -113,14 +111,14 @@ const Navbar = () =>
                   </div>
                 ) : (
                   <div className='flex items-center justify-center gap-4 cursor-pointer'>
-                    <div onClick={() => dispatch(handleSignin())} className='underline'>
-                      <p
+                    <div onClick={() => dispatch(handleSignin())} className=''>
+                      <p className="bg-black p-2 rounded-md"
                       >
                         Sign in
                       </p>
                     </div>
                     <div onClick={() => dispatch(handleSignup())}>
-                      <p
+                      <p className="underline"
                       >
                         Sign up
                       </p>
@@ -129,16 +127,16 @@ const Navbar = () =>
                 )}
               </div>
             </div>
-          </div>
         </div>
-        <div className="flex gap-10 items-center my-4 justify-center sm:justify-end w-full">
+        <div className="flex gap-10 items-center my-4 justify-center sm:justify-end w-full text-white">
           {/* Search bar */}
-          <div className="hidden md:flex item-center justify-end my-3 gap-8 items-center">
-            <form onSubmit={handleSearch} className="flex item-center w-full md:w-max justify-between md:justify-end border border-gray-500 rounded-md">
+          <div className="hidden md:flex item-center justify-end my-3 gap-2 items-center bg-black px-2 rounded-md">
+              <FaSearch className='block h-5 w-5' />
+            <form onSubmit={handleSearch} className="flex item-center w-full md:w-max justify-between md:justify-end rounded-md">
               <input
                 type="text"
-                placeholder="Search for items ..."
-                className='text-base md:text-xl w-min rounded-md bg-white focus:ring-0 border-transparent focus:border-transparent border-none focus:border-none outline-none focus:outline-none'
+                placeholder="Search ..."
+                className='text-base w-min rounded-md bg-black focus:ring-0 border-transparent focus:border-transparent border-none focus:border-none outline-none focus:outline-none'
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button className="hidden" type="submit" >
@@ -148,20 +146,18 @@ const Navbar = () =>
           </div>
           <div className='flex lg:ml-0'>
             <Link to='/'>
-              <p className='hidden sm:block text-base md:text-lg'>Home</p>
-              <AiOutlineHome className='block sm:hidden h-5 w-5' />
+              <FaHome className='block h-5 w-5' />
             </Link>
           </div>
           <div className='flex lg:ml-0'>
             <Link to='/products'>
-              <p className='hidden sm:block text-base md:text-lg'>Shop</p>
-              <HiOutlineShoppingBag className='block sm:hidden h-5 w-5' />
+              <FaShop className='block h-5 w-5' />
             </Link>
           </div>
           <Link className="cursor-pointer" to='/cart'>
             <div className='relative flex lg:ml-0'>
               <p className='absolute text-base w-5 h-5 -top-1 text-center -right-3  bg-pink2 m-0 text-white rounded-full'>{items?.length || 0}</p>
-              {items?.length > 0 ? (<BsCartCheckFill size={18} />) : (<BsCartPlus size={18} />)}
+              {items?.length > 0 ? (<FaCartShopping size={18} />) : (<FaShoppingBasket size={18} />)}
             </div>
           </Link>
           {user?._id && (

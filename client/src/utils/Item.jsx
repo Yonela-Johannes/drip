@@ -7,7 +7,6 @@ import Rating from "../components/shared/Rating";
 import { Link } from "react-router-dom";
 
 const Item = ({
-  ifExists,
   _id,
   color,
   shadow,
@@ -24,11 +23,11 @@ const Item = ({
   return (
     <>
       <div
-        className={`relative bg-gradient-to-b cursor-pointer ${color} ${shadow} grid items-center ${ifExists ? "justify-items-start" : "justify-items-center"
+        className={`relative bg-gradient-to-b cursor-pointer ${color} ${shadow} grid items-center justify-items-start"
           } rounded-xl py-4 px-5 transition-all duration-700 ease-in-out w-full hover:scale-105`}
       >
         <Link to={`/product/${_id}`}
-          className={`grid items-center ${ifExists ? "justify-items-start" : "justify-items-center"
+          className={`grid items-center "justify-items-center"
             }`}
         >
           <h1 className="text-slate-200 text-xl lg:text-lg md:text-base font-medium filter drop-shadow">
@@ -53,16 +52,13 @@ const Item = ({
           </div>
         </Link>
         <Link
-          className={`flex items-center ${ifExists ? "absolute top-5 right-1" : "justify-center"}`}
+          className={`flex items-center absolute top-5 right-1`}
           to={`/product/${_id}`}
         >
           <img
             src={imageUrl}
             alt={`imageUrl/${_id}`}
-            className={`object-center object-contain transitions-theme hover:-rotate-12 ${ifExists
-              ? "h-auto w-64 lg:w-56 md:w-48 -rotate-[35deg]"
-              : "h-36 w-64"
-              }`}
+            className={`object-center object-contain transitions-theme hover:-rotate-12 h-auto w-64 lg:w-56 md:w-48 -rotate-[35deg]"`}
           />
         </Link>
         <div

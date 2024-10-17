@@ -7,7 +7,6 @@ import Hero from "../components/Hero";
 import Newest from "../components/Newest";
 import Banner from "../components/banner/Banner";
 import HomeBanner from "../components/banner/HomeBanner";
-import Main from "../components/common/Hero";
 import { heroapi, popularsales, story } from "../data/data";
 import Sales from "../components/common/Sales";
 
@@ -31,16 +30,16 @@ export default function Home()
   {
     fetchProducts();
   }, [items]);
+  console.log(items)
 
   return (
     <div className="w-screen overflow-x-hidden">
       <Banner />
-      <Main heroapi={heroapi} />
       <MaxWidthWrapper>
         <div className="flex flex-col text-center w-full items-center justify-start">
           <h2
 
-            className="text-center self-center p-4 md:p-8 text-xl md:text-2xl m-5 text-black"
+            className="text-center self-center p-4 md:p-8 text-xl md:text-2xl m-5 text-lgray"
           >
             Featured
           </h2>
@@ -56,11 +55,8 @@ export default function Home()
       </MaxWidthWrapper>
       <MaxWidthWrapper>
         <Hero />
-        <Sales endpoint={popularsales} ifExists />
+        <Sales endpoint={popularsales} />
       </MaxWidthWrapper>
-      <div data-aos-duration="500" className="relative w-full bg-lgray">
-        <div className="h-[200px] w-[200px] bg-pink2 -top-10 absolute right-0 rotate-45"></div>
-      </div>
       <MaxWidthWrapper>
         <Newest products={products} />
       </MaxWidthWrapper>

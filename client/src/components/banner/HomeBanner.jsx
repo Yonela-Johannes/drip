@@ -4,12 +4,12 @@ import { GrSecure } from "react-icons/gr";
 import { IoFastFood } from "react-icons/io5";
 import { GiFoodTruck } from "react-icons/gi";
 import Title from "../../utils/Title";
+import { FaGift } from "react-icons/fa6";
 
-const HomeBanner = () =>
-{
+const HomeBanner = () => {
   return (
     <div className="flex py-2 md:my-20 max-w-2xl sm:pb-6 lg:max-w-7xl">
-      <div className="mb-8 grid grid-cols-1 md:grid-cols-2 items-start justify-start text-start md:gap-4 gap-2 md:mb-16" >
+      <div className="mb-8 grid grid-cols-1 md:grid-cols-2 items-start justify-start text-start md:gap-4 gap-2 md:mb-16">
         {/* image section */}
         <div className="md:relative flex w-full bg-black items-start justify-start">
           <img
@@ -21,29 +21,28 @@ const HomeBanner = () =>
 
         {/* text details section */}
         <div className="mb-6 flex w-full flex-col justify-center">
-          <Title title="Winter Sale Up to 50% Off" />
-          <p
-            className="text-base md:text-xl text-gray-500 tracking-wide leading-5 mt-1 mb-3"
-          >
-            Lorem ipsum, dolor sit amet Consectetur adipisicing elit. Eaque
-            reiciendis inventore iste ratione ex alias quis magni at optio
+          <Title title="Summer Sale – Up to 50% Off" secondary={true} />
+          <p className="text-base md:text-xl text-gray-500 tracking-wide leading-5 mt-1 mb-3">
+            Refresh your wardrobe with hot deals on our exclusive summer
+            collection! Enjoy unbeatable prices on top-quality fashion items for
+            the season.
           </p>
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-4">
-              <GrSecure className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-violet-400 dark:bg-violet-400" />
-              <p className="text-base md:text-xl">Quality Products</p>
+            <div className="flex items-center gap-4 text-black">
+              <GrSecure className="text-black text-4xl h-12 w-12 shadow-sm p-2 rounded-full bg-violet-400 dark:bg-violet-400" />
+              <p className="text-base md:text-xl">Premium Quality Products</p>
             </div>
             <div className="flex items-center gap-4">
-              <IoFastFood className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-orange-400 dark:bg-orange-400" />
-              <p className="text-base md:text-xl">Fast Delivery</p>
+              <IoFastFood className="text-black text-4xl h-12 w-12 shadow-sm p-2 rounded-full bg-orange-400 dark:bg-orange-400" />
+              <p className="text-base md:text-xl">Fast and Reliable Delivery</p>
             </div>
             <div className="flex items-center gap-4">
-              <GiFoodTruck className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-green-400 dark:bg-green-400" />
-              <p className="text-base md:text-xl">Easy Payment method</p>
+              <GiFoodTruck className="text-black text-4xl h-12 w-12 shadow-sm p-2 rounded-full bg-green-400 dark:bg-green-400" />
+              <p className="text-base md:text-xl">Hassle-Free Payment Options</p>
             </div>
             <div className="flex items-center gap-4">
-              <GiFoodTruck className="text-4xl h-12 w-12 shadow-sm p-4 rounded-full bg-yellow-400 dark:bg-yellow-400" />
-              <p className="text-base md:text-xl">Get Offers</p>
+              <FaGift className="text-black text-4xl h-12 w-12 shadow-sm p-2 rounded-full bg-yellow-400 dark:bg-yellow-400" />
+              <p className="text-base md:text-xl">Exclusive Summer Offers</p>
             </div>
           </div>
         </div>

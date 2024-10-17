@@ -8,6 +8,9 @@
 html {
   scroll-behavior: smooth;
 }
+body{
+  background-color: #E8E9F3;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -23,10 +23,8 @@ const MainFooter = () =>
             src={logo}
             className="w-10 h-10 object-contain object-left md:object-center"
           />
-          <p>Drip</p>
+          <p>Netmark</p>
         </div>
-        <p className="description mb-4">It's drippin baby
-        </p>
       </div>
 
       <div className="flex flex-col md:flex-row w-full justify-between gap-4">

@@ -5,7 +5,6 @@ import Items from '../components/Products/Products'
 import Loader from '../components/shared/Loader'
 import { getProducts } from '../redux/features/products/productSlice'
 import { useEffect } from "react";
-import Sales from '../components/common/Sales';
 
 const Products = () =>
 {
@@ -29,18 +28,15 @@ const Products = () =>
             </div>
           </MaxWidthWrapper>
           <MaxWidthWrapper>
-            <Sales items={items} category={'Featured'} />
+            <ProductReel
+              title={'Browse high-quality products'}
+              products={items}
+            />
           </MaxWidthWrapper>
           <MaxWidthWrapper>
             <div className='lg:block'>
               <Items items={items} loading={loading} category={'Low Prices'} />
             </div>
-          </MaxWidthWrapper>
-          <MaxWidthWrapper>
-            <ProductReel
-              title={'Browse high-quality products'}
-              products={items}
-            />
           </MaxWidthWrapper>
         </div>) : (
         <Loader />
