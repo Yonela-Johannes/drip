@@ -1,4 +1,4 @@
-# Drip - A Modern Fullstack E-Commerce Marketplace for products + Dashboard & CMS, React, Tailwind, MongoDB
+# Netmark - A Modern Fullstack E-Commerce Marketplace for products + Dashboard & CMS, React, Tailwind, MongoDB
 
 ### Frontend: Built with the Vite App Router, & Tailwind
 ### Backend: Built with the Nodejs, Express, MongoDB, Mongoose
@@ -7,7 +7,7 @@
 
 ## Demo
 
-You can check out a live demo of the application [here](https://drip-theta.vercel.app/)
+You can check out a live demo of the application [here](https://netmark-eight.vercel.app/)
 
 ## Key Features
 
